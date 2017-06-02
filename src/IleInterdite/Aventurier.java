@@ -122,7 +122,7 @@ public class Aventurier {
         }
          
         // Aller en Bas
-        if ((this.getY()+1 <= 5) && (laGrille.getTuile(getX(), getY()+1) != null)){
+        if ((this.getY()+1 <= 5) && (laGrille.getTuile(getX(), getY()+1) != null)/* && (laGrille.getTuile(getX(), getY()+1).getEtat() != Utils.EtatTuile.COULEE)*/){
             lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY())+1));
         }
         

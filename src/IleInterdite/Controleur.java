@@ -20,11 +20,14 @@ public class Controleur {
 
     private Grille laGrille;
     private Tuile uneTuile;
-    private CarteInnondation uneCarte;
+    private CarteInondation uneCarte;
     private Aventurier aventurierActuel;
     private ArrayList<Aventurier> lesAventuriers;
     private boolean PartieFinie;
     private boolean finDuTour;
+    private ArrayList<CarteInondation> cimetiereInondation;
+    private ArrayList<CarteInondation> bannieInondation;
+    private ArrayList<CarteInondation> piocheInondation;
     
     public Controleur(){
         setAventurierActuel(new Aventurier("init", Pion.VERT));
@@ -34,10 +37,10 @@ public class Controleur {
     public void InitialiserTestPartie() {
         setPartieFinie(false);
         setFinDuTour(false);
-
-        ArrayList<CarteInnondation> cimetiereInnondation = new ArrayList();
-        ArrayList<CarteInnondation> bannieInnondation = new ArrayList();
-        ArrayList<CarteInnondation> piocheInnondation = new ArrayList();
+        
+        cimetiereInondation = new ArrayList();
+        bannieInondation = new ArrayList();
+        piocheInondation = new ArrayList();
         
         lesAventuriers = new ArrayList();
         getLesAventuriers().add(new Explorateur("Joueur1"));
@@ -143,8 +146,8 @@ public class Controleur {
         uneTuile = new Tuile("Le Jardin Des Murmures");
         getLaGrille().addTuile(5,3, uneTuile);
         
-        uneCarte = new CarteInnondation(uneTuile); // On créer une carte lié a la tuile et on l'ajoute dans la pioche innondation
-        piocheInnondation.add(uneCarte); // A faire pour toute les cases :/ :$
+        uneCarte = new CarteInondation(uneTuile); // On créer une carte lié a la tuile et on l'ajoute dans la pioche innondation
+        piocheInondation.add(uneCarte); // A faire pour toute les cases :/ :$
         
         
         System.out.println(getLaGrille().getTuile(5, 3).getNom());

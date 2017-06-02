@@ -110,7 +110,7 @@ public class Aventurier {
     public ArrayList<Integer> DeplacementPossible(Grille laGrille) {
         ArrayList<Integer> lesDeplacements = new ArrayList();
         lesDeplacements.clear();
-        System.out.println(laGrille.getTuile(getX(), getY()).getNom()); // <<<<<<<<<<<<<<< FAIRE ATTENTION CA SALUT NEARLY
+        System.out.println(laGrille.getTuile(getX(), getY()).getNom()); // <<<<<<<<<<<<<<< FAIRE ATTENTION CA SALUT NEARLY oui
         // Aller à Droite
         if ((this.getX()+1 <= 5) /*&& (laGrille.getTuile(getX()+1, getY()) != null)*/){
             lesDeplacements.add(Integer.valueOf(String.valueOf(getX()+1) + String.valueOf(getY())));

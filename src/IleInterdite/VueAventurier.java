@@ -21,7 +21,7 @@ import java.awt.event.ActionListener;
  
 public class VueAventurier implements ActionListener  {
     
-    private Controleur leControleur = new Controleur();
+    private static Controleur leControleur = new Controleur();
     
     private final JPanel panelBoutons ;
     private final JPanel panelCentre ;
@@ -137,7 +137,6 @@ public class VueAventurier implements ActionListener  {
      public static void main(String [] args) {
         // Instanciation de la fenêtre 
         //VueAventurier vueAventurier = new VueAventurier ("Manon", "Explorateur",Pion.ROUGE.getCouleur() );
-        Controleur leControleur = new Controleur();
         leControleur.InitialiserTestPartie();
         VueAventurier vueAventurierActuel = new VueAventurier(leControleur.getAventurierActuel());
         while (!leControleur.isPartieFinie()){
@@ -156,6 +155,7 @@ public class VueAventurier implements ActionListener  {
         }
         if (e.getSource() == btnTerminerTour){
             leControleur.setFinDuTour(true);
+            System.out.println(leControleur.getAventurierActuel().getNomJoueur());
         }
     }
 }

@@ -112,22 +112,22 @@ public class Aventurier {
         lesDeplacements.clear();
         System.out.println(laGrille.getTuile(getX(), getY()).getNom()); // <<<<<<<<<<<<<<< FAIRE ATTENTION CA SALUT NEARLY oui
         // Aller à Droite
-        if ((this.getX()+1 <= 5) /*&& (laGrille.getTuile(getX()+1, getY()) != null)*/){
+        if ((this.getX()+1 <= 5) && (laGrille.getTuile(getX()+1, getY()) != null) && (laGrille.getTuile(getX(), getY()+1).getEtat() != Utils.EtatTuile.COULEE)){
             lesDeplacements.add(Integer.valueOf(String.valueOf(getX()+1) + String.valueOf(getY())));
         }
         
         // Aller à Gauche
-        if ((this.getX()-1 >= 0) && (laGrille.getTuile(getX()-1, getY()) != null)){
+        if ((this.getX()-1 >= 0) && (laGrille.getTuile(getX()-1, getY()) != null) && (laGrille.getTuile(getX(), getY()+1).getEtat() != Utils.EtatTuile.COULEE)){
             lesDeplacements.add(Integer.valueOf(String.valueOf(getX()-1) + String.valueOf(getY())));
         }
          
         // Aller en Bas
-        if ((this.getY()+1 <= 5) && (laGrille.getTuile(getX(), getY()+1) != null)/* && (laGrille.getTuile(getX(), getY()+1).getEtat() != Utils.EtatTuile.COULEE)*/){
-            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY())+1));
+        if ((this.getY()+1 <= 5) && (laGrille.getTuile(getX(), getY()+1) != null) && (laGrille.getTuile(getX(), getY()+1).getEtat() != Utils.EtatTuile.COULEE)){
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY()+1)));
         }
         
         // Aller en Haut
-        if ((this.getY()-1 >= 0) && (laGrille.getTuile(getX(), getY()-1) != null)){
+        if ((this.getY()-1 >= 0) && (laGrille.getTuile(getX(), getY()-1) != null) && (laGrille.getTuile(getX(), getY()+1).getEtat() != Utils.EtatTuile.COULEE)){
             lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY()-1)));
         }
         
@@ -146,7 +146,12 @@ public class Aventurier {
 
         int x = Character.getNumericValue(leChampCommande.getText().charAt(0));
         int y = Character.getNumericValue(leChampCommande.getText().charAt(leChampCommande.getText().length()-1));
-        this.setPosition(x, y);
+        for (int unDeplacementPossible: DeplacementPossible){
+            if (unDeplacementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))){
+                this.setPosition(x, y);
+            }
+        }
+
         System.out.println("Apres "+ this.X +","+ this.Y);
     }
 

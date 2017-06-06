@@ -6,6 +6,7 @@
 package IleInterdite;
 
 import java.util.ArrayList;
+import javax.swing.JTextField;
 
 /**
  *
@@ -34,34 +35,79 @@ public class Plongeur extends Aventurier {
         this.nomRole = nomRole;
     }
 
-    @Override
-    public ArrayList<Integer> DeplacementPossible(Grille laGrille) {
+    public ArrayList<Integer> DeplacementPossible(int X, int Y, Grille laGrille) {
         ArrayList<Integer> lesDeplacements = new ArrayList();
         lesDeplacements.clear();
         System.out.println(laGrille.getTuile(getX(), getY()).getNom());
 
         // Aller à Droite possible?
         // Si on sort pas de la grille, qu'elle n'est pas nulle et qu'elle n'est pas coulée, on l'ajoute à lesDeplacements
-        if ((this.getX() + 1 <= 5) && (laGrille.getTuile(getX() + 1, getY()) != null) && (laGrille.getTuile(getX() + 1, getY()).getEtat() != Utils.EtatTuile.COULEE)) {
-            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() + 1) + String.valueOf(getY())));
+        if ((X + 1 <= 5) && (laGrille.getTuile(X + 1, Y) != null) && (laGrille.getTuile(X + 1, Y).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(X + 1) + String.valueOf(Y)));
         }
 
         // Aller à Gauche possible?
-        if ((this.getX() - 1 >= 0) && (laGrille.getTuile(getX() - 1, getY()) != null) && (laGrille.getTuile(getX() - 1, getY()).getEtat() != Utils.EtatTuile.COULEE)) {
-            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() - 1) + String.valueOf(getY())));
+        if ((X - 1 >= 0) && (laGrille.getTuile(X - 1, Y) != null) && (laGrille.getTuile(X - 1, Y).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(X - 1) + String.valueOf(Y)));
         }
 
         // Aller en Bas possible?
-        if ((this.getY() + 1 <= 5) && (laGrille.getTuile(getX(), getY() + 1) != null) && (laGrille.getTuile(getX(), getY() + 1).getEtat() != Utils.EtatTuile.COULEE)) {
-            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() + 1)));
+        if ((Y + 1 <= 5) && (laGrille.getTuile(X, Y + 1) != null) && (laGrille.getTuile(X, Y + 1).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(X) + String.valueOf(Y + 1)));
         }
 
         // Aller en Haut possible?
-        if ((this.getY() - 1 >= 0) && (laGrille.getTuile(getX(), getY() - 1) != null) && (laGrille.getTuile(getX(), getY() - 1).getEtat() != Utils.EtatTuile.COULEE)) {
-            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() - 1)));
+        if ((Y - 1 >= 0) && (laGrille.getTuile(X, Y - 1) != null) && (laGrille.getTuile(X, Y - 1).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(X) + String.valueOf(Y - 1)));
+        }
+        
+        // -------------------
+        
+        if ((X + 1 <= 5) && (laGrille.getTuile(X + 1, Y) != null) && (laGrille.getTuile(X + 1, Y).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.addAll(DeplacementPossible(X+1, Y, laGrille));
         }
 
+        // Aller à Gauche possible?
+        if ((X - 1 >= 0) && (laGrille.getTuile(X - 1, Y) != null) && (laGrille.getTuile(X - 1, Y).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.addAll(DeplacementPossible(X-1, Y, laGrille));
+        }
+
+        // Aller en Bas possible?
+        if ((Y + 1 <= 5) && (laGrille.getTuile(X, Y + 1) != null) && (laGrille.getTuile(X, Y + 1).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.addAll(DeplacementPossible(X, Y+1, laGrille));
+        }
+
+        // Aller en Haut possible?
+        if ((Y - 1 >= 0) && (laGrille.getTuile(X, Y - 1) != null) && (laGrille.getTuile(X, Y - 1).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.addAll(DeplacementPossible(X, Y-1, laGrille));
+        }
+        
+
         return lesDeplacements;
+    }
+    
+    @Override
+    public void SeDeplacer(Grille laGrille, JTextField leChampCommande) {
+
+        ArrayList<Integer> DeplacementPossible = DeplacementPossible(getX(), getY(), laGrille);
+        
+        System.out.println("Déplacements possibles:");
+        for (int unDeplacementPossible : DeplacementPossible) {
+            System.out.println(unDeplacementPossible);
+        }
+
+        System.out.println("Avant " + getX() + "," + getY());
+
+        int x = Character.getNumericValue(leChampCommande.getText().charAt(0));
+        int y = Character.getNumericValue(leChampCommande.getText().charAt(leChampCommande.getText().length() - 1));
+        for (int unDeplacementPossible : DeplacementPossible) {
+            if (unDeplacementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
+                this.setPosition(x, y);
+                setPA(getPA() - 1);
+            }
+        }
+
+        System.out.println("Apres " + getX() + "," + getY());
     }
 
 }

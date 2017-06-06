@@ -23,6 +23,7 @@ public class TuileSpawn extends Tuile{
     /**
      * @return the spawnAventurier
      */
+    
     public Pion getSpawnAventurier() {
         return spawnAventurier;
     }

@@ -5,8 +5,6 @@
  */
 package IleInterdite;
 
-import java.util.HashMap;
-
 /**
  *
  * @author monnetlu

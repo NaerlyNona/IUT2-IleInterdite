@@ -46,5 +46,5 @@ public class Tuile {
         this.etat = etat;
     }
     
-    
+  
 }

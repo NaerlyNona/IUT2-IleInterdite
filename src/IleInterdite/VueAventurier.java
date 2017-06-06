@@ -40,7 +40,7 @@ public class VueAventurier implements ActionListener {
     public VueAventurier(Aventurier unAventurier) {
 
         this.window = new JFrame();
-        window.setSize(700, 700);
+        window.setSize(900, 900);
 
         window.setTitle(unAventurier.getNomJoueur());
         mainPanel = new JPanel(new BorderLayout());
@@ -87,15 +87,15 @@ public class VueAventurier implements ActionListener {
                         tuileVide.setEnabled(false);
                         tuileVide.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
                         panelCentreCarte.add(tuileVide);
-                        i++;
+                       
                         
                    // System.out.println("Ligne:"+l+"|"+"Colonne:"+c);
                             
                     } else if (leControleur.getLaGrille().getTuile(l, c).getEtat() == Utils.EtatTuile.ASSECHEE) {
                         JButton tuile = new JButton(leControleur.getLaGrille().getTuile(l, c).getNom() + "[" + l + "," + c + "]");
-                        tuile.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
+                        //tuile.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
                         panelCentreCarte.add(tuile);
-                        i++;
+                        
                       /*  for (Aventurier nAventurier : leControleur.getLesAventuriers()) {
                             if ( nAventurier.getX() == l && nAventurier.getY() == c){
                                 
@@ -113,10 +113,16 @@ public class VueAventurier implements ActionListener {
                         */
                     } else if (leControleur.getLaGrille().getTuile(l, c).getEtat() == Utils.EtatTuile.INONDEE) {
                         JButton tuile = new JButton(leControleur.getLaGrille().getTuile(l, c).getNom() + "[" + l + "," + c + "]");
-                        tuile.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
+                        //tuile.setBorder(BorderFactory.createLineBorder(Color.CYAN, 1));
                         panelCentreCarte.add(tuile);
-                        tuile.setBackground(Color.BLUE);
-                        i++;
+                        tuile.setBackground(Color.CYAN);
+                        
+                        } else if (leControleur.getLaGrille().getTuile(l, c).getEtat() == Utils.EtatTuile.COULEE) {
+                        JButton tuile = new JButton(leControleur.getLaGrille().getTuile(l, c).getNom() + "[" + l + "," + c + "]");
+                        //tuile.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+                        panelCentreCarte.add(tuile);
+                        tuile.setBackground(Color.GRAY);
+                        
                     /*    for (Aventurier nAventurier : leControleur.getLesAventuriers()) {
                             if ( nAventurier.getX() == l && nAventurier.getY() == c){
                                 
@@ -134,6 +140,7 @@ public class VueAventurier implements ActionListener {
                         }
 */
                     } 
+                        i++;
                         
                     
 

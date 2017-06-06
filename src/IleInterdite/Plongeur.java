@@ -35,8 +35,9 @@ public class Plongeur extends Aventurier {
         this.nomRole = nomRole;
     }
 
-    public ArrayList<Integer> DeplacementPossible(int X, int Y, Grille laGrille) {
+    public ArrayList<Integer> DeplacementPossible(int X, int Y, Grille laGrille, boolean premier) {
         ArrayList<Integer> lesDeplacements = new ArrayList();
+
         lesDeplacements.clear();
         System.out.println(laGrille.getTuile(X, Y).getNom());
 
@@ -60,37 +61,47 @@ public class Plongeur extends Aventurier {
         if ((Y - 1 >= 0) && (laGrille.getTuile(X, Y - 1) != null) && (laGrille.getTuile(X, Y - 1).getEtat() != Utils.EtatTuile.COULEE)) {
             lesDeplacements.add(Integer.valueOf(String.valueOf(X) + String.valueOf(Y - 1)));
         }
-        
+
         // -------------------
-        
-        if ((X + 1 <= 5) && (laGrille.getTuile(X + 1, Y) != null) && (laGrille.getTuile(X + 1, Y).getEtat() == Utils.EtatTuile.COULEE)) {
-            lesDeplacements.addAll(DeplacementPossible(X+1, Y, laGrille));
+        if ((X + 1 <= 5) && (laGrille.getTuile(X + 1, Y) != null) && (laGrille.getTuile(X + 1, Y).getEtat() == Utils.EtatTuile.COULEE) && (!lesDeplacements.contains(Integer.valueOf(String.valueOf(X + 1) + String.valueOf(Y))))) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(X + 1) + String.valueOf(Y)));
+            lesDeplacements.addAll(DeplacementPossible(X + 1, Y, laGrille, false));
         }
 
         // Aller à Gauche possible?
-        if ((X - 1 >= 0) && (laGrille.getTuile(X - 1, Y) != null) && (laGrille.getTuile(X - 1, Y).getEtat() == Utils.EtatTuile.COULEE)) {
-            lesDeplacements.addAll(DeplacementPossible(X-1, Y, laGrille));
+        if ((X - 1 >= 0) && (laGrille.getTuile(X - 1, Y) != null) && (laGrille.getTuile(X - 1, Y).getEtat() == Utils.EtatTuile.COULEE) && (!lesDeplacements.contains(Integer.valueOf(String.valueOf(X - 1) + String.valueOf(Y))))) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(X - 1) + String.valueOf(Y)));
+            lesDeplacements.addAll(DeplacementPossible(X - 1, Y, laGrille, false));
         }
 
         // Aller en Bas possible?
-        if ((Y + 1 <= 5) && (laGrille.getTuile(X, Y + 1) != null) && (laGrille.getTuile(X, Y + 1).getEtat() == Utils.EtatTuile.COULEE)) {
-            lesDeplacements.addAll(DeplacementPossible(X, Y+1, laGrille));
+        if ((Y + 1 <= 5) && (laGrille.getTuile(X, Y + 1) != null) && (laGrille.getTuile(X, Y + 1).getEtat() == Utils.EtatTuile.COULEE) && (!lesDeplacements.contains(Integer.valueOf(String.valueOf(X) + String.valueOf(Y + 1))))) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(X) + String.valueOf(Y + 1)));
+            lesDeplacements.addAll(DeplacementPossible(X, Y + 1, laGrille, false));
         }
 
         // Aller en Haut possible?
-        if ((Y - 1 >= 0) && (laGrille.getTuile(X, Y - 1) != null) && (laGrille.getTuile(X, Y - 1).getEtat() == Utils.EtatTuile.COULEE)) {
-            lesDeplacements.addAll(DeplacementPossible(X, Y-1, laGrille));
+        if ((Y - 1 >= 0) && (laGrille.getTuile(X, Y - 1) != null) && (laGrille.getTuile(X, Y - 1).getEtat() == Utils.EtatTuile.COULEE) && (!lesDeplacements.contains(Integer.valueOf(String.valueOf(X) + String.valueOf(Y - 1))))) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(X) + String.valueOf(Y - 1)));
+            lesDeplacements.addAll(DeplacementPossible(X, Y - 1, laGrille, false));
         }
-        
+        if (premier) {
+
+            for (int unDeplacement : lesDeplacements) {
+                if (laGrille.getTuile(String.valueOf(Math.abs((long) unDeplacement)).charAt(0), String.valueOf(Math.abs((long) unDeplacement)).charAt(1)).getEtat() == Utils.EtatTuile.COULEE) {
+                    lesDeplacements.remove(unDeplacement);
+                }
+            }
+        }
 
         return lesDeplacements;
     }
-    
+
     @Override
     public void SeDeplacer(Grille laGrille, JTextField leChampCommande) {
 
-        ArrayList<Integer> DeplacementPossible = DeplacementPossible(getX(), getY(), laGrille);
-        
+        ArrayList<Integer> DeplacementPossible = DeplacementPossible(getX(), getY(), laGrille, true);
+
         System.out.println("Déplacements possibles:");
         for (int unDeplacementPossible : DeplacementPossible) {
             System.out.println(unDeplacementPossible);

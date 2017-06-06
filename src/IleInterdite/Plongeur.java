@@ -38,7 +38,7 @@ public class Plongeur extends Aventurier {
     public ArrayList<Integer> DeplacementPossible(int X, int Y, Grille laGrille) {
         ArrayList<Integer> lesDeplacements = new ArrayList();
         lesDeplacements.clear();
-        System.out.println(laGrille.getTuile(getX(), getY()).getNom());
+        System.out.println(laGrille.getTuile(X, Y).getNom());
 
         // Aller à Droite possible?
         // Si on sort pas de la grille, qu'elle n'est pas nulle et qu'elle n'est pas coulée, on l'ajoute à lesDeplacements
@@ -63,22 +63,22 @@ public class Plongeur extends Aventurier {
         
         // -------------------
         
-        if ((X + 1 <= 5) && (laGrille.getTuile(X + 1, Y) != null) && (laGrille.getTuile(X + 1, Y).getEtat() != Utils.EtatTuile.COULEE)) {
+        if ((X + 1 <= 5) && (laGrille.getTuile(X + 1, Y) != null) && (laGrille.getTuile(X + 1, Y).getEtat() == Utils.EtatTuile.COULEE)) {
             lesDeplacements.addAll(DeplacementPossible(X+1, Y, laGrille));
         }
 
         // Aller à Gauche possible?
-        if ((X - 1 >= 0) && (laGrille.getTuile(X - 1, Y) != null) && (laGrille.getTuile(X - 1, Y).getEtat() != Utils.EtatTuile.COULEE)) {
+        if ((X - 1 >= 0) && (laGrille.getTuile(X - 1, Y) != null) && (laGrille.getTuile(X - 1, Y).getEtat() == Utils.EtatTuile.COULEE)) {
             lesDeplacements.addAll(DeplacementPossible(X-1, Y, laGrille));
         }
 
         // Aller en Bas possible?
-        if ((Y + 1 <= 5) && (laGrille.getTuile(X, Y + 1) != null) && (laGrille.getTuile(X, Y + 1).getEtat() != Utils.EtatTuile.COULEE)) {
+        if ((Y + 1 <= 5) && (laGrille.getTuile(X, Y + 1) != null) && (laGrille.getTuile(X, Y + 1).getEtat() == Utils.EtatTuile.COULEE)) {
             lesDeplacements.addAll(DeplacementPossible(X, Y+1, laGrille));
         }
 
         // Aller en Haut possible?
-        if ((Y - 1 >= 0) && (laGrille.getTuile(X, Y - 1) != null) && (laGrille.getTuile(X, Y - 1).getEtat() != Utils.EtatTuile.COULEE)) {
+        if ((Y - 1 >= 0) && (laGrille.getTuile(X, Y - 1) != null) && (laGrille.getTuile(X, Y - 1).getEtat() == Utils.EtatTuile.COULEE)) {
             lesDeplacements.addAll(DeplacementPossible(X, Y-1, laGrille));
         }
         

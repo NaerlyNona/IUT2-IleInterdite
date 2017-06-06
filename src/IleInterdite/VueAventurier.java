@@ -84,7 +84,7 @@ public class VueAventurier implements ActionListener {
                         if (leControleur.getLaGrille().getTuile(l, c) == null) {
                         JButton tuileVide = new JButton("Vide");
                         tuileVide.setBackground(Color.BLACK);
-
+                        tuileVide.setEnabled(false);
                         tuileVide.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
                         panelCentreCarte.add(tuileVide);
                         i++;

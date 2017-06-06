@@ -43,7 +43,7 @@ public class Controleur {
         piocheInondation = new ArrayList();
         
         lesAventuriers = new ArrayList();
-        getLesAventuriers().add(new Explorateur("Joueur1"));
+        getLesAventuriers().add(new Pilote("Joueur1"));
         getLesAventuriers().add(new Messager("Joueur2"));
 
         for (Aventurier unAventurier : getLesAventuriers()) {
@@ -51,7 +51,7 @@ public class Controleur {
                 unAventurier.setPosition(3, 5);
             }
 
-            if (unAventurier.getNomRole()== "Explorateur") {
+            if (unAventurier.getNomRole()== "Pilote") {
                 unAventurier.setPosition(2, 3);
             }
         }
@@ -137,8 +137,11 @@ public class Controleur {
         uneTuile = new Tuile("Le Temple De La Lune");
         getLaGrille().addTuile(4,2, uneTuile);
 
-        uneTuile = new Tuile("Le Val Du Crepuscule");
+        uneTuile = new Tuile("Le Plais Des Marees");
         getLaGrille().addTuile(4,3, uneTuile);
+        
+        uneTuile = new Tuile("Le Val Du Crepuscule");
+        getLaGrille().addTuile(4,4, uneTuile);
 
         uneTuile = new Tuile("La Tour Du Guet");
         getLaGrille().addTuile(5,2, uneTuile);

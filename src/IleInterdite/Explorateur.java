@@ -6,15 +6,16 @@
 package IleInterdite;
 
 import IleInterdite.Utils.Pion;
+import java.util.ArrayList;
 
 /**
  *
  * @author monnetlu
  */
 public class Explorateur extends Aventurier {
-    
-        private String nomRole;
-    
+
+    private String nomRole;
+
     public Explorateur(String leNomJoueur) {
         super(leNomJoueur, Pion.VERT);
         setNomRole("Explorateur");
@@ -33,65 +34,54 @@ public class Explorateur extends Aventurier {
     public void setNomRole(String nomRole) {
         this.nomRole = nomRole;
     }
-    
- /*     
-        @Override
-    public void SeDeplacer(Grille laGrille,) {
-        Position caseDroite = new Position(getPosition().getX()+1,getPosition().getY());
-        Position caseGauche = new Position(getPosition().getX()-1,getPosition().getY());
-        Position caseHaut = new Position(getPosition().getX(),getPosition().getY()+1);
-        Position caseBas = new Position(getPosition().getX(),getPosition().getY()-1);
-        Position caseHautDroit = new Position(getPosition().getX()+1,getPosition().getY()+1);
-        Position caseHautGauche = new Position(getPosition().getX()+1,getPosition().getY()-1);
-        Position caseBasDroite = new Position(getPosition().getX()-1,getPosition().getY()-1);
-        Position caseBasGauche = new Position(getPosition().getX()-1,getPosition().getY()+1);
-        int i = 0;
-        
-        System.out.println("Cases où les déplacements sont possibles :");
-        
-        if (laGrille.lesTuiles.containsKey(caseDroite) && laGrille.lesTuiles.get(caseDroite).getEtat() != Utils.EtatTuile.COULEE) {
-            System.out.println("La case de droite est :" + caseDroite);
-            i += 1;
+
+    @Override
+    public ArrayList<Integer> DeplacementPossible(Grille laGrille) {
+        ArrayList<Integer> lesDeplacements = new ArrayList();
+        lesDeplacements.clear();
+        System.out.println(laGrille.getTuile(getX(), getY()).getNom());
+
+        // Aller à Droite possible?
+        // Si on sort pas de la grille, qu'elle n'est pas nulle et qu'elle n'est pas coulée, on l'ajoute à lesDeplacements
+        if ((this.getX() + 1 <= 5) && (laGrille.getTuile(getX() + 1, getY()) != null) && (laGrille.getTuile(getX() + 1, getY()).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() + 1) + String.valueOf(getY())));
         }
-        
-        if (laGrille.lesTuiles.containsKey(caseGauche) && laGrille.lesTuiles.get(caseGauche).getEtat() != Utils.EtatTuile.COULEE) {
-            System.out.println("La case de gauche est :" + caseGauche);
-            i += 1;
+
+        // Aller à Gauche possible?
+        if ((this.getX() - 1 >= 0) && (laGrille.getTuile(getX() - 1, getY()) != null) && (laGrille.getTuile(getX() - 1, getY()).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() - 1) + String.valueOf(getY())));
         }
-        
-        if (laGrille.lesTuiles.containsKey(caseHaut) && laGrille.lesTuiles.get(caseHaut).getEtat() != Utils.EtatTuile.COULEE) {
-            System.out.println("La case du haut est :" + caseHaut);
-            i += 1;
+
+        // Aller en Bas possible?
+        if ((this.getY() + 1 <= 5) && (laGrille.getTuile(getX(), getY() + 1) != null) && (laGrille.getTuile(getX(), getY() + 1).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() + 1)));
         }
-        
-        if (laGrille.lesTuiles.containsKey(caseBas) && laGrille.lesTuiles.get(caseBas).getEtat() != Utils.EtatTuile.COULEE) {
-            System.out.println("La case du bas est :" + caseBas);
-            i += 1;
+
+        // Aller en Haut possible?
+        if ((this.getY() - 1 >= 0) && (laGrille.getTuile(getX(), getY() - 1) != null) && (laGrille.getTuile(getX(), getY() - 1).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() - 1)));
         }
-        
-        if (laGrille.lesTuiles.containsKey(caseHautGauche) && laGrille.lesTuiles.get(caseHautGauche).getEtat() != Utils.EtatTuile.COULEE) {
-            System.out.println("La case HautGauche est :" + caseHautGauche);
-            i += 1;
+
+        // Aller HautDroite possible?
+        if ((this.getX() + 1 <= 5) && (this.getY() + 1 <= 5) && (laGrille.getTuile(getX() + 1, getY() + 1) != null) && (laGrille.getTuile(getX() + 1, getY() + 1).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() + 1) + String.valueOf(getY())));
         }
-        
-        if (laGrille.lesTuiles.containsKey(caseHautDroit) && laGrille.lesTuiles.get(caseHautDroit).getEtat() != Utils.EtatTuile.COULEE) {
-            System.out.println("La case HautDroit est :" + caseHautDroit);
-            i += 1;
+
+        // Aller à HautGauche possible?
+        if ((this.getX() - 1 >= 0) && (this.getY() + 1 <= 5) && (laGrille.getTuile(getX() - 1, getY() + 1) != null) && (laGrille.getTuile(getX() - 1, getY() + 1).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() - 1) + String.valueOf(getY())));
         }
-        
-        if (laGrille.lesTuiles.containsKey(caseBasGauche) && laGrille.lesTuiles.get(caseBasGauche).getEtat() != Utils.EtatTuile.COULEE) {
-            System.out.println("La case basGauche est :" + caseBasGauche);
-            i += 1;
+
+        // Aller en BasDroite possible?
+        if ((this.getX() + 1 <= 5) && (this.getY() - 1 >= 0) && (laGrille.getTuile(getX() + 1, getY() - 1) != null) && (laGrille.getTuile(getX() + 1, getY() - 1).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() + 1)));
         }
-        
-        if (laGrille.lesTuiles.containsKey(caseBasDroite) && laGrille.lesTuiles.get(caseBasDroite).getEtat() != Utils.EtatTuile.COULEE) {
-            System.out.println("La case basDroite est :" + caseBasDroite);
-            i += 1;
+
+        // Aller en BasGauche possible?
+        if ((this.getX() - 1 >= 0) && (this.getY() - 1 >= 0) && (laGrille.getTuile(getX() - 1, getY() - 1) != null) && (laGrille.getTuile(getX() - 1, getY() - 1).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() - 1)));
         }
-        
-        
-        if ( i == 0 ) {
-            System.out.println("Aucun déplacement possible");
-        }
-    }*/
+
+        return lesDeplacements;
+    }
 }

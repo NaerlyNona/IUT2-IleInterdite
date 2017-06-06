@@ -5,13 +5,16 @@
  */
 package IleInterdite;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author monnetlu
  */
-public class Plongeur extends Aventurier{
+public class Plongeur extends Aventurier {
+
     private String nomRole;
-    
+
     public Plongeur(String leNomJoueur) {
         super(leNomJoueur, Utils.Pion.VIOLET);
         setNomRole("Plongeur");
@@ -30,5 +33,35 @@ public class Plongeur extends Aventurier{
     public void setNomRole(String nomRole) {
         this.nomRole = nomRole;
     }
-    
+
+    @Override
+    public ArrayList<Integer> DeplacementPossible(Grille laGrille) {
+        ArrayList<Integer> lesDeplacements = new ArrayList();
+        lesDeplacements.clear();
+        System.out.println(laGrille.getTuile(getX(), getY()).getNom());
+
+        // Aller à Droite possible?
+        // Si on sort pas de la grille, qu'elle n'est pas nulle et qu'elle n'est pas coulée, on l'ajoute à lesDeplacements
+        if ((this.getX() + 1 <= 5) && (laGrille.getTuile(getX() + 1, getY()) != null) && (laGrille.getTuile(getX() + 1, getY()).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() + 1) + String.valueOf(getY())));
+        }
+
+        // Aller à Gauche possible?
+        if ((this.getX() - 1 >= 0) && (laGrille.getTuile(getX() - 1, getY()) != null) && (laGrille.getTuile(getX() - 1, getY()).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() - 1) + String.valueOf(getY())));
+        }
+
+        // Aller en Bas possible?
+        if ((this.getY() + 1 <= 5) && (laGrille.getTuile(getX(), getY() + 1) != null) && (laGrille.getTuile(getX(), getY() + 1).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() + 1)));
+        }
+
+        // Aller en Haut possible?
+        if ((this.getY() - 1 >= 0) && (laGrille.getTuile(getX(), getY() - 1) != null) && (laGrille.getTuile(getX(), getY() - 1).getEtat() != Utils.EtatTuile.COULEE)) {
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() - 1)));
+        }
+
+        return lesDeplacements;
+    }
+
 }

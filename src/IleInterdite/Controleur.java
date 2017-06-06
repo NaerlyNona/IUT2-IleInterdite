@@ -43,7 +43,7 @@ public class Controleur {
         piocheInondation = new ArrayList();
         
         lesAventuriers = new ArrayList();
-        getLesAventuriers().add(new Pilote("Joueur1"));
+        getLesAventuriers().add(new Plongeur("Joueur1"));
         getLesAventuriers().add(new Messager("Joueur2"));
 
         for (Aventurier unAventurier : getLesAventuriers()) {
@@ -53,6 +53,10 @@ public class Controleur {
 
             if (unAventurier.getNomRole()== "Pilote") {
                 unAventurier.setPosition(2, 3);
+            }
+            
+            if (unAventurier.getNomRole()== "Plongeur") {
+                unAventurier.setPosition(1, 2);
             }
         }
         //En Haut à Gauche
@@ -103,7 +107,7 @@ public class Controleur {
 
         uneTuile = new Tuile("Les Dunes De L'Illusion");
         getLaGrille().addTuile(2,2, uneTuile);
-        getLaGrille().getTuile(0, 3).setEtat(Utils.EtatTuile.COULEE);
+        getLaGrille().getTuile(2, 2).setEtat(Utils.EtatTuile.COULEE);
 
         uneTuile = new TuileSpawn("Heliport", Pion.BLEU);
         getLaGrille().addTuile(2,3, uneTuile);
@@ -119,30 +123,30 @@ public class Controleur {
 
         uneTuile = new Tuile("Le Lagon Perdu");
         getLaGrille().addTuile(3,1, uneTuile);
-        getLaGrille().getTuile(0, 3).setEtat(Utils.EtatTuile.INONDEE);
+        getLaGrille().getTuile(3, 1).setEtat(Utils.EtatTuile.INONDEE);
 
         uneTuile = new Tuile("Le Marais Brumeux");
         getLaGrille().addTuile(3,2, uneTuile);
-        getLaGrille().getTuile(0, 3).setEtat(Utils.EtatTuile.COULEE);
+        getLaGrille().getTuile(3, 2).setEtat(Utils.EtatTuile.COULEE);
 
         uneTuile = new Tuile("Observatoire");
         getLaGrille().addTuile(3,3, uneTuile);
-        getLaGrille().getTuile(0, 3).setEtat(Utils.EtatTuile.INONDEE);
+        getLaGrille().getTuile(3, 3).setEtat(Utils.EtatTuile.INONDEE);
 
         uneTuile = new Tuile("Le Rocher Fantome");
         getLaGrille().addTuile(3,4, uneTuile);
-        getLaGrille().getTuile(0, 3).setEtat(Utils.EtatTuile.COULEE);
+        getLaGrille().getTuile(3, 4).setEtat(Utils.EtatTuile.COULEE);
 
         uneTuile = new Tuile("La Caverne Du Brasier");
         getLaGrille().addTuile(3,5, uneTuile);
-        getLaGrille().getTuile(0, 3).setEtat(Utils.EtatTuile.INONDEE);
+        getLaGrille().getTuile(3, 5).setEtat(Utils.EtatTuile.INONDEE);
 
         uneTuile = new Tuile("Le Temple Du Soleil");
         getLaGrille().addTuile(4,1, uneTuile);
 
         uneTuile = new Tuile("Le Temple De La Lune");
         getLaGrille().addTuile(4,2, uneTuile);
-        getLaGrille().getTuile(0, 3).setEtat(Utils.EtatTuile.COULEE);
+        getLaGrille().getTuile(4, 2).setEtat(Utils.EtatTuile.COULEE);
 
         uneTuile = new Tuile("Le Plais Des Marees");
         getLaGrille().addTuile(4,3, uneTuile);
@@ -155,7 +159,7 @@ public class Controleur {
 
         uneTuile = new Tuile("Le Jardin Des Murmures");
         getLaGrille().addTuile(5,3, uneTuile);
-        getLaGrille().getTuile(0, 3).setEtat(Utils.EtatTuile.INONDEE);
+        getLaGrille().getTuile(5, 3).setEtat(Utils.EtatTuile.INONDEE);
         
         uneCarte = new CarteInondation(uneTuile); // On créer une carte lié a la tuile et on l'ajoute dans la pioche innondation
         piocheInondation.add(uneCarte); // A faire pour toute les cases :/ :$

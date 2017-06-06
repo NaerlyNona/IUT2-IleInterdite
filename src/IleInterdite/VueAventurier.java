@@ -88,20 +88,54 @@ public class VueAventurier implements ActionListener {
                         tuileVide.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
                         panelCentreCarte.add(tuileVide);
                         i++;
-                    System.out.println("Ligne:"+l+"|"+"Colonne:"+c);
+                        
+                   // System.out.println("Ligne:"+l+"|"+"Colonne:"+c);
                             
                     } else if (leControleur.getLaGrille().getTuile(l, c).getEtat() == Utils.EtatTuile.ASSECHEE) {
                         JButton tuile = new JButton(leControleur.getLaGrille().getTuile(l, c).getNom() + "[" + l + "," + c + "]");
                         tuile.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
                         panelCentreCarte.add(tuile);
                         i++;
+                      /*  for (Aventurier nAventurier : leControleur.getLesAventuriers()) {
+                            if ( nAventurier.getX() == l && nAventurier.getY() == c){
+                                
+                                switch (nAventurier.getNomRole()) {
+                                    case "Pilote" : tuile.setBackground(Color.CYAN);
+                                    case "Messager" : tuile.setBackground(Color.GRAY);
+                                    case "Explorateur" : tuile.setBackground(Color.GREEN);
+                                    case "Ingenieur" : tuile.setBackground(Color.RED);
+                                    case "Plongeur" : tuile.setBackground(Color.BLACK);
+                                    case "Navigateur" : tuile.setBackground(Color.YELLOW);
+                                }
+                            }
+                            
+                        }
+                        */
                     } else if (leControleur.getLaGrille().getTuile(l, c).getEtat() == Utils.EtatTuile.INONDEE) {
                         JButton tuile = new JButton(leControleur.getLaGrille().getTuile(l, c).getNom() + "[" + l + "," + c + "]");
                         tuile.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
                         panelCentreCarte.add(tuile);
-                        tuile.setBackground(Color.GRAY);
+                        tuile.setBackground(Color.BLUE);
                         i++;
-                    }
+                    /*    for (Aventurier nAventurier : leControleur.getLesAventuriers()) {
+                            if ( nAventurier.getX() == l && nAventurier.getY() == c){
+                                
+                                switch (nAventurier.getNomRole()) {
+                                    case "Pilote" : tuile.setBackground(Color.CYAN);
+                                    case "Messager" : tuile.setBackground(Color.GRAY);
+                                    case "Explorateur" : tuile.setBackground(Color.GREEN);
+                                    case "Ingenieur" : tuile.setBackground(Color.RED);
+                                    case "Plongeur" : tuile.setBackground(Color.BLACK);
+                                    case "Navigateur" : tuile.setBackground(Color.YELLOW);
+                                }
+
+                            }
+                            
+                        }
+*/
+                    } 
+                        
+                    
 
                 }
             }

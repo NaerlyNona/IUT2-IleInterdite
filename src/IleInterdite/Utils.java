@@ -98,4 +98,13 @@ public class Utils {
     public static void afficherInformation(String message) {
         JOptionPane.showMessageDialog(null, message, "Information", JOptionPane.OK_OPTION);
     }
+    
+    public static int getChiffre(int leNombre, int numChiffre){
+       String Chiffres = Integer.toString(leNombre);
+       if (numChiffre-1 >= Chiffres.length()){
+           return 0;
+       } else{
+        return Character.digit(Chiffres.charAt(numChiffre-1), 10);
+       }
+    }
 }

@@ -176,6 +176,7 @@ public class VueAventurier implements ActionListener {
         this.panelBoutons.add(btnTerminerTour);
 
         this.btnAller.addActionListener(this);
+        this.btnAssecher.addActionListener(this);
         this.btnTerminerTour.addActionListener(this);
 
         this.window.setVisible(true);
@@ -221,6 +222,11 @@ public class VueAventurier implements ActionListener {
         if (e.getSource() == btnAller) {
             leControleur.getAventurierActuel().SeDeplacer(leControleur.getLaGrille(), champCommande);
             textePosition.setText("[" + leControleur.getAventurierActuel().getX() + "," + leControleur.getAventurierActuel().getY() + "]");
+        }
+        
+        if (e.getSource() == btnAssecher) {
+            leControleur.getAventurierActuel().Assécher(leControleur.getLaGrille(), champCommande);
+            
         }
         if (e.getSource() == btnTerminerTour) {
             leControleur.setFinDuTour(true);

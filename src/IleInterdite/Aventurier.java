@@ -157,6 +157,61 @@ public class Aventurier {
         }
         System.out.println("Apres "+ getX() +","+ getY());
     }
+    
+    public ArrayList<Integer> AssechementPossible(Grille laGrille) {
+        ArrayList<Integer> lesDeplacements = new ArrayList();
+        lesDeplacements.clear();
+        System.out.println(laGrille.getTuile(getX(), getY()).getNom());
+        
+        // Assecher à Droite possible?
+        // Si on sort pas de la grille, qu'elle n'est pas nulle et qu'elle est inondée, on l'ajoute à lesDeplacements
+        if ((this.getX()+1 <= 5) && (laGrille.getTuile(getX()+1, getY()) != null) && (laGrille.getTuile(getX()+1, getY()).getEtat() == Utils.EtatTuile.INONDEE)){
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()+1) + String.valueOf(getY())));
+        }
+        
+        // Assecher à Gauche possible?
+        if ((this.getX()-1 >= 0) && (laGrille.getTuile(getX()-1, getY()) != null) && (laGrille.getTuile(getX()-1, getY()).getEtat() == Utils.EtatTuile.INONDEE)){
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()-1) + String.valueOf(getY())));
+        }
+         
+        // Assecher en Bas possible?
+        if ((this.getY()+1 <= 5) && (laGrille.getTuile(getX(), getY()+1) != null) && (laGrille.getTuile(getX(), getY()+1).getEtat() == Utils.EtatTuile.INONDEE)){
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY()+1)));
+        }
+        
+        // Assecher en Haut possible?
+        if ((this.getY()-1 >= 0) && (laGrille.getTuile(getX(), getY()-1) != null) && (laGrille.getTuile(getX(), getY()-1).getEtat() == Utils.EtatTuile.INONDEE)){
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY()-1)));
+        }
+        // Assecher sur soi possible?
+        if ((laGrille.getTuile(getX(), getY()) != null) && (laGrille.getTuile(getX(), getY()).getEtat() == Utils.EtatTuile.INONDEE)){
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY())));
+        }
+        
+        return lesDeplacements;
+    }
+
+    public void Assécher(Grille laGrille, JTextField leChampCommande) {
+        
+        ArrayList<Integer> AssechementPossible = AssechementPossible(laGrille);
+        System.out.println("Assèchement possibles:");
+        for (int unAssechementPossible: AssechementPossible){
+            System.out.println(unAssechementPossible);
+        }
+        
+        int x = Character.getNumericValue(leChampCommande.getText().charAt(0));
+        int y = Character.getNumericValue(leChampCommande.getText().charAt(leChampCommande.getText().length()-1));
+        
+        System.out.println("Avant: " + laGrille.getTuile(x,y).getEtat());
+        
+        for (int unAssechementPossible: AssechementPossible){
+            if (unAssechementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))){
+                laGrille.getTuile(x, y).setEtat(Utils.EtatTuile.ASSECHEE);
+                setPA(getPA()-1);
+            }
+        }
+        System.out.println("Après: " + laGrille.getTuile(x,y).getEtat());
+    }
 
     /**
      * @return the PA

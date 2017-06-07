@@ -43,7 +43,7 @@ public class Controleur {
         piocheInondation = new ArrayList();
         
         lesAventuriers = new ArrayList();
-        getLesAventuriers().add(new Plongeur("Joueur1"));
+        getLesAventuriers().add(new Explorateur("Joueur1"));
         getLesAventuriers().add(new Messager("Joueur2"));
 
         for (Aventurier unAventurier : getLesAventuriers()) {
@@ -55,7 +55,7 @@ public class Controleur {
                 unAventurier.setPosition(2, 3);
             }
             
-            if (unAventurier.getNomRole()== "Plongeur") {
+            if (unAventurier.getNomRole()== "Explorateur") {
                 unAventurier.setPosition(1, 2);
             }
         }

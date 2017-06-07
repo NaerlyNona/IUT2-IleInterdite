@@ -64,22 +64,22 @@ public class Explorateur extends Aventurier {
 
         // Aller HautDroite possible?
         if ((this.getX() + 1 <= 5) && (this.getY() + 1 <= 5) && (laGrille.getTuile(getX() + 1, getY() + 1) != null) && (laGrille.getTuile(getX() + 1, getY() + 1).getEtat() != Utils.EtatTuile.COULEE)) {
-            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() + 1) + String.valueOf(getY())));
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() + 1) + String.valueOf(getY()+1)));
         }
 
         // Aller à HautGauche possible?
         if ((this.getX() - 1 >= 0) && (this.getY() + 1 <= 5) && (laGrille.getTuile(getX() - 1, getY() + 1) != null) && (laGrille.getTuile(getX() - 1, getY() + 1).getEtat() != Utils.EtatTuile.COULEE)) {
-            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() - 1) + String.valueOf(getY())));
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() - 1) + String.valueOf(getY()+1)));
         }
 
         // Aller en BasDroite possible?
         if ((this.getX() + 1 <= 5) && (this.getY() - 1 >= 0) && (laGrille.getTuile(getX() + 1, getY() - 1) != null) && (laGrille.getTuile(getX() + 1, getY() - 1).getEtat() != Utils.EtatTuile.COULEE)) {
-            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() + 1)));
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()+1) + String.valueOf(getY() - 1)));
         }
 
         // Aller en BasGauche possible?
         if ((this.getX() - 1 >= 0) && (this.getY() - 1 >= 0) && (laGrille.getTuile(getX() - 1, getY() - 1) != null) && (laGrille.getTuile(getX() - 1, getY() - 1).getEtat() != Utils.EtatTuile.COULEE)) {
-            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() - 1)));
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()-1) + String.valueOf(getY() - 1)));
         }
 
         return lesDeplacements;
@@ -118,22 +118,22 @@ public class Explorateur extends Aventurier {
         
         // Assecher HautDroite possible?
         if ((this.getX() + 1 <= 5) && (this.getY() + 1 <= 5) && (laGrille.getTuile(getX() + 1, getY() + 1) != null) && (laGrille.getTuile(getX() + 1, getY() + 1).getEtat() == Utils.EtatTuile.INONDEE)) {
-            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() + 1) + String.valueOf(getY())));
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() + 1) + String.valueOf(getY()+1)));
         }
 
         // AAssecher à HautGauche possible?
         if ((this.getX() - 1 >= 0) && (this.getY() + 1 <= 5) && (laGrille.getTuile(getX() - 1, getY() + 1) != null) && (laGrille.getTuile(getX() - 1, getY() + 1).getEtat() == Utils.EtatTuile.INONDEE)) {
-            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() - 1) + String.valueOf(getY())));
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX() - 1) + String.valueOf(getY()+1)));
         }
 
         // Assecher en BasDroite possible?
         if ((this.getX() + 1 <= 5) && (this.getY() - 1 >= 0) && (laGrille.getTuile(getX() + 1, getY() - 1) != null) && (laGrille.getTuile(getX() + 1, getY() - 1).getEtat() == Utils.EtatTuile.INONDEE)) {
-            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() + 1)));
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()+1) + String.valueOf(getY() + 1)));
         }
 
         // Assecher en BasGauche possible?
         if ((this.getX() - 1 >= 0) && (this.getY() - 1 >= 0) && (laGrille.getTuile(getX() - 1, getY() - 1) != null) && (laGrille.getTuile(getX() - 1, getY() - 1).getEtat() == Utils.EtatTuile.INONDEE)) {
-            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() - 1)));
+            lesDeplacements.add(Integer.valueOf(String.valueOf(getX()-1) + String.valueOf(getY() - 1)));
         }
         
         

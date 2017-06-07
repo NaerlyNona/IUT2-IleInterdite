@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class Controleur {
 
-    private Grille laGrille;
+    private Grille laGrille = new Grille();
     private Tuile uneTuile;
     private CarteInondation uneCarte;
     private Aventurier aventurierActuel;
@@ -31,7 +31,6 @@ public class Controleur {
     
     public Controleur(){
         setAventurierActuel(new Aventurier("init", Pion.VERT));
-        setLaGrille(new Grille());
     }
 
     public void InitialiserTestPartie() {

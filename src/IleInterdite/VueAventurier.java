@@ -43,7 +43,7 @@ public class VueAventurier implements ActionListener {
     private final JButton btnAutreAction;
     private final JButton btnTerminerTour;
     private final JTextField champCommande;
-
+    
     private JLabel texteNom; // Nom du joueur et son role
     private JLabel textePosition; // Position du joueur
 
@@ -52,12 +52,16 @@ public class VueAventurier implements ActionListener {
     public VueAventurier(Aventurier unAventurier) {
 
         this.window = new JFrame();
+        window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        window.setUndecorated(true);
+        window.setAlwaysOnTop(true);
+        window.setResizable(false);       
         window.setSize(900, 900);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         window.setTitle("Ile Interdite");
-        mainPanel = new JPanel(new BorderLayout());
-        this.window.add(mainPanel);
+        mainPanel = new JPanel(new BorderLayout(50,50));
+        this.window.add(mainPanel); 
 
         mainPanel.setBackground(new Color(230, 230, 230));
         mainPanel.setBorder(BorderFactory.createLineBorder(unAventurier.getPion().getCouleur(), 2));
@@ -98,6 +102,9 @@ public class VueAventurier implements ActionListener {
                     //tuiles[l][c].setEnabled(false);
                 } else {
                     tuiles[l][c].setText(leControleur.getLaGrille().getTuile(l, c).getNom() + "[" + l + "," + c + "]");
+                    if (leControleur.getLaGrille().getTuile(l, c).getEtat() == Utils.EtatTuile.COULEE){
+                    tuiles[l][c].setIcon(new ImageIcon("img/resources/tiles/extra/Tile_FloodWater.png"));
+                    }
                     if (leControleur.getLaGrille().getTuile(l,c).getNom()== "La Porte De Bronze"){
                         ImageIcon icon = new ImageIcon(new ImageIcon("img/resources/tiles/"+leControleur.getLaGrille().getTuile(l,c).getNom()+".png").getImage().getScaledInstance(128, 128, Image.SCALE_DEFAULT));
                         tuiles[l][c].setIcon(icon);

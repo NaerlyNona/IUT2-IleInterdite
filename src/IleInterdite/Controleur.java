@@ -46,6 +46,7 @@ public class Controleur {
         getLesAventuriers().add(new Messager("Joueur2"));
 
         for (Aventurier unAventurier : getLesAventuriers()) {
+            System.out.println(unAventurier.getNomJoueur());
             if (unAventurier.getNomRole() == "Messager") {
                 unAventurier.setPosition(3, 5);
             }
@@ -241,10 +242,11 @@ public class Controleur {
     }
     
     public void finDuTour(){
-        if (this.getLesAventuriers().contains(getLesAventuriers().indexOf(getAventurierActuel())+1)){
-        this.setAventurierActuel(getLesAventuriers().get(getLesAventuriers().indexOf(getAventurierActuel())+1));
-        } else{
-            this.setAventurierActuel(getLesAventuriers().get(0));
+        this.getAventurierActuel().reset();
+        if (this.getLesAventuriers().size()-1 == this.getLesAventuriers().lastIndexOf(getAventurierActuel())){
+            setAventurierActuel(getLesAventuriers().get(0));
+        } else {
+            setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel())+1));
         }
         setFinDuTour(false);
     }

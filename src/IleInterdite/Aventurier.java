@@ -121,6 +121,10 @@ public class Aventurier {
     public void setPA(int PA) {
         this.PA = PA;
     }
+    
+    public void reset(){
+        setPA(3);
+    }
 
     public ArrayList<Integer> DeplacementPossible(Grille laGrille) {
         ArrayList<Integer> lesTuiles = getTuilesAdjacentes(laGrille);

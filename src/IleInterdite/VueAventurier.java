@@ -16,8 +16,13 @@ import static javax.swing.SwingConstants.CENTER;
 import javax.swing.border.MatteBorder;
 import IleInterdite.Utils.Pion;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
@@ -26,8 +31,8 @@ public class VueAventurier implements ActionListener {
 
     private static final Controleur leControleur = new Controleur();
 
-    private final JPanel panelBoutons;
-    private final JPanel panelCentre;
+    private final JPanel panelBoutons;// Panneau ou se trouve les boutons aller etc
+    private final JPanel panelCentre; // Ou se trouve les tuiles
     private final JPanel panelCentrePosition;
     private final JFrame window;
     private final JPanel panelAventurier;
@@ -39,18 +44,18 @@ public class VueAventurier implements ActionListener {
     private final JButton btnTerminerTour;
     private final JTextField champCommande;
 
-    private JLabel textePosition;
+    private JLabel texteNom; // Nom du joueur et son role
+    private JLabel textePosition; // Position du joueur
 
     private JButton[][] tuiles = new JButton[6][6];
 
     public VueAventurier(Aventurier unAventurier) {
 
         this.window = new JFrame();
-        window.setSize(900, 1000);
-        window.setResizable(false);
+        window.setSize(900, 900);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        window.setTitle(unAventurier.getNomJoueur());
+        window.setTitle("Ile Interdite");
         mainPanel = new JPanel(new BorderLayout());
         this.window.add(mainPanel);
 
@@ -60,9 +65,10 @@ public class VueAventurier implements ActionListener {
         // =================================================================================
         // NORD : le titre = nom de l'aventurier + nom du joueur sur la couleurActive du pion
         this.panelAventurier = new JPanel(new GridLayout(2, 1));
-        panelAventurier.setBackground(unAventurier.getPion().getCouleur());
-        panelAventurier.add(new JLabel(unAventurier.getNomRole(), SwingConstants.CENTER));
-        textePosition = new JLabel("[" + unAventurier.getX() + "," + unAventurier.getX() + "]", SwingConstants.CENTER);
+        //panelAventurier.setBackground(unAventurier.getPion().getCouleur());
+        texteNom = new JLabel(unAventurier.getNomJoueur() + " | " + unAventurier.getNomRole(), SwingConstants.CENTER);
+        panelAventurier.add(texteNom);
+        textePosition = new JLabel("[" + unAventurier.getX() + "," + unAventurier.getY() + "]", SwingConstants.CENTER);
         panelAventurier.add(textePosition);
         mainPanel.add(panelAventurier, BorderLayout.NORTH);
 
@@ -70,11 +76,11 @@ public class VueAventurier implements ActionListener {
         // CENTRE : Carte
         this.panelCentre = new JPanel(new GridLayout(6, 6));
         panelCentre.setMinimumSize(new Dimension(500, 500));
+        panelCentre.setBorder(BorderFactory.createBevelBorder(CENTER));
         mainPanel.add(this.panelCentre, BorderLayout.CENTER);
 
         this.panelCentrePosition = new JPanel(new GridLayout(2, 1));
         this.panelCentrePosition.setOpaque(false);
-        this.panelCentrePosition.setBorder(new MatteBorder(0, 0, 2, 0, unAventurier.getPion().getCouleur()));
 
         //Grille
         JPanel grille = new JPanel(new GridLayout(6, 6));
@@ -87,11 +93,16 @@ public class VueAventurier implements ActionListener {
                 tuiles[l][c].setHorizontalTextPosition(SwingConstants.CENTER);
 
                 if (leControleur.getLaGrille().getTuile(l, c) == null) {
-                    tuiles[l][c].setBackground(Color.BLACK);
-                    tuiles[l][c].setEnabled(false);
+                    //tuiles[l][c].setBackground(Color.BLACK);
+                    tuiles[l][c].setIcon(new ImageIcon("img/resources/tiles/extra/Tile_FloodWater.png"));
+                    //tuiles[l][c].setEnabled(false);
                 } else {
                     tuiles[l][c].setText(leControleur.getLaGrille().getTuile(l, c).getNom() + "[" + l + "," + c + "]");
-                    tuiles[l][c].setIcon(new ImageIcon("img/defaultTuile.jpg"));
+                    if (leControleur.getLaGrille().getTuile(l,c).getNom()== "La Porte De Bronze"){
+                        ImageIcon icon = new ImageIcon(new ImageIcon("img/resources/tiles/"+leControleur.getLaGrille().getTuile(l,c).getNom()+".png").getImage().getScaledInstance(128, 128, Image.SCALE_DEFAULT));
+                        tuiles[l][c].setIcon(icon);
+                    }
+                    //tuiles[l][c].setIcon(new ImageIcon("img/defaultTuile.jpg"));
                 }
                 panelCentre.add(tuiles[l][c]);
 
@@ -128,6 +139,7 @@ public class VueAventurier implements ActionListener {
         this.btnTerminerTour.addActionListener(this);
 
         this.window.setVisible(true);
+        //window.setResizable(false);
         mainPanel.repaint();
 
     }
@@ -178,8 +190,10 @@ public class VueAventurier implements ActionListener {
 
         }
         if (e.getSource() == btnTerminerTour) {
-            leControleur.setFinDuTour(true);
+            leControleur.finDuTour();
             System.out.println(leControleur.getAventurierActuel().getNomJoueur());
+            MAJFenetre();
+            
         }
     }
 
@@ -197,5 +211,11 @@ public class VueAventurier implements ActionListener {
                 }
             }
         }
+    }
+    
+    public void MAJFenetre(){
+        texteNom.setText(leControleur.getAventurierActuel().getNomJoueur() + " | " + leControleur.getAventurierActuel().getNomRole());
+        textePosition.setText("[" + leControleur.getAventurierActuel().getX() + "," + leControleur.getAventurierActuel().getY() + "]");
+        mainPanel.setBorder(BorderFactory.createLineBorder(leControleur.getAventurierActuel().getPion().getCouleur(), 2));
     }
 }

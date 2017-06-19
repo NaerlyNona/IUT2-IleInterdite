@@ -21,13 +21,15 @@ public class Aventurier {
     private int X;
     private int Y;
     private int PA;
+    private int maxPA;
     private Utils.Pion pion;
 
     public Aventurier(String leNomJoueur, Pion lePion) {
         setNomJoueur(leNomJoueur);
         setPion(lePion);
         setPosition(2, 3);
-        setPA(3);
+        setMaxPA(3);
+        setPA(getMaxPA());
     }
 
     /**
@@ -123,7 +125,7 @@ public class Aventurier {
     }
     
     public void reset(){
-        setPA(3);
+        setPA(maxPA);
     }
 
     public ArrayList<Integer> DeplacementPossible(Grille laGrille) {
@@ -133,7 +135,7 @@ public class Aventurier {
         
         //Parcourt les Tuiles, si la tuile n'est pas coulée, on l'ajoute à la liste des déplacements possibles    
         for (int uneTuile : lesTuiles) {
-            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 1), Utils.getChiffre(uneTuile, 2)).getEtat() != Utils.EtatTuile.COULEE) {
+            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() != Utils.EtatTuile.COULEE) {
                 lesDeplacements.add(uneTuile);
             }
         }
@@ -168,15 +170,14 @@ public class Aventurier {
         ArrayList<Integer> lesTuiles = getTuilesAdjacentes(laGrille);
         ArrayList<Integer> lesAssechements = new ArrayList();
         
-        int x =10;
-        int y=02;
-        int z =303;
-        System.out.println(Utils.getChiffre(10,1));
-        System.out.println(Utils.getChiffre(10,2));
-        System.out.println(Utils.getChiffre(10,3));
+        int z = 321;
+        System.out.println(Utils.getChiffre(z,1));
+        System.out.println(Utils.getChiffre(z,2));
+        System.out.println(Utils.getChiffre(z,3));
+        System.out.println(Utils.getChiffre(z,4));
         //Parcourt les Tuiles, si la tuile est inondé, on l'ajoute à la liste des assèchements possibles
         for (int uneTuile : lesTuiles) {
-            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 1), Utils.getChiffre(uneTuile, 2)).getEtat() == Utils.EtatTuile.INONDEE) {
+            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() == Utils.EtatTuile.INONDEE) {
                 lesAssechements.add(uneTuile);
             }
         }
@@ -235,6 +236,20 @@ public class Aventurier {
 
         return tuilesAdjacentes;
 
+    }
+
+    /**
+     * @return the maxPA
+     */
+    public int getMaxPA() {
+        return maxPA;
+    }
+
+    /**
+     * @param maxPA the maxPA to set
+     */
+    public void setMaxPA(int maxPA) {
+        this.maxPA = maxPA;
     }
 
 }

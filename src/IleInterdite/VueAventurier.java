@@ -42,10 +42,10 @@ public class VueAventurier implements ActionListener {
     private final JButton btnAssecher;
     private final JButton btnAutreAction;
     private final JButton btnTerminerTour;
-    private final JTextField champCommande;
 
     private JLabel texteNom; // Nom du joueur et son role
     private JLabel textePosition; // Position du joueur
+    private JLabel textePA;
 
     private JButton[][] tuiles = new JButton[6][6];
 
@@ -105,18 +105,20 @@ public class VueAventurier implements ActionListener {
                 tuiles[l][c].setHorizontalTextPosition(SwingConstants.CENTER);
 
                 if (leControleur.getLaGrille().getTuile(l, c) == null) {
-                    //tuiles[l][c].setBackground(Color.BLACK);
-                    tuiles[l][c].setIcon(new ImageIcon("img/resources/tiles/extra/Tile_FloodWater.png"));
-                    //tuiles[l][c].setEnabled(false);
+                    tuiles[l][c].setBackground(Color.LIGHT_GRAY);
+                    tuiles[l][c].setBorder(null);
+                    //tuiles[l][c].setIcon(new ImageIcon("img/resources/tiles/extra/Tile_FloodWater.png"));
+                    tuiles[l][c].setEnabled(false);
                 } else {
                     tuiles[l][c].setText(leControleur.getLaGrille().getTuile(l, c).getNom() + "[" + l + "," + c + "]");
-                    if (leControleur.getLaGrille().getTuile(l, c).getEtat() == Utils.EtatTuile.COULEE) {
+                    
+                    /*if (leControleur.getLaGrille().getTuile(l, c).getEtat() == Utils.EtatTuile.COULEE) {
                         tuiles[l][c].setIcon(new ImageIcon("img/resources/tiles/extra/Tile_FloodWater.png"));
                     }
                     if (leControleur.getLaGrille().getTuile(l, c).getNom() == "La Porte De Bronze") {
                         ImageIcon icon = new ImageIcon(new ImageIcon("img/resources/tiles/" + leControleur.getLaGrille().getTuile(l, c).getNom() + ".png").getImage().getScaledInstance(128, 128, Image.SCALE_DEFAULT));
                         tuiles[l][c].setIcon(icon);
-                    }
+                    }*/
                     //tuiles[l][c].setIcon(new ImageIcon("img/defaultTuile.jpg"));
                 }
                 panelCentre.add(tuiles[l][c]);
@@ -130,10 +132,8 @@ public class VueAventurier implements ActionListener {
         this.panelSud = new JPanel(new GridLayout(2, 1));
         mainPanel.add(panelSud, BorderLayout.SOUTH);
 
-        champCommande = new JTextField(30);
-        champCommande.setText("En attente d'une action...");
-        champCommande.setHorizontalAlignment(CENTER);
-        panelSud.add(champCommande);
+        textePA = new JLabel("X PA", SwingConstants.CENTER);
+        panelSud.add(textePA);
 
         this.panelBoutons = new JPanel(new GridLayout(2, 2));
         this.panelBoutons.setOpaque(false);
@@ -161,10 +161,6 @@ public class VueAventurier implements ActionListener {
 
     public JButton getBtnAutreAction() {
         return btnAutreAction;
-    }
-
-    public void setChampCommande(String pos) {
-        this.champCommande.setText(pos);
     }
 
     public JButton getBtnAller() {
@@ -208,6 +204,7 @@ public class VueAventurier implements ActionListener {
         } else {
             if (mode == 0){
                 leControleur.getAventurierActuel().SeDeplacer(leControleur.getLaGrille(),("" +((JButtonTuile)(e.getSource())).getPosX() + ((JButtonTuile)(e.getSource())).getPosY()) );
+                MAJTuile();
                 MAJFenetre();
             } else if (mode == 1){
                 leControleur.getAventurierActuel().Assécher(leControleur.getLaGrille(), ("" +((JButtonTuile)(e.getSource())).getPosX() + ((JButtonTuile)(e.getSource())).getPosY()) );
@@ -226,10 +223,17 @@ public class VueAventurier implements ActionListener {
                 if (leControleur.getLaGrille().getTuile(l, c) != null) {
                     if (leControleur.getLaGrille().getTuile(l, c).getEtat() == Utils.EtatTuile.ASSECHEE) {
                         tuiles[l][c].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.ORANGE));
+                        tuiles[l][c].setBackground(Color.WHITE);
                     } else if (leControleur.getLaGrille().getTuile(l, c).getEtat() == Utils.EtatTuile.INONDEE) {
                         tuiles[l][c].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.CYAN));
+                        tuiles[l][c].setBackground(Color.WHITE);
                     } else if (leControleur.getLaGrille().getTuile(l, c).getEtat() == Utils.EtatTuile.COULEE) {
+                        tuiles[l][c].setBorder(null);
                         tuiles[l][c].setBackground(Color.GRAY);
+                    }
+                    
+                    if ((leControleur.getAventurierActuel().getX() == l) && (leControleur.getAventurierActuel().getY() == c)){
+                        tuiles[l][c].setBackground(leControleur.getAventurierActuel().getPion().getCouleur());
                     }
                 }
             }

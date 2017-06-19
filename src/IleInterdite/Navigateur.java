@@ -15,6 +15,7 @@ public class Navigateur extends Aventurier{
     public Navigateur(String leNomJoueur) {
         super(leNomJoueur, Utils.Pion.JAUNE);
         setNomRole("Navigateur");
+        setMaxPA(4);
     }
 
     /**
@@ -31,9 +32,9 @@ public class Navigateur extends Aventurier{
         this.nomRole = nomRole;
     }
     
-    
-    public void SeDeplacer(Grille laGrille) {
+    @Override
+    public void reset(){
+        setPA(4);
     }
-    
     
 }

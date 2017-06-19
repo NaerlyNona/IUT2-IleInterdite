@@ -42,7 +42,7 @@ public class Explorateur extends Aventurier {
         ArrayList<Integer> lesDeplacements = super.DeplacementPossible(laGrille);
         //Parcourt les Tuiles, si la tuile n'est pas coulée, on l'ajoute à la liste des déplacements possibles
         for (int uneTuile : lesTuiles) {
-            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 1), Utils.getChiffre(uneTuile, 2)).getEtat() != Utils.EtatTuile.COULEE) {
+            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() != Utils.EtatTuile.COULEE) {
                 lesDeplacements.add(uneTuile);
             }
         }
@@ -52,11 +52,11 @@ public class Explorateur extends Aventurier {
     
     @Override
     public ArrayList<Integer> AssechementPossible(Grille laGrille) {
-        ArrayList<Integer> lesTuiles = getTuilesAdjacentes(laGrille);
+        ArrayList<Integer> lesTuiles = getTuilesDiagonales(laGrille);
         ArrayList<Integer> lesAssechements = super.AssechementPossible(laGrille);
         //Parcourt les Tuiles, si la tuile est inondé, on l'ajoute à la liste des assèchements possibles
         for (int uneTuile : lesTuiles) {
-            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 1), Utils.getChiffre(uneTuile, 2)).getEtat() == Utils.EtatTuile.INONDEE) {
+            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() == Utils.EtatTuile.INONDEE) {
                 lesAssechements.add(uneTuile);
             }
         }

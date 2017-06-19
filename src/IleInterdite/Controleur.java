@@ -297,13 +297,19 @@ public class Controleur {
     }
     
     public void finDuTour(){
+        
+        
         this.getAventurierActuel().reset();
         if (this.getLesAventuriers().size()-1 == this.getLesAventuriers().lastIndexOf(getAventurierActuel())){
             setAventurierActuel(getLesAventuriers().get(0));
         } else {
             setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel())+1));
         }
+        
+        Inonder(niveauEau,piocheInondation);
+        
         setFinDuTour(false);
+        
     }
 
     /**
@@ -346,6 +352,31 @@ public class Controleur {
      */
     public void setPiocheInondation(ArrayList<CarteInondation> piocheInondation) {
         this.piocheInondation = piocheInondation;
+    }
+    
+     public void getInonde(Tuile tuile){
+        if (tuile.getEtat()==Utils.EtatTuile.ASSECHEE){
+            tuile.setEtat(Utils.EtatTuile.INONDEE);
+           
+        } else if (tuile.getEtat()==Utils.EtatTuile.INONDEE) {
+            tuile.setEtat(Utils.EtatTuile.COULEE);
+        } 
+    }
+    
+    public void Inonder(int niveau, ArrayList<CarteInondation> cartes ){
+        melanger(cartes);
+        while (niveau != 0){
+            int indiceAuHasard = (int) (Math.random() * (cartes.size() - 1));
+            getInonde(cartes.get(indiceAuHasard).getTuile());
+            niveau = niveau-1;
+        }
+    }
+    
+    
+    
+    public void melanger(ArrayList<CarteInondation> cartes){
+        Collections.shuffle(cartes);
+        
     }
     
 }

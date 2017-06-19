@@ -73,7 +73,7 @@ System.out.println("TEST");
         return lesDeplacements;
     }
 
-    @Override
+   /* @Override
     public void SeDeplacer(Grille laGrille, JTextField leChampCommande) {
 
         ArrayList<Integer> DeplacementPossible = DeplacementPossible(laGrille);
@@ -111,5 +111,5 @@ System.out.println("TEST");
         }
         System.out.println("Apres " + getX() + "," + getY());
     }
-
+*/
 }

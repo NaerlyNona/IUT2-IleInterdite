@@ -142,7 +142,7 @@ public class Aventurier {
         return lesDeplacements;
     }
 
-    public void SeDeplacer(Grille laGrille, JTextField leChampCommande) {
+    public void SeDeplacer(Grille laGrille, String laPosition) {
 
         ArrayList<Integer> DeplacementPossible = DeplacementPossible(laGrille);
         System.out.println("Déplacements possibles:");
@@ -152,8 +152,8 @@ public class Aventurier {
 
         System.out.println("Avant " + getX() + "," + getY());
 
-        int x = Character.getNumericValue(leChampCommande.getText().charAt(0));
-        int y = Character.getNumericValue(leChampCommande.getText().charAt(leChampCommande.getText().length() - 1));
+        int x = Character.getNumericValue(laPosition.charAt(0));
+        int y = Character.getNumericValue(laPosition.charAt(1));
         for (int unDeplacementPossible : DeplacementPossible) {
             if (unDeplacementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
                 this.setPosition(x, y);

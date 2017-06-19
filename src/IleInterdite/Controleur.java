@@ -505,7 +505,7 @@ public class Controleur implements Observateur {
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
         }
-
+  
     }
     
 }

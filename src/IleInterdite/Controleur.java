@@ -22,13 +22,17 @@ public class Controleur {
     private Grille laGrille = new Grille();
     private Tuile uneTuile;
     private CarteInondation uneCarte;
+    private Carte carte;
     private Aventurier aventurierActuel;
     private ArrayList<Aventurier> lesAventuriers;
     private boolean PartieFinie;
     private boolean finDuTour;
-    private ArrayList<CarteInondation> cimetiereInondation;
+    private ArrayList<CarteInondation> defausseInondation;
     private ArrayList<CarteInondation> bannieInondation;
     private ArrayList<CarteInondation> piocheInondation;
+    private ArrayList<Carte> piocheTresor;
+    private ArrayList<Carte> defausseTresor;
+    
     
     public Controleur(){
         setAventurierActuel(new Aventurier("init", Pion.VERT));
@@ -38,9 +42,30 @@ public class Controleur {
         setPartieFinie(false);
         setFinDuTour(false);
         
-        setCimetiereInondation((ArrayList<CarteInondation>) new ArrayList());
-        setBannieInondation((ArrayList<CarteInondation>) new ArrayList());
-        setPiocheInondation((ArrayList<CarteInondation>) new ArrayList());
+        defausseInondation = new ArrayList();
+        bannieInondation =  new ArrayList();
+        piocheInondation =  new ArrayList();
+        piocheTresor = new ArrayList();
+        defausseTresor = new ArrayList();
+        
+        
+     
+         
+        carte = new CarteMontée("Montée"); piocheTresor.add(carte);
+        carte = new CarteMontée("Montée"); piocheTresor.add(carte);
+        for ( int i = 0; i < 4; i++){
+            carte = new CarteTrésor("Le Calice de l’onde", Utils.TypeTresor.BLEU); piocheTresor.add(carte);
+            carte = new CarteTrésor("La Pierre sacrée", Utils.TypeTresor.GRIS); piocheTresor.add(carte);
+            carte = new CarteTrésor("La Statue du zéphyr", Utils.TypeTresor.JAUNE); piocheTresor.add(carte);
+            carte = new CarteTrésor("Le Cristal ardent", Utils.TypeTresor.ROUGE); piocheTresor.add(carte);
+        }
+        carte = new CarteSpéciale("Sac de sable",Utils.TypeSpéciale.SacDeSable); piocheTresor.add(carte);
+        carte = new CarteSpéciale("Sac de sable",Utils.TypeSpéciale.SacDeSable); piocheTresor.add(carte);
+        carte = new CarteSpéciale("houloucouptère",Utils.TypeSpéciale.Helicoptère); piocheTresor.add(carte);
+        carte = new CarteSpéciale("houloucouptère",Utils.TypeSpéciale.Helicoptère); piocheTresor.add(carte);
+        carte = new CarteSpéciale("houloucouptère",Utils.TypeSpéciale.Helicoptère); piocheTresor.add(carte);
+        
+        
         
         lesAventuriers = new ArrayList();
         getLesAventuriers().add(new Explorateur("Joueur1"));
@@ -220,9 +245,9 @@ public class Controleur {
         
         
         
-        for (CarteInondation test : getPiocheInondation()){
+        /*for (CarteInondation test : getPiocheInondation()){
             System.out.println(test.getNom());
-        }
+        }*/
 
     }
 
@@ -297,28 +322,22 @@ public class Controleur {
     }
     
     public void finDuTour(){
+        
+        
         this.getAventurierActuel().reset();
         if (this.getLesAventuriers().size()-1 == this.getLesAventuriers().lastIndexOf(getAventurierActuel())){
             setAventurierActuel(getLesAventuriers().get(0));
         } else {
             setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel())+1));
         }
+        
+        InonderFinTour(niveauEau,piocheInondation);
+        
         setFinDuTour(false);
+        
     }
 
-    /**
-     * @return the cimetiereInondation
-     */
-    public ArrayList<CarteInondation> getCimetiereInondation() {
-        return cimetiereInondation;
-    }
-
-    /**
-     * @param cimetiereInondation the cimetiereInondation to set
-     */
-    public void setCimetiereInondation(ArrayList<CarteInondation> cimetiereInondation) {
-        this.cimetiereInondation = cimetiereInondation;
-    }
+  
 
     /**
      * @return the bannieInondation
@@ -346,6 +365,50 @@ public class Controleur {
      */
     public void setPiocheInondation(ArrayList<CarteInondation> piocheInondation) {
         this.piocheInondation = piocheInondation;
+    }
+    
+    
+    
+    public void InonderFinTour(int niveau, ArrayList<CarteInondation> cartes ){
+        melanger(cartes);
+        while (niveau != 0){
+            int indiceAuHasard = (int) (Math.random() * (cartes.size() - 1));
+            Tuile tuile = cartes.get(indiceAuHasard).getTuile();
+             if (tuile.getEtat()==Utils.EtatTuile.ASSECHEE){
+                 tuile.setEtat(Utils.EtatTuile.INONDEE);
+                 defausseInondation.add(piocheInondation.get(indiceAuHasard));
+                 piocheInondation.remove(indiceAuHasard);
+                 
+             } else if (tuile.getEtat()==Utils.EtatTuile.INONDEE) {
+                    tuile.setEtat(Utils.EtatTuile.COULEE);
+                    bannieInondation.add(piocheInondation.get(indiceAuHasard));
+                    piocheInondation.remove(indiceAuHasard);
+        } 
+            
+           
+            niveau = niveau-1;
+        }
+    }
+    
+    
+    
+    public void melanger(ArrayList<CarteInondation> cartes){
+        Collections.shuffle(cartes);
+        
+    }
+
+    /**
+     * @return the defausseInondation
+     */
+    public ArrayList<CarteInondation> getDefausseInondation() {
+        return defausseInondation;
+    }
+
+    /**
+     * @param defausseInondation the defausseInondation to set
+     */
+    public void setDefausseInondation(ArrayList<CarteInondation> defausseInondation) {
+        this.defausseInondation = defausseInondation;
     }
     
 }

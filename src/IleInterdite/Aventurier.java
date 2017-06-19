@@ -23,15 +23,24 @@ public class Aventurier {
     private int PA;
     private int maxPA;
     private Utils.Pion pion;
-
+    private ArrayList<Carte> main;
+    
     public Aventurier(String leNomJoueur, Pion lePion) {
         setNomJoueur(leNomJoueur);
         setPion(lePion);
         setPosition(2, 3);
+        setPA(3);
+        main = new ArrayList();
         setMaxPA(3);
         setPA(getMaxPA());
     }
 
+    
+    public void ajouterMain(Carte carte){
+        main.add(carte);
+    }
+    
+    
     /**
      * @return the nom
      */

@@ -129,11 +129,10 @@ public class Aventurier {
     public ArrayList<Integer> DeplacementPossible(Grille laGrille) {
         ArrayList<Integer> lesTuiles = getTuilesAdjacentes(laGrille);
         ArrayList<Integer> lesDeplacements = new ArrayList();
-        //Parcourt les Tuiles, si la tuile est inondé, on l'ajoute à la liste des assèchements possibles
         
         
+        //Parcourt les Tuiles, si la tuile n'est pas coulée, on l'ajoute à la liste des déplacements possibles    
         for (int uneTuile : lesTuiles) {
-            System.out.println(Utils.getChiffre(uneTuile, 1) + "," + Utils.getChiffre(uneTuile, 2));
             if (laGrille.getTuile(Utils.getChiffre(uneTuile, 1), Utils.getChiffre(uneTuile, 2)).getEtat() != Utils.EtatTuile.COULEE) {
                 lesDeplacements.add(uneTuile);
             }
@@ -145,15 +144,17 @@ public class Aventurier {
     public void SeDeplacer(Grille laGrille, String laPosition) {
 
         ArrayList<Integer> DeplacementPossible = DeplacementPossible(laGrille);
-        System.out.println("Déplacements possibles:");
-        for (int unDeplacementPossible : DeplacementPossible) {
-            System.out.println(unDeplacementPossible);
+        System.out.println("Assèchement possibles:");
+        for (int unAssechementPossible : DeplacementPossible) {
+            System.out.println(unAssechementPossible);
         }
-
+        
+        
         System.out.println("Avant " + getX() + "," + getY());
 
         int x = Character.getNumericValue(laPosition.charAt(0));
         int y = Character.getNumericValue(laPosition.charAt(1));
+        
         for (int unDeplacementPossible : DeplacementPossible) {
             if (unDeplacementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
                 this.setPosition(x, y);
@@ -166,6 +167,13 @@ public class Aventurier {
     public ArrayList<Integer> AssechementPossible(Grille laGrille) {
         ArrayList<Integer> lesTuiles = getTuilesAdjacentes(laGrille);
         ArrayList<Integer> lesAssechements = new ArrayList();
+        
+        int x =10;
+        int y=02;
+        int z =303;
+        System.out.println(Utils.getChiffre(10,1));
+        System.out.println(Utils.getChiffre(10,2));
+        System.out.println(Utils.getChiffre(10,3));
         //Parcourt les Tuiles, si la tuile est inondé, on l'ajoute à la liste des assèchements possibles
         for (int uneTuile : lesTuiles) {
             if (laGrille.getTuile(Utils.getChiffre(uneTuile, 1), Utils.getChiffre(uneTuile, 2)).getEtat() == Utils.EtatTuile.INONDEE) {
@@ -188,7 +196,7 @@ public class Aventurier {
         int y = Character.getNumericValue(laPosition.charAt(1));
 
         System.out.println("Avant: " + laGrille.getTuile(x, y).getEtat());
-
+        System.out.println("Essai sur : " + x + y);
         for (int unAssechementPossible : AssechementPossible) {
             if (unAssechementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
                 laGrille.getTuile(x, y).setEtat(Utils.EtatTuile.ASSECHEE);
@@ -219,6 +227,10 @@ public class Aventurier {
         // Aller en Haut possible?
         if ((this.getY() - 1 >= 0) && (laGrille.getTuile(getX(), getY() - 1) != null)) {
             tuilesAdjacentes.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() - 1)));
+        }
+        
+        if ((laGrille.getTuile(getX(), getY()) != null)) {
+            tuilesAdjacentes.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY())));
         }
 
         return tuilesAdjacentes;

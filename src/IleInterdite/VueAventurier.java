@@ -64,7 +64,7 @@ public class VueAventurier implements ActionListener {
         //window.setUndecorated(true);
         window.setAlwaysOnTop(true);
         window.setResizable(false);
-        window.setSize(900, 900);
+        window.setSize(750, 900);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         window.setTitle("Ile Interdite");

@@ -41,6 +41,9 @@ public class Utils {
     public static enum TypeSpéciale {
         SacDeSable,Helicoptère
     }
+    public static enum TypeCarte {
+        Montée,Spéciale,Trésor
+    }
     public static enum Pion {
         ROUGE("Rouge", new Color(255, 0, 0)),
         VERT("Vert", new Color(0, 195, 0)),

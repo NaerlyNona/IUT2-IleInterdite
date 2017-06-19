@@ -13,5 +13,7 @@ public enum TypesMessage {
     DEMARRER,
     DEPLACER,
     ASSECHER,
-    TERMINER_TOUR
+    TERMINER_TOUR,
+    GAGNER,
+    PERDU
 }

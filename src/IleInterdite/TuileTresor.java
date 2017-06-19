@@ -21,6 +21,7 @@ public class TuileTresor extends Tuile {
     /**
      * @return the tresor
      */
+    @Override
     public Tresor getTresor() {
         return tresor;
     }

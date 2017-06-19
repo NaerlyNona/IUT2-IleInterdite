@@ -10,10 +10,10 @@ package IleInterdite;
  * @author chenavje
  */
 public class CarteTrésor extends Carte {
-    private Utils.TypeTresor type ;
+    private Tresor tresor ;
     
-    public CarteTrésor(String nom, Utils.TypeTresor type){
+    public CarteTrésor(String nom,Tresor type){
         super(nom);
-        this.type = type;
+        this.tresor = type;
     }
 }

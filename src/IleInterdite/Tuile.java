@@ -25,7 +25,11 @@ public class Tuile {
     public String getNom() {
         return nom;
     }
-
+    
+    public Tresor getTresor() {
+        return null;
+    }
+    
     /**
      * @param nom the nom to set
      */

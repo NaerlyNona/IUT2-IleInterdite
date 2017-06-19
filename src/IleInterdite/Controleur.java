@@ -26,7 +26,7 @@ public class Controleur {
     private ArrayList<Aventurier> lesAventuriers;
     private boolean PartieFinie;
     private boolean finDuTour;
-    private ArrayList<CarteInondation> cimetiereInondation;
+    private ArrayList<CarteInondation> defausseInondation;
     private ArrayList<CarteInondation> bannieInondation;
     private ArrayList<CarteInondation> piocheInondation;
     
@@ -38,7 +38,7 @@ public class Controleur {
         setPartieFinie(false);
         setFinDuTour(false);
         
-        setCimetiereInondation((ArrayList<CarteInondation>) new ArrayList());
+        setDefausseInondation((ArrayList<CarteInondation>) new ArrayList());
         setBannieInondation((ArrayList<CarteInondation>) new ArrayList());
         setPiocheInondation((ArrayList<CarteInondation>) new ArrayList());
         
@@ -306,25 +306,13 @@ public class Controleur {
             setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel())+1));
         }
         
-        Inonder(niveauEau,piocheInondation);
+        InonderFinTour(niveauEau,piocheInondation);
         
         setFinDuTour(false);
         
     }
 
-    /**
-     * @return the cimetiereInondation
-     */
-    public ArrayList<CarteInondation> getCimetiereInondation() {
-        return cimetiereInondation;
-    }
-
-    /**
-     * @param cimetiereInondation the cimetiereInondation to set
-     */
-    public void setCimetiereInondation(ArrayList<CarteInondation> cimetiereInondation) {
-        this.cimetiereInondation = cimetiereInondation;
-    }
+  
 
     /**
      * @return the bannieInondation
@@ -354,20 +342,25 @@ public class Controleur {
         this.piocheInondation = piocheInondation;
     }
     
-     public void getInonde(Tuile tuile){
-        if (tuile.getEtat()==Utils.EtatTuile.ASSECHEE){
-            tuile.setEtat(Utils.EtatTuile.INONDEE);
-           
-        } else if (tuile.getEtat()==Utils.EtatTuile.INONDEE) {
-            tuile.setEtat(Utils.EtatTuile.COULEE);
-        } 
-    }
     
-    public void Inonder(int niveau, ArrayList<CarteInondation> cartes ){
+    
+    public void InonderFinTour(int niveau, ArrayList<CarteInondation> cartes ){
         melanger(cartes);
         while (niveau != 0){
             int indiceAuHasard = (int) (Math.random() * (cartes.size() - 1));
-            getInonde(cartes.get(indiceAuHasard).getTuile());
+            Tuile tuile = cartes.get(indiceAuHasard).getTuile();
+             if (tuile.getEtat()==Utils.EtatTuile.ASSECHEE){
+                 tuile.setEtat(Utils.EtatTuile.INONDEE);
+                 defausseInondation.add(piocheInondation.get(indiceAuHasard));
+                 piocheInondation.remove(indiceAuHasard);
+                 
+             } else if (tuile.getEtat()==Utils.EtatTuile.INONDEE) {
+                    tuile.setEtat(Utils.EtatTuile.COULEE);
+                    bannieInondation.add(piocheInondation.get(indiceAuHasard));
+                    piocheInondation.remove(indiceAuHasard);
+        } 
+            
+           
             niveau = niveau-1;
         }
     }
@@ -377,6 +370,20 @@ public class Controleur {
     public void melanger(ArrayList<CarteInondation> cartes){
         Collections.shuffle(cartes);
         
+    }
+
+    /**
+     * @return the defausseInondation
+     */
+    public ArrayList<CarteInondation> getDefausseInondation() {
+        return defausseInondation;
+    }
+
+    /**
+     * @param defausseInondation the defausseInondation to set
+     */
+    public void setDefausseInondation(ArrayList<CarteInondation> defausseInondation) {
+        this.defausseInondation = defausseInondation;
     }
     
 }

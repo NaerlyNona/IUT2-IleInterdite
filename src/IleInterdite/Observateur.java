@@ -9,9 +9,6 @@ package IleInterdite;
  *
  * @author monnetlu
  */
-public class Message {
-    public TypesMessage type; // nature du message
-    
-    public int posX = 0;
-    public int posY = 0;
+public interface Observateur {
+    public void traiterMessage(Message msg);
 }

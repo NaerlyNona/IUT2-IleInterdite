@@ -9,9 +9,8 @@ package IleInterdite;
  *
  * @author monnetlu
  */
-public class Message {
-    public TypesMessage type; // nature du message
-    
-    public int posX = 0;
-    public int posY = 0;
+public class Main {
+    public static void main(String [] args) {     
+        new Controleur();
+   }  
 }

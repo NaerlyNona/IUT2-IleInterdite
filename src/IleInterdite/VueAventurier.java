@@ -175,7 +175,7 @@ public class VueAventurier implements ActionListener {
         return btnTerminerTour;
     }
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         // Instanciation de la fenêtre 
         //VueAventurier vueAventurier = new VueAventurier ("Manon", "Explorateur",Pion.ROUGE.getCouleur() );
         leControleur.InitialiserTestPartie();
@@ -186,7 +186,7 @@ public class VueAventurier implements ActionListener {
             }
         }
 
-    }
+    }*/
 
     @Override
     public void actionPerformed(ActionEvent e) {

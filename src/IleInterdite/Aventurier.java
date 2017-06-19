@@ -7,6 +7,7 @@ package IleInterdite;
 
 import IleInterdite.Utils.Pion;
 import java.util.ArrayList;
+import java.util.Scanner;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -29,7 +30,6 @@ public class Aventurier {
         setNomJoueur(leNomJoueur);
         setPion(lePion);
         setPosition(2, 3);
-        setPA(3);
         main = new ArrayList();
         setMaxPA(3);
         setPA(getMaxPA());
@@ -37,9 +37,66 @@ public class Aventurier {
 
     
     public void ajouterMain(Carte carte){
-        main.add(carte);
+        getMain().add(carte);
+        
     }
     
+    public void modifMain(){
+        int i = 1;
+        System.out.println("====MAIN====");
+        for (Carte c : main){   
+                System.out.println(c.getNomCarte());
+            }
+        if (getMain().size() > 5){ 
+            
+            System.out.println("====Carte a defausse====");
+            for (Carte c : main){   
+                System.out.println("Carte n°"+i+" : "+c.getNomCarte());
+                i++;
+            }
+        }
+   
+        if (getMain().size()==6){
+            System.out.println("Saisissez numéro carte a défausser:");
+            Scanner sc = new Scanner(System.in);
+            int choix = sc.nextInt();
+            main.remove(choix-1);
+        }
+        if (getMain().size()==7){
+            System.out.println("Saisissez numéro carte a défausser:");
+            Scanner sc = new Scanner(System.in);
+            int choix = sc.nextInt();
+            main.remove(choix-1);
+            System.out.println("====Carte a defausse====");
+            i = 0;
+                for (Carte c : main){   
+                    System.out.println("Carte n°"+i+" : "+c.getNomCarte());
+                    i++;
+                }
+                
+            System.out.println("Saisissez numéro carte a défausser:");
+            int choix2 = sc.nextInt();
+            main.remove(choix2-1);
+        }
+    }
+ 
+    public void donnerCarte(Aventurier a){
+        if (main.size() > 0){
+            int i = 1;
+        System.out.println("====Carte a donner====");
+            for (Carte c : main){   
+                System.out.println("Carte n°"+i+" : "+c.getNomCarte());
+                i++;
+            }
+            Scanner sc = new Scanner(System.in);
+            int choix = sc.nextInt();
+            a.ajouterMain(main.get(choix-1));
+            main.remove(choix-1);
+        } else { System.out.println("starfoulila");
+        
+            
+    }  
+    }
     
     /**
      * @return the nom
@@ -259,6 +316,20 @@ public class Aventurier {
      */
     public void setMaxPA(int maxPA) {
         this.maxPA = maxPA;
+    }
+
+    /**
+     * @return the main
+     */
+    public ArrayList<Carte> getMain() {
+        return main;
+    }
+
+    /**
+     * @param main the main to set
+     */
+    public void setMain(ArrayList<Carte> main) {
+        this.main = main;
     }
 
 }

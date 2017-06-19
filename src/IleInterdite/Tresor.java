@@ -10,5 +10,12 @@ package IleInterdite;
  * @author monnetlu
  */
 public class Tresor {
-    
+   private String nom;
+   private Utils.TypeTresor type;
+   
+   
+   public Tresor(String nom, Utils.TypeTresor type ){
+       this.nom = nom;
+       this.type = type;
+   }
 }

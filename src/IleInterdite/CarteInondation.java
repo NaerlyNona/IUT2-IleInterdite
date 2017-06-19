@@ -16,7 +16,7 @@ import java.util.Collections;
  */
 public class CarteInondation {
     private Tuile tuile;
-    private int niveau;
+   
     
 
     CarteInondation(Tuile uneTuile) {

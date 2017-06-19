@@ -197,13 +197,13 @@ public class VueAventurier implements ActionListener {
         if (e.getSource() == btnAller) {
             mode = 0;   
         }
-
         else if (e.getSource() == btnAssecher) {
             mode = 1;
         }
         else if (e.getSource() == btnTerminerTour) {
             leControleur.finDuTour();
             System.out.println(leControleur.getAventurierActuel().getNomJoueur());
+            MAJTuile();
             MAJFenetre();
         } else {
             if (mode == 0){

@@ -25,7 +25,7 @@ public class Aventurier {
     private int maxPA;
     private Utils.Pion pion;
     private ArrayList<Carte> main;
-    
+    private ArrayList<Tresor> tresor;
     public Aventurier(String leNomJoueur, Pion lePion) {
         setNomJoueur(leNomJoueur);
         setPion(lePion);
@@ -33,6 +33,7 @@ public class Aventurier {
         main = new ArrayList();
         setMaxPA(3);
         setPA(getMaxPA());
+        tresor = new ArrayList();
     }
 
     
@@ -97,6 +98,8 @@ public class Aventurier {
             
     }  
     }
+    
+    
     
     /**
      * @return the nom

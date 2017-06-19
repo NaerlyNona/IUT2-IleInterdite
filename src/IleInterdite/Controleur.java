@@ -106,6 +106,8 @@ public class Controleur implements Observateur {
                 unAventurier.setPosition(1, 2);
             }
         }
+        
+        System.out.println("Nearly la petite pute");
         //En Haut à Gauche
         getLaGrille().addTuile(0, 0, null);
         getLaGrille().addTuile(0, 1, null);

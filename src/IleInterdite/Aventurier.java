@@ -176,7 +176,7 @@ public class Aventurier {
         return lesAssechements;
     }
 
-    public void Assécher(Grille laGrille, JTextField leChampCommande) {
+    public void Assécher(Grille laGrille, String laPosition) {
 
         ArrayList<Integer> AssechementPossible = AssechementPossible(laGrille);
         System.out.println("Assèchement possibles:");
@@ -184,8 +184,8 @@ public class Aventurier {
             System.out.println(unAssechementPossible);
         }
 
-        int x = Character.getNumericValue(leChampCommande.getText().charAt(0));
-        int y = Character.getNumericValue(leChampCommande.getText().charAt(leChampCommande.getText().length() - 1));
+        int x = Character.getNumericValue(laPosition.charAt(0));
+        int y = Character.getNumericValue(laPosition.charAt(1));
 
         System.out.println("Avant: " + laGrille.getTuile(x, y).getEtat());
 

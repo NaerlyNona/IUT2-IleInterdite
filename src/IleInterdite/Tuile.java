@@ -19,6 +19,7 @@ public class Tuile {
     }
 
     /**
+
      * @return the nom
      */
     public String getNom() {

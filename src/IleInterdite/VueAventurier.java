@@ -198,18 +198,19 @@ public class VueAventurier implements ActionListener {
             mode = 0;   
         }
 
-        if (e.getSource() == btnAssecher) {
+        else if (e.getSource() == btnAssecher) {
             mode = 1;
         }
-        if (e.getSource() == btnTerminerTour) {
+        else if (e.getSource() == btnTerminerTour) {
             leControleur.finDuTour();
             System.out.println(leControleur.getAventurierActuel().getNomJoueur());
             MAJFenetre();
         } else {
             if (mode == 0){
                 leControleur.getAventurierActuel().SeDeplacer(leControleur.getLaGrille(),("" +((JButtonTuile)(e.getSource())).getPosX() + ((JButtonTuile)(e.getSource())).getPosY()) );
+                MAJFenetre();
             } else if (mode == 1){
-                leControleur.getAventurierActuel().Assécher(leControleur.getLaGrille(), champCommande);
+                leControleur.getAventurierActuel().Assécher(leControleur.getLaGrille(), ("" +((JButtonTuile)(e.getSource())).getPosX() + ((JButtonTuile)(e.getSource())).getPosY()) );
                 MAJTuile();
             } else {
                 System.out.println("Mode non reconnu");

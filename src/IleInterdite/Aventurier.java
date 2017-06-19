@@ -25,7 +25,7 @@ public class Aventurier {
     private int maxPA;
     private Utils.Pion pion;
     private ArrayList<Carte> main;
-    private ArrayList<Tresor> tresor;
+ 
     public Aventurier(String leNomJoueur, Pion lePion) {
         setNomJoueur(leNomJoueur);
         setPion(lePion);
@@ -33,13 +33,19 @@ public class Aventurier {
         main = new ArrayList();
         setMaxPA(3);
         setPA(getMaxPA());
-        tresor = new ArrayList();
+       
     }
 
+    
+    
+    
     
     public void ajouterMain(Carte carte){
         getMain().add(carte);
         
+    }
+    public void removeMain(Carte carte){
+        getMain().remove(carte);
     }
     
     public void modifMain(){
@@ -69,7 +75,7 @@ public class Aventurier {
             int choix = sc.nextInt();
             main.remove(choix-1);
             System.out.println("====Carte a defausse====");
-            i = 0;
+            i = 1;
                 for (Carte c : main){   
                     System.out.println("Carte n°"+i+" : "+c.getNomCarte());
                     i++;
@@ -334,5 +340,6 @@ public class Aventurier {
     public void setMain(ArrayList<Carte> main) {
         this.main = main;
     }
-
+    
 }
+

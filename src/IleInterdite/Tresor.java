@@ -18,4 +18,32 @@ public class Tresor {
        this.nom = nom;
        this.type = type;
    }
+
+    /**
+     * @return the nom
+     */
+    public String getNom() {
+        return nom;
+    }
+
+    /**
+     * @param nom the nom to set
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    /**
+     * @return the type
+     */
+    public Utils.TypeTresor getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(Utils.TypeTresor type) {
+        this.type = type;
+    }
 }

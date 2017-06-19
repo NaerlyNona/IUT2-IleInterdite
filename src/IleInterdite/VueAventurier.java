@@ -127,7 +127,6 @@ public class VueAventurier implements ActionListener {
                 this.tuiles[l][c].addActionListener(this);
             }
         }
-        MAJTuile();
 
         // =================================================================================
         // SUD : les boutons
@@ -254,5 +253,13 @@ public class VueAventurier implements ActionListener {
         texteNom.setText(leControleur.getAventurierActuel().getNomJoueur() + " | " + leControleur.getAventurierActuel().getNomRole());
         textePosition.setText("[" + leControleur.getAventurierActuel().getX() + "," + leControleur.getAventurierActuel().getY() + "]");
         mainPanel.setBorder(BorderFactory.createLineBorder(leControleur.getAventurierActuel().getPion().getCouleur(), 2));
+    }
+}
+
+*/
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -52,8 +52,10 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         1 = Assécher
     
      */
-    public IHMIleInterdite() {
+    public IHMIleInterdite(Observateur o) {
         super("Ile Interdite");
+        setObservateur(o);
+        
         this.pack();
         this.setSize(new Dimension(500, 350));
         this.setLocationRelativeTo(null);
@@ -141,13 +143,6 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         setSize(650, 700);
         setVisible(true);
     }
-
-    public void initialiser() {
-        Message m = new Message();
-        m.type = TypesMessage.DEMARRER;
-        observateur.traiterMessage(m);
-    }
-
     public void MAJJoueur(Aventurier aventurier) {
         nomJoueur.setText(aventurier.getNomJoueur());
         paJoueur.setText("PA: " + aventurier.getPA());

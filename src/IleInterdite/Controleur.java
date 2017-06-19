@@ -38,12 +38,12 @@ public class Controleur implements Observateur {
     public Controleur() {
         setAventurierActuel(new Aventurier("init", Pion.VERT));
         InitialiserTestPartie();
-        
+
         ihmIleInterdite = new IHMIleInterdite(this);
 
         ihmIleInterdite.afficher();
-                        ihmIleInterdite.MAJJoueur(getAventurierActuel());
-                ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+        ihmIleInterdite.MAJJoueur(getAventurierActuel());
+        ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
     }
 
     public void InitialiserTestPartie() {
@@ -489,23 +489,27 @@ public class Controleur implements Observateur {
                 break;
 
             case DEPLACER:
-                getAventurierActuel().SeDeplacer(laGrille, "" + msg.posX + msg.posY);
-                ihmIleInterdite.MAJJoueur(getAventurierActuel());
-                ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                if (getAventurierActuel().getPA() > 0) {
+                    getAventurierActuel().SeDeplacer(laGrille, "" + msg.posX + msg.posY);
+                    ihmIleInterdite.MAJJoueur(getAventurierActuel());
+                    ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                }
                 break;
 
             case ASSECHER:
-                getAventurierActuel().Assécher(laGrille, "" + msg.posX + msg.posY);
-                ihmIleInterdite.MAJJoueur(getAventurierActuel());
-                ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                if (getAventurierActuel().getPA() > 0) {
+                    getAventurierActuel().Assécher(laGrille, "" + msg.posX + msg.posY);
+                    ihmIleInterdite.MAJJoueur(getAventurierActuel());
+                    ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                }
                 break;
-                
+
             case TERMINER_TOUR:
                 finDuTour();
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
         }
-  
+
     }
-    
+
 }

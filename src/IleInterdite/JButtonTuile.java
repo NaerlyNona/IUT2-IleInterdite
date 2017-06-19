@@ -10,12 +10,12 @@ import javax.swing.JButton;
  *
  * @author monnetlu
  */
-public class JButtonTuile extends JButton {
+public class JButtonTuile extends JButtonSpecial {
     private int posX;
     private int posY;
-
+    
     public JButtonTuile(int posX, int posY) {
-        super();
+        super(0);
         setPosX(posX);
         setPosY(posY);
     }

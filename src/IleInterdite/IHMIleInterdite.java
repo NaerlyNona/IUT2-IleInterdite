@@ -9,6 +9,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import static java.awt.GridBagConstraints.BOTH;
+import static java.awt.GridBagConstraints.CENTER;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,6 +43,9 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     private JPanel panelPlateau = new JPanel(); // le panel du milieu où le plateau est présent
     private JButtonTuile[][] tuiles = new JButtonTuile[6][6];
 
+    private JPanel panelMain = new JPanel(); // le panel du bas où les boutons sont présents
+    private JButton[] main = new JButton[5];
+
     private JPanel panelBoutons = new JPanel(); // le panel du bas où les boutons sont présents
     private JButton btnDeplacer;
     private JButton btnAssecher;
@@ -55,7 +62,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     public IHMIleInterdite(Observateur o) {
         super("Ile Interdite");
         setObservateur(o);
-        
+
         this.pack();
         this.setSize(new Dimension(500, 350));
         this.setLocationRelativeTo(null);
@@ -74,12 +81,16 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         Message m = new Message();
         if (e.getSource() == btnDeplacer) {
             mode = 0;
+            btnDeplacer.setEnabled(false);
+            btnAssecher.setEnabled(true);
         } else if (e.getSource() == btnAssecher) {
             mode = 1;
+            btnDeplacer.setEnabled(true);
+            btnAssecher.setEnabled(false);
         } else if (e.getSource() == btnTerminerTour) {
             m.type = TypesMessage.TERMINER_TOUR;
             observateur.traiterMessage(m);
-        } else {
+        } else if (((JButtonSpecial) (e.getSource())).getType() == 0) {
             m.posX = ((JButtonTuile) (e.getSource())).getPosX();
             m.posY = ((JButtonTuile) (e.getSource())).getPosY();
             if (mode == 0) {
@@ -91,6 +102,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             } else {
                 System.out.println("Mode non reconnu");
             }
+        } else if (((JButtonSpecial) (e.getSource())).getType() == 1) {
+            System.out.println("Main");
         }
     }
 
@@ -99,17 +112,24 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     }
 
     private void initialisationFenetre() {
-        setLayout(new BorderLayout());
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
         //PanelJoueur
         panelJoueur.setLayout(new GridLayout(1, 3));
         nomJoueur = new JLabel("Nom du joueur", SwingConstants.CENTER);
         paJoueur = new JLabel("PA: X", SwingConstants.CENTER);
         roleJoueur = new JLabel("Role du joueur", SwingConstants.CENTER);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 6;
+        gbc.anchor = GridBagConstraints.PAGE_START;
         panelJoueur.add(nomJoueur);
         panelJoueur.add(paJoueur);
         panelJoueur.add(roleJoueur);
-        this.add(panelJoueur, BorderLayout.NORTH);
+        this.add(panelJoueur, gbc);
 
         //PanelPlateau
         panelPlateau.setLayout(new GridLayout(6, 6));
@@ -118,12 +138,41 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                 tuiles[l][c] = new JButtonTuile(l, c);
                 tuiles[l][c].setHorizontalTextPosition(SwingConstants.CENTER);
                 //tuiles[l][c].setFont(new Font("Serif",Font.PLAIN, 10));
-
                 panelPlateau.add(tuiles[l][c]);
                 this.tuiles[l][c].addActionListener(this);
             }
         }
-        this.add(panelPlateau, BorderLayout.CENTER);
+
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.gridwidth = 6;
+        gbc.gridheight = 6;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.CENTER;
+        this.add(panelPlateau, gbc);
+
+        //PanelMain 
+        panelMain.setLayout(new GridLayout(1, 5));
+        for (int i = 0; i <= 4; i++) {
+            main[i] = new JButtonMain();
+            main[i].setHorizontalTextPosition(SwingConstants.CENTER);
+            main[i].setText("Vide");
+            panelMain.add(main[i]);
+            this.main[i].addActionListener(this);
+        }
+
+        gbc.weightx = 0;
+        gbc.weighty = 0;
+        gbc.gridx = 2;
+        gbc.gridy = 7;
+        gbc.gridwidth = 8;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.fill = GridBagConstraints.CENTER;
+        this.add(panelMain, gbc);
 
         //PanelBoutons
         panelBoutons.setLayout(new GridLayout(2, 2));
@@ -132,10 +181,20 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         btnAutresActions = new JButton("Autres Actions");
         btnTerminerTour = new JButton("Terminer Tour");
         panelBoutons.add(btnDeplacer);
+        btnDeplacer.setEnabled(false);
         panelBoutons.add(btnAssecher);
         panelBoutons.add(btnAutresActions);
         panelBoutons.add(btnTerminerTour);
-        this.add(panelBoutons, BorderLayout.SOUTH);
+
+        gbc.weightx = 0;
+        gbc.weighty = 0;
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 7;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.PAGE_END;
+        this.add(panelBoutons, gbc);
     }
 
     public void afficher() {
@@ -143,6 +202,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         setSize(650, 700);
         setVisible(true);
     }
+
     public void MAJJoueur(Aventurier aventurier) {
         nomJoueur.setText(aventurier.getNomJoueur());
         paJoueur.setText("PA: " + aventurier.getPA());

@@ -22,14 +22,22 @@ public class Aventurier {
     private int Y;
     private int PA;
     private Utils.Pion pion;
-
+    private ArrayList<Carte> main;
+    
     public Aventurier(String leNomJoueur, Pion lePion) {
         setNomJoueur(leNomJoueur);
         setPion(lePion);
         setPosition(2, 3);
         setPA(3);
+        main = new ArrayList();
     }
 
+    
+    public void ajouterMain(Carte carte){
+        main.add(carte);
+    }
+    
+    
     /**
      * @return the nom
      */

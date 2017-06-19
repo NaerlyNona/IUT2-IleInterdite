@@ -25,6 +25,7 @@ public class Utils {
 
         String libelle ;
         
+        
         EtatTuile(String libelle) {
             this.libelle = libelle ;
         }
@@ -34,7 +35,12 @@ public class Utils {
             return this.libelle ;
         }
     }
-
+    public static enum TypeTresor {
+        GRIS,ROUGE,JAUNE,BLEU
+    }
+    public static enum TypeSpéciale {
+        SacDeSable,Helicoptère
+    }
     public static enum Pion {
         ROUGE("Rouge", new Color(255, 0, 0)),
         VERT("Vert", new Color(0, 195, 0)),

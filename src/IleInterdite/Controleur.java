@@ -22,6 +22,7 @@ public class Controleur {
     private Grille laGrille = new Grille();
     private Tuile uneTuile;
     private CarteInondation uneCarte;
+    private Carte carte;
     private Aventurier aventurierActuel;
     private ArrayList<Aventurier> lesAventuriers;
     private boolean PartieFinie;
@@ -29,6 +30,9 @@ public class Controleur {
     private ArrayList<CarteInondation> defausseInondation;
     private ArrayList<CarteInondation> bannieInondation;
     private ArrayList<CarteInondation> piocheInondation;
+    private ArrayList<Carte> piocheTresor;
+    private ArrayList<Carte> defausseTresor;
+    
     
     public Controleur(){
         setAventurierActuel(new Aventurier("init", Pion.VERT));
@@ -38,9 +42,30 @@ public class Controleur {
         setPartieFinie(false);
         setFinDuTour(false);
         
-        setDefausseInondation((ArrayList<CarteInondation>) new ArrayList());
-        setBannieInondation((ArrayList<CarteInondation>) new ArrayList());
-        setPiocheInondation((ArrayList<CarteInondation>) new ArrayList());
+        defausseInondation = new ArrayList();
+        bannieInondation =  new ArrayList();
+        piocheInondation =  new ArrayList();
+        piocheTresor = new ArrayList();
+        defausseTresor = new ArrayList();
+        
+        
+     
+         
+        carte = new CarteMontée("Montée"); piocheTresor.add(carte);
+        carte = new CarteMontée("Montée"); piocheTresor.add(carte);
+        for ( int i = 0; i < 4; i++){
+            carte = new CarteTrésor("Le Calice de l’onde", Utils.TypeTresor.BLEU); piocheTresor.add(carte);
+            carte = new CarteTrésor("La Pierre sacrée", Utils.TypeTresor.GRIS); piocheTresor.add(carte);
+            carte = new CarteTrésor("La Statue du zéphyr", Utils.TypeTresor.JAUNE); piocheTresor.add(carte);
+            carte = new CarteTrésor("Le Cristal ardent", Utils.TypeTresor.ROUGE); piocheTresor.add(carte);
+        }
+        carte = new CarteSpéciale("Sac de sable",Utils.TypeSpéciale.SacDeSable); piocheTresor.add(carte);
+        carte = new CarteSpéciale("Sac de sable",Utils.TypeSpéciale.SacDeSable); piocheTresor.add(carte);
+        carte = new CarteSpéciale("houloucouptère",Utils.TypeSpéciale.Helicoptère); piocheTresor.add(carte);
+        carte = new CarteSpéciale("houloucouptère",Utils.TypeSpéciale.Helicoptère); piocheTresor.add(carte);
+        carte = new CarteSpéciale("houloucouptère",Utils.TypeSpéciale.Helicoptère); piocheTresor.add(carte);
+        
+        
         
         lesAventuriers = new ArrayList();
         getLesAventuriers().add(new Explorateur("Joueur1"));

@@ -18,6 +18,7 @@ import java.util.*;
  */
 public class Controleur {
 
+    private int niveauEau = 2;
     private Grille laGrille = new Grille();
     private Tuile uneTuile;
     private CarteInondation uneCarte;
@@ -37,9 +38,9 @@ public class Controleur {
         setPartieFinie(false);
         setFinDuTour(false);
         
-        cimetiereInondation = new ArrayList();
-        bannieInondation = new ArrayList();
-        piocheInondation = new ArrayList();
+        setCimetiereInondation((ArrayList<CarteInondation>) new ArrayList());
+        setBannieInondation((ArrayList<CarteInondation>) new ArrayList());
+        setPiocheInondation((ArrayList<CarteInondation>) new ArrayList());
         
         lesAventuriers = new ArrayList();
         getLesAventuriers().add(new Explorateur("Joueur1"));
@@ -82,92 +83,146 @@ public class Controleur {
 
         uneTuile = new Tuile("Le Pont Des Abimes");
         getLaGrille().addTuile(0,2, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new TuileSpawn("La Porte De Bronze", Pion.ROUGE);
         getLaGrille().addTuile(0,3, uneTuile);
         getLaGrille().getTuile(0, 3).setEtat(Utils.EtatTuile.INONDEE);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("La Caverne Des Ombres");
         getLaGrille().addTuile(1,1, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new TuileSpawn("La Porte De Fer", Pion.VIOLET);
         getLaGrille().addTuile(1,2, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new TuileSpawn("La Porte d'Or", Pion.JAUNE);
         getLaGrille().addTuile(1,3, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("Les Falaises de L'Oubli");
         getLaGrille().addTuile(1,4, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("Le Palais de Corail");
         getLaGrille().addTuile(2,0, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("La Porte d'Argent");
         getLaGrille().addTuile(2,1, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("Les Dunes De L'Illusion");
         getLaGrille().addTuile(2,2, uneTuile);
         getLaGrille().getTuile(2, 2).setEtat(Utils.EtatTuile.COULEE);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new TuileSpawn("Heliport", Pion.BLEU);
         getLaGrille().addTuile(2,3, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new TuileSpawn("La Porte De Cuivre", Pion.VERT);
         getLaGrille().addTuile(2,4, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("Le Jardin Des Hurlements");
         getLaGrille().addTuile(2,5, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("La Foret Pourpre");
         getLaGrille().addTuile(3,0, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("Le Lagon Perdu");
         getLaGrille().addTuile(3,1, uneTuile);
         getLaGrille().getTuile(3, 1).setEtat(Utils.EtatTuile.INONDEE);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("Le Marais Brumeux");
         getLaGrille().addTuile(3,2, uneTuile);
         getLaGrille().getTuile(3, 2).setEtat(Utils.EtatTuile.COULEE);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("Observatoire");
         getLaGrille().addTuile(3,3, uneTuile);
         getLaGrille().getTuile(3, 3).setEtat(Utils.EtatTuile.INONDEE);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("Le Rocher Fantome");
         getLaGrille().addTuile(3,4, uneTuile);
         getLaGrille().getTuile(3, 4).setEtat(Utils.EtatTuile.COULEE);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("La Caverne Du Brasier");
         getLaGrille().addTuile(3,5, uneTuile);
         getLaGrille().getTuile(3, 5).setEtat(Utils.EtatTuile.INONDEE);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("Le Temple Du Soleil");
         getLaGrille().addTuile(4,1, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("Le Temple De La Lune");
         getLaGrille().addTuile(4,2, uneTuile);
         getLaGrille().getTuile(4, 2).setEtat(Utils.EtatTuile.COULEE);
-
-        uneTuile = new Tuile("Le Plais Des Marees");
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
+        uneTuile = new Tuile("Le Palais Des Marees");
         getLaGrille().addTuile(4,3, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
         
         uneTuile = new Tuile("Le Val Du Crepuscule");
         getLaGrille().addTuile(4,4, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("La Tour Du Guet");
         getLaGrille().addTuile(5,2, uneTuile);
-
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+        
         uneTuile = new Tuile("Le Jardin Des Murmures");
         getLaGrille().addTuile(5,3, uneTuile);
         getLaGrille().getTuile(5, 3).setEtat(Utils.EtatTuile.INONDEE);
         
         uneCarte = new CarteInondation(uneTuile); // On créer une carte lié a la tuile et on l'ajoute dans la pioche innondation
-        piocheInondation.add(uneCarte); // A faire pour toute les cases :/ :$
+        getPiocheInondation().add(uneCarte); // A faire pour toute les cases :/ :$
         
         
         System.out.println(getLaGrille().getTuile(5, 3).getNom());
         
         setAventurierActuel(lesAventuriers.get(0));
+        
+        
+        
+        
+        
+        for (CarteInondation test : getPiocheInondation()){
+            System.out.println(test.getNom());
+        }
 
     }
 
@@ -249,6 +304,48 @@ public class Controleur {
             setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel())+1));
         }
         setFinDuTour(false);
+    }
+
+    /**
+     * @return the cimetiereInondation
+     */
+    public ArrayList<CarteInondation> getCimetiereInondation() {
+        return cimetiereInondation;
+    }
+
+    /**
+     * @param cimetiereInondation the cimetiereInondation to set
+     */
+    public void setCimetiereInondation(ArrayList<CarteInondation> cimetiereInondation) {
+        this.cimetiereInondation = cimetiereInondation;
+    }
+
+    /**
+     * @return the bannieInondation
+     */
+    public ArrayList<CarteInondation> getBannieInondation() {
+        return bannieInondation;
+    }
+
+    /**
+     * @param bannieInondation the bannieInondation to set
+     */
+    public void setBannieInondation(ArrayList<CarteInondation> bannieInondation) {
+        this.bannieInondation = bannieInondation;
+    }
+
+    /**
+     * @return the piocheInondation
+     */
+    public ArrayList<CarteInondation> getPiocheInondation() {
+        return piocheInondation;
+    }
+
+    /**
+     * @param piocheInondation the piocheInondation to set
+     */
+    public void setPiocheInondation(ArrayList<CarteInondation> piocheInondation) {
+        this.piocheInondation = piocheInondation;
     }
     
 }

@@ -122,7 +122,7 @@ public class Plongeur extends Aventurier {
         return lesDeplacements;
     }
 
-    @Override
+    /*@Override
     public void SeDeplacer(Grille laGrille, JTextField leChampCommande) {
 
         ArrayList<Integer> DeplacementPossible = DeplacementPossible(getX(), getY(), laGrille, true);
@@ -145,5 +145,5 @@ public class Plongeur extends Aventurier {
 
         System.out.println("Apres " + getX() + "," + getY());
     }
-
+*/
 }

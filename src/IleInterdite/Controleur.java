@@ -346,16 +346,19 @@ public class Controleur implements Observateur {
         this.finDuTour = finDuTour;
     }
 
-    public void finDuTour() {
+    public void finDuTourPartie1() {
         if (isGagne()) {
             System.out.println("c gagné");
         }
         if (isPerdu()) {
 
         }
-        
+
         piocheFinTour();
-        
+
+    }
+
+    public void finDuTourPartie2() {
         this.getAventurierActuel().reset();
         if (this.getLesAventuriers().size() - 1 == this.getLesAventuriers().lastIndexOf(getAventurierActuel())) {
             setAventurierActuel(getLesAventuriers().get(0));
@@ -363,7 +366,6 @@ public class Controleur implements Observateur {
             setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel()) + 1));
         }
 
-        
         InonderFinTour(getNiveauEau(), piocheInondation);
 
         setFinDuTour(false);
@@ -413,7 +415,7 @@ public class Controleur implements Observateur {
 
             Carte cartePioche = piocheTresor.get(piocheTresor.size() - 1);
             if (cartePioche.getNomCarte() == "Montée") {
-                System.out.println("Bite");
+                System.out.println("Montée");
                 setNiveauEau(getNiveauEau() + 0.5);
                 defausseTresor.add(cartePioche);
                 piocheTresor.remove(cartePioche);
@@ -429,8 +431,12 @@ public class Controleur implements Observateur {
                 piocheTresor.remove(cartePioche);
             }
         }
+
         System.out.println(piocheTresor.size());
-        getAventurierActuel().modifMain();
+        if (getAventurierActuel().getMain().size() > 5) {
+            ihmIleInterdite.setEnabled(false);
+            new IHMDefausse(getAventurierActuel(), this);
+        }
 
     }
 
@@ -467,7 +473,6 @@ public class Controleur implements Observateur {
                     for (int c = 0; c <= 5; c++) {
 
     }*/
-
     public void recupererTresor() {
         int i = 0;
         System.out.println("test3");
@@ -486,45 +491,44 @@ public class Controleur implements Observateur {
                 System.out.println("recuperation du trésor en cours... ah c fini laul");
                 for (Carte main : getAventurierActuel().getMain()) {
                     if (main.getNomCarte() == laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor().getNom()) {
-                     
+
                         defausseTresor.add(main);
                         getAventurierActuel().removeMain(main);
                     }
                 }
             }
-             
-            } else {
-                System.out.println("Il n'y a pas de trésor ici starfoulila");
-            }
+
+        } else {
+            System.out.println("Il n'y a pas de trésor ici starfoulila");
         }
-    
-    public void donnerCarte(){
-        if (getAventurierActuel().getMain().size() > 0){
+    }
+
+    public void donnerCarte() {
+        if (getAventurierActuel().getMain().size() > 0) {
             int i = 1;
             System.out.println("====Carte a donner====");
-            for (Carte c : getAventurierActuel().getMain()){   
-                System.out.println("Carte n°"+i+" : "+c.getNomCarte());
+            for (Carte c : getAventurierActuel().getMain()) {
+                System.out.println("Carte n°" + i + " : " + c.getNomCarte());
                 i++;
             }
             Scanner sc = new Scanner(System.in);
             int choix = sc.nextInt();
-            
-            for (Aventurier a : lesAventuriers){
+
+            for (Aventurier a : lesAventuriers) {
                 System.out.println("====Donner a qui====");
-                if (a.getX()==getAventurierActuel().getX() && a.getY()==getAventurierActuel().getY()){
-                    
+                if (a.getX() == getAventurierActuel().getX() && a.getY() == getAventurierActuel().getY()) {
+
                 }
             }
-                
+
             //a.ajouterMain(getAventurierActuel().getMain().get(choix-1));
-            getAventurierActuel().getMain().remove(choix-1);
-        } else { System.out.println("starfoulila");
-        
-            
-        }  
+            getAventurierActuel().getMain().remove(choix - 1);
+        } else {
+            System.out.println("starfoulila");
+
+        }
     }
-    
-    
+
     /**
      * @return the niveauEau
      */
@@ -578,15 +582,33 @@ public class Controleur implements Observateur {
                 break;
 
             case TERMINER_TOUR:
-                finDuTour();
-                ihmIleInterdite.MAJMain(getAventurierActuel());
-                ihmIleInterdite.MAJJoueur(getAventurierActuel());
-                ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                finDuTourPartie1();
+                if (getAventurierActuel().getMain().size() <= 5) {
+                    finDuTourPartie2();   
+                    ihmIleInterdite.setEnabled(true);
+                    ihmIleInterdite.MAJMain(getAventurierActuel());
+                    ihmIleInterdite.MAJJoueur(getAventurierActuel());
+                    ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                }
                 break;
             case AUTREACTION:
                 System.out.println("test2");
                 recupererTresor();
                 break;
+
+            case DEFAUSSER:
+                getAventurierActuel().removeMain(msg.carte);
+                if (getAventurierActuel().getMain().size() <= 5) {
+                    finDuTourPartie2();   
+                    ihmIleInterdite.setEnabled(true);
+                    ihmIleInterdite.MAJMain(getAventurierActuel());
+                    ihmIleInterdite.MAJJoueur(getAventurierActuel());
+                    ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                } else {
+                    new IHMDefausse(getAventurierActuel(), this);
+                }
+                break;
+
         }
 
     }

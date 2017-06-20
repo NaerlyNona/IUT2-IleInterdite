@@ -43,7 +43,8 @@ public class VueAventurier implements ActionListener {
     private final JButton btnAssecher;
     private final JButton btnAutreAction;
     private final JButton btnTerminerTour;
-    
+
+
     private JLabel texteNom; // Nom du joueur et son role
     private JLabel textePosition; // Position du joueur
     private JLabel textePA;
@@ -62,6 +63,7 @@ public class VueAventurier implements ActionListener {
     public VueAventurier(Aventurier unAventurier) {
         
         this.window = new JFrame();
+       
         window.setExtendedState(JFrame.MAXIMIZED_BOTH);
         //window.setUndecorated(true);
         window.setAlwaysOnTop(true);

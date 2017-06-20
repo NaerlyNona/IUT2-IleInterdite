@@ -17,6 +17,7 @@ import javax.swing.JTextField;
  */
 public class Aventurier {
 
+    private Controleur controleur;
     private String nomJoueur;
     private String nomRole;
     private int X;
@@ -98,26 +99,27 @@ public class Aventurier {
         }
     }
 
-    /*public void donnerCarte(Aventurier a){
-        if (main.size() > 0){
-            int i = 1;
-        System.out.println("====Carte a donner====");
-            for (Carte c : main){   
-                System.out.println("Carte n°"+i+" : "+c.getNomCarte());
-                i++;
+    
+    public void donnerCarte(Aventurier a, int choix) {
+    
+
+            /* for (Aventurier a : controleur.getLesAventuriers()){
+                     System.out.println("a.getNomRole()"+a.getNomRole());
+                     System.out.println("role"+role);
+                      if (a.getNomRole() == role){ 
+                         System.out.println("Test5"); */
+            if (a.getMain().size() < 5) {
+                System.out.println("La carte " + getMain().get(choix - 1).getNomCarte() + " a été envoyé à " + a.getNomRole());
+                a.ajouterMain(getMain().get(choix - 1));
+                getMain().remove(choix - 1);
             }
-            Scanner sc = new Scanner(System.in);
-            int choix = sc.nextInt();
-            a.ajouterMain(main.get(choix-1));
-            main.remove(choix-1);
-        } else { System.out.println("starfoulila");
-        
-            
-        }  
-    }*/
-    /**
-     * @return the nom
-     */
+
+            else {
+            System.out.println("starfoulila");
+
+        }
+    }
+
     public String getNomJoueur() {
         return nomJoueur;
     }

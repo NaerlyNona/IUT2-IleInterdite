@@ -16,6 +16,7 @@ public class TuileTresor extends Tuile {
     
     public TuileTresor(String nom, Tresor tresor) {
         super(nom);
+        super.setType(1);
         setTresor(tresor);
         this.type = Utils.TypeTuile.Tresor;
     }

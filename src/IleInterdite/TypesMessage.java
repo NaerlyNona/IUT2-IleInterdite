@@ -15,5 +15,6 @@ public enum TypesMessage {
     ASSECHER,
     TERMINER_TOUR,
     GAGNER,
-    PERDU
+    PERDU,
+    AUTREACTION
 }

@@ -73,6 +73,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         btnDeplacer.addActionListener(this);
         btnAssecher.addActionListener(this);
         btnTerminerTour.addActionListener(this);
+        btnAutresActions.addActionListener(this);
 
     }
 
@@ -89,6 +90,10 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             btnAssecher.setEnabled(false);
         } else if (e.getSource() == btnTerminerTour) {
             m.type = TypesMessage.TERMINER_TOUR;
+            observateur.traiterMessage(m);
+        } else if (e.getSource() == btnAutresActions) {
+            System.out.println("test");
+            m.type = TypesMessage.AUTREACTION;
             observateur.traiterMessage(m);
         } else if (((JButtonSpecial) (e.getSource())).getType() == 0) {
             m.posX = ((JButtonTuile) (e.getSource())).getPosX();

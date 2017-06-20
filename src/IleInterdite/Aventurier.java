@@ -25,7 +25,7 @@ public class Aventurier {
     private int maxPA;
     private Utils.Pion pion;
     private ArrayList<Carte> main;
- 
+
     public Aventurier(String leNomJoueur, Pion lePion) {
         setNomJoueur(leNomJoueur);
         setPion(lePion);
@@ -33,61 +33,72 @@ public class Aventurier {
         main = new ArrayList();
         setMaxPA(3);
         setPA(getMaxPA());
-       
+
     }
 
-    
-    
-    
-    
-    public void ajouterMain(Carte carte){
+    public void ajouterMain(Carte carte) {
         getMain().add(carte);
-        
+
     }
-    public void removeMain(Carte carte){
+
+    public void removeMain(Carte carte) {
         getMain().remove(carte);
     }
-    
-    public void modifMain(){
+
+    public void modifMain() {
         int i = 1;
         System.out.println("====MAIN====");
-        for (Carte c : main){   
-                System.out.println(c.getNomCarte());
-            }
-        if (getMain().size() > 5){ 
-            
+        for (Carte c : main) {
+            System.out.println(c.getNomCarte());
+        }
+        if (getMain().size() > 5) {
+
             System.out.println("====Carte a defausse====");
-            for (Carte c : main){   
-                System.out.println("Carte n°"+i+" : "+c.getNomCarte());
+            for (Carte c : main) {
+                System.out.println("Carte n°" + i + " : " + c.getNomCarte());
                 i++;
             }
         }
-   
-        if (getMain().size()==6){
-            System.out.println("Saisissez numéro carte a défausser:");
-            Scanner sc = new Scanner(System.in);
-            int choix = sc.nextInt();
-            main.remove(choix-1);
+
+        if (getMain().size() == 6) {
+            //System.out.println("Saisissez numéro carte a défausser:");
+            /*Scanner sc = new Scanner(System.in);
+            int choix = sc.nextInt();*/
+            getInput();
         }
-        if (getMain().size()==7){
-            System.out.println("Saisissez numéro carte a défausser:");
-            Scanner sc = new Scanner(System.in);
-            int choix = sc.nextInt();
-            main.remove(choix-1);
+        if (getMain().size() == 7) {
+            //System.out.println("Saisissez numéro carte a défausser:");
+            /*Scanner sc = new Scanner(System.in);
+            int choix = sc.nextInt();*/
+            getInput();
             System.out.println("====Carte a defausse====");
             i = 1;
-                for (Carte c : main){   
-                    System.out.println("Carte n°"+i+" : "+c.getNomCarte());
-                    i++;
-                }
-                
-            System.out.println("Saisissez numéro carte a défausser:");
-            int choix2 = sc.nextInt();
-            main.remove(choix2-1);
+            for (Carte c : main) {
+                System.out.println("Carte n°" + i + " : " + c.getNomCarte());
+                i++;
+            }
+
+            //System.out.println("Saisissez numéro carte a défausser:");
+            //int choix2 = sc.nextInt();
+            getInput();
         }
     }
- 
-    public void donnerCarte(Aventurier a){
+
+    public void getInput() {
+        try {
+            System.out.println("Saisissez la carte a défausser : ");
+            Scanner sc = new Scanner(System.in);
+            int choix = sc.nextInt();
+
+            main.remove(choix - 1);
+            System.out.println("La carte n°" + choix + " a été défaussée");
+        } catch (IndexOutOfBoundsException ime) {
+            System.out.println("Entrée invalide, recommence fdp.");
+            getInput();
+        }
+    }
+
+    /*public void donnerCarte(Aventurier a){
         if (main.size() > 0){
             int i = 1;
         System.out.println("====Carte a donner====");
@@ -102,11 +113,8 @@ public class Aventurier {
         } else { System.out.println("starfoulila");
         
             
-    }  
-    }
-    
-    
-    
+        }  
+    }*/
     /**
      * @return the nom
      */
@@ -184,8 +192,8 @@ public class Aventurier {
     public void setY(int Y) {
         this.Y = Y;
     }
-    
-        /**
+
+    /**
      * @return the PA
      */
     public int getPA() {
@@ -198,16 +206,15 @@ public class Aventurier {
     public void setPA(int PA) {
         this.PA = PA;
     }
-    
-    public void reset(){
+
+    public void reset() {
         setPA(maxPA);
     }
 
     public ArrayList<Integer> DeplacementPossible(Grille laGrille) {
         ArrayList<Integer> lesTuiles = getTuilesAdjacentes(laGrille);
         ArrayList<Integer> lesDeplacements = new ArrayList();
-        
-        
+
         //Parcourt les Tuiles, si la tuile n'est pas coulée, on l'ajoute à la liste des déplacements possibles    
         for (int uneTuile : lesTuiles) {
             if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() != Utils.EtatTuile.COULEE) {
@@ -225,13 +232,12 @@ public class Aventurier {
         for (int unAssechementPossible : DeplacementPossible) {
             System.out.println(unAssechementPossible);
         }
-        
-        
+
         System.out.println("Avant " + getX() + "," + getY());
 
         int x = Character.getNumericValue(laPosition.charAt(0));
         int y = Character.getNumericValue(laPosition.charAt(1));
-        
+
         for (int unDeplacementPossible : DeplacementPossible) {
             if (unDeplacementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
                 this.setPosition(x, y);
@@ -244,12 +250,12 @@ public class Aventurier {
     public ArrayList<Integer> AssechementPossible(Grille laGrille) {
         ArrayList<Integer> lesTuiles = getTuilesAdjacentes(laGrille);
         ArrayList<Integer> lesAssechements = new ArrayList();
-        
+
         int z = 321;
-        System.out.println(Utils.getChiffre(z,1));
-        System.out.println(Utils.getChiffre(z,2));
-        System.out.println(Utils.getChiffre(z,3));
-        System.out.println(Utils.getChiffre(z,4));
+        System.out.println(Utils.getChiffre(z, 1));
+        System.out.println(Utils.getChiffre(z, 2));
+        System.out.println(Utils.getChiffre(z, 3));
+        System.out.println(Utils.getChiffre(z, 4));
         //Parcourt les Tuiles, si la tuile est inondé, on l'ajoute à la liste des assèchements possibles
         for (int uneTuile : lesTuiles) {
             if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() == Utils.EtatTuile.INONDEE) {
@@ -304,7 +310,7 @@ public class Aventurier {
         if ((this.getY() - 1 >= 0) && (laGrille.getTuile(getX(), getY() - 1) != null)) {
             tuilesAdjacentes.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() - 1)));
         }
-        
+
         if ((laGrille.getTuile(getX(), getY()) != null)) {
             tuilesAdjacentes.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY())));
         }
@@ -340,6 +346,5 @@ public class Aventurier {
     public void setMain(ArrayList<Carte> main) {
         this.main = main;
     }
-    
-}
 
+}

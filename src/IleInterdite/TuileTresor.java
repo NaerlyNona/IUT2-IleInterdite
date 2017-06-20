@@ -12,11 +12,13 @@ package IleInterdite;
 public class TuileTresor extends Tuile {
     
     private Tresor tresor;
+    private Utils.TypeTuile type;
     
     public TuileTresor(String nom, Tresor tresor) {
         super(nom);
         super.setType(1);
         setTresor(tresor);
+        this.type = Utils.TypeTuile.Tresor;
     }
 
     /**

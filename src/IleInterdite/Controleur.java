@@ -46,7 +46,7 @@ public class Controleur implements Observateur {
         ihmIleInterdite.afficher();
         ihmIleInterdite.MAJJoueur(getAventurierActuel());
         ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
-        
+
     }
 
     public void InitialiserTestPartie() {
@@ -585,7 +585,7 @@ public class Controleur implements Observateur {
             case TERMINER_TOUR:
                 finDuTourPartie1();
                 if (getAventurierActuel().getMain().size() <= 5) {
-                    finDuTourPartie2();   
+                    finDuTourPartie2();
                     ihmIleInterdite.setEnabled(true);
                     ihmIleInterdite.MAJMain(getAventurierActuel());
                     ihmIleInterdite.MAJJoueur(getAventurierActuel());
@@ -593,7 +593,7 @@ public class Controleur implements Observateur {
                 }
                 break;
             case AUTREACTION:
-                System.out.println("test2");
+                System.out.println("test");
                 /*recupererTresor();
                 break;*/
                 donnerC();
@@ -602,7 +602,7 @@ public class Controleur implements Observateur {
             case DEFAUSSER:
                 getAventurierActuel().removeMain(msg.carte);
                 if (getAventurierActuel().getMain().size() <= 5) {
-                    finDuTourPartie2();   
+                    finDuTourPartie2();
                     ihmIleInterdite.setEnabled(true);
                     ihmIleInterdite.MAJMain(getAventurierActuel());
                     ihmIleInterdite.MAJJoueur(getAventurierActuel());
@@ -616,36 +616,39 @@ public class Controleur implements Observateur {
 
     }
 
-    public void donnerC(){
+    public void donnerC() {
         if (getAventurierActuel().getMain().size() > 0) {
-                    int i = 1;
-                    System.out.println("====Carte a donner====");
+            int i = 1;
+            System.out.println("====Carte a donner====");
 
-                    for (Carte c : getAventurierActuel().getMain()) {
-                        System.out.println("Carte n°" + i + " : " + c.getNomCarte());
-                        i++;
-                    }
-                    System.out.println("Saisir la carte a donner: ");
-                    Scanner sc = new Scanner(System.in);
-                    int choix = sc.nextInt();
+            for (Carte c : getAventurierActuel().getMain()) {
+                System.out.println("Carte n°" + i + " : " + c.getNomCarte());
+                i++;
+            }
+            System.out.println("Saisir la carte a donner: ");
+            Scanner sc = new Scanner(System.in);
+            int choix = sc.nextInt();
 
-                    System.out.println("====Donner a qui====");
+            System.out.println("====Donner a qui====");
+            for (Aventurier a : getLesAventuriers()) {
 
-                    System.out.println("Saisir a qui envoyer: ");
-                    String role = sc.next();
-                    for (Aventurier a : getLesAventuriers()) {
-                        System.out.println("Nom Rôle :" + a.getNomRole());
-                        System.out.println("role :" + role);
-                        if (a.getNomRole().equals(role)) {
-                            System.out.println("Test5");
-                            getAventurierActuel().donnerCarte(a, choix);
-                        }
-                    }
+                System.out.println("Nom Rôle :" + a.getNomRole());
+
+            }
+
+            System.out.println("Saisir a qui envoyer: ");
+            String role = sc.next();
+
+            for (Aventurier a : getLesAventuriers()) {
+
+                if ((a.getNomRole().equals(role))) {
+                    System.out.println("Test5");
+                    getAventurierActuel().donnerCarte(a, choix);
                 }
+            }
+        }
     }
-    
-    
-    
+
     // Retourne true si c'est gagné
     public boolean isGagne() {
         int i = 0;
@@ -664,15 +667,27 @@ public class Controleur implements Observateur {
 
     // Retourne true si c'est perdu
     public boolean isPerdu() {
+        // On vérifie si l'Héliport a coulé, dans ce cas-ci la partie est perdue
+        for (int l = 0; l <= 5; l++) {
+            for (int c = 0; c <= 5; c++) {
+                if (laGrille.getTuile(l, c) != null) {
+                    if ((laGrille.getTuile(l, c).getNom() == "Heliport") && (laGrille.getTuile(l, c).getEtat() == Utils.EtatTuile.COULEE)) {
+                        System.out.println("l'houloucouptère a coulé");
+                        return true;
+                    }
+                }
+            }
 
-        if (laGrille.getTuile(2, 3).getEtat() == Utils.EtatTuile.COULEE) {
-            System.out.println("l'houloucouptère a coulé");
-            return true;
         }
-        
-        
-        
+        // Si la liste des déplacements possibles est vide ou que la tuile sur laquelle est présente un joueur est coulée alors un des joueurs ne peut plus se déplacer 
+        if (getAventurierActuel().DeplacementPossible(laGrille).isEmpty() && laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getEtat() == Utils.EtatTuile.COULEE) {
+            // /!\ CAS PLONGUEUR NON TRAITE /!\  
+            return true;
+
+        }
+
         int j = 0;
+        // On parcourt une liste de trésors restants
         for (Tresor tresor : tresorsRestant) {
 
             int i = 0;

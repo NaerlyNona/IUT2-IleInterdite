@@ -86,6 +86,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             btnDeplacer.setEnabled(false);
             btnAssecher.setEnabled(true);
         } else if (e.getSource() == btnAssecher) {
+
             mode = 1;
             btnDeplacer.setEnabled(true);
             btnAssecher.setEnabled(false);
@@ -207,21 +208,23 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         setSize(650, 700);
         setVisible(true);
-        
-        
+
         fenetreF = new JFrame();
-        fenetreF.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        
         
         texteF = new JLabel("Félicitations ! Vous avez perdu.");
         fenetreF.setSize(300,100);
-        fenetreF.setVisible(true);
         fenetreF.add(texteF);
+        fenetreF.setVisible(false);
+
+        
         
     }
 
     public void fin(){
         this.setVisible(false);
         fenetreF.setVisible(true);
+        fenetreF.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
     }
     public void MAJJoueur(Aventurier aventurier) {
         nomJoueur.setText(aventurier.getNomJoueur());
@@ -245,22 +248,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
     }
 
-    public void MAJMain(Aventurier aventurier) {
-        ArrayList<Carte> laMain = aventurier.getMain();
-        int i = 0;
-
-        while ((i < laMain.size()) && (i <= 4)) {
-            main[i].setText(laMain.get(i).getNomCarte());
-            i++;
-        }
-
-        while ((i <= 4)) {
-            main[i].setText("Vide");
-            i++;
-        }
-
-    }
-
+  
     public void MAJTuile(Grille laGrille, ArrayList<Aventurier> lesAventuriers, Aventurier aventurier) {
         for (int l = 0; l <= 5; l++) {
             for (int c = 0; c <= 5; c++) {

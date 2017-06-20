@@ -14,10 +14,12 @@ import IleInterdite.Utils.Pion;
 public class TuileSpawn extends Tuile{
     
     private Pion spawnAventurier;
+    private Utils.TypeTuile type;
     
     public TuileSpawn(String nom, Pion spawnAventurier) {
         super(nom);
         setSpawnAventurier(spawnAventurier);
+        this.type = Utils.TypeTuile.Spawn;
     }
 
     /**

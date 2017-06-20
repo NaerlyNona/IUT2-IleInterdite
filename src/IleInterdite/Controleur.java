@@ -459,17 +459,19 @@ public class Controleur implements Observateur {
 
     }
 
-    public boolean verifTresor() {
+    /*public boolean verifTresor() {
         int x = getAventurierActuel().getX();
         int y = getAventurierActuel().getY();
-        return ((x == 1 && y == 1) || (x == 2 && y == 0) || (x == 2 && y == 5) || (x == 3 && y == 5) || (x == 4 && y == 1) || (x == 4 && y == 2) || (x == 4 && y == 3) || (x == 5 && y == 3));
+        return 
+                for (int l = 0; l <= 5; l++) {
+                    for (int c = 0; c <= 5; c++) {
 
-    }
+    }*/
 
     public void recupererTresor() {
         int i = 0;
         System.out.println("test3");
-        if (verifTresor()) {
+        if (laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor() != null) {
             System.out.println("Il y a un trésor ici starfoulila");
             for (Carte carte : getAventurierActuel().getMain()) {
                 if (carte.getNomCarte() == laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor().getNom()) {
@@ -490,29 +492,39 @@ public class Controleur implements Observateur {
                     }
                 }
             }
-                /*for (Tresor tresor : tresorsRestant) {
-                if (tresor.getType() == laGrille.getTuile(getAventurierActuel().getX(),getAventurierActuel().getY()).getTresor().getType()) {
-                    i++;
-                    
-                }
-            }
-            if (i == 4) {
-                tresors.add(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
-                tresorsRestant.remove(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
-                System.out.println("recuperation du trésor en cours... ah c fini laul");
-            }
-            for (Carte carte : getAventurierActuel().getMain()) {
-                if (carte.getNomCarte() == laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor().getNom()) {
-                    getAventurierActuel().removeMain(carte);
-                    defausseTresor.add(carte);
-                }
-            }*/
+             
             } else {
                 System.out.println("Il n'y a pas de trésor ici starfoulila");
             }
         }
     
-
+    public void donnerCarte(){
+        if (getAventurierActuel().getMain().size() > 0){
+            int i = 1;
+            System.out.println("====Carte a donner====");
+            for (Carte c : getAventurierActuel().getMain()){   
+                System.out.println("Carte n°"+i+" : "+c.getNomCarte());
+                i++;
+            }
+            Scanner sc = new Scanner(System.in);
+            int choix = sc.nextInt();
+            
+            for (Aventurier a : lesAventuriers){
+                System.out.println("====Donner a qui====");
+                if (a.getX()==getAventurierActuel().getX() && a.getY()==getAventurierActuel().getY()){
+                    
+                }
+            }
+                
+            //a.ajouterMain(getAventurierActuel().getMain().get(choix-1));
+            getAventurierActuel().getMain().remove(choix-1);
+        } else { System.out.println("starfoulila");
+        
+            
+        }  
+    }
+    
+    
     /**
      * @return the niveauEau
      */

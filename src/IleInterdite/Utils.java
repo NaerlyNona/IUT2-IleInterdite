@@ -35,6 +35,9 @@ public class Utils {
             return this.libelle ;
         }
     }
+    public static enum TypeTuile {
+        Tresor,Spawn,Normale
+    }
     public static enum TypeTresor {
         GRIS,ROUGE,JAUNE,BLEU
     }

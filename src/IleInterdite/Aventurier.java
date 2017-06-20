@@ -64,16 +64,16 @@ public class Aventurier {
         }
    
         if (getMain().size()==6){
-            System.out.println("Saisissez numéro carte a défausser:");
-            Scanner sc = new Scanner(System.in);
-            int choix = sc.nextInt();
-            main.remove(choix-1);
+            //System.out.println("Saisissez numéro carte a défausser:");
+            /*Scanner sc = new Scanner(System.in);
+            int choix = sc.nextInt();*/
+            getInput();
         }
         if (getMain().size()==7){
-            System.out.println("Saisissez numéro carte a défausser:");
-            Scanner sc = new Scanner(System.in);
-            int choix = sc.nextInt();
-            main.remove(choix-1);
+            //System.out.println("Saisissez numéro carte a défausser:");
+            /*Scanner sc = new Scanner(System.in);
+            int choix = sc.nextInt();*/
+            getInput();
             System.out.println("====Carte a defausse====");
             i = 1;
                 for (Carte c : main){   
@@ -81,12 +81,26 @@ public class Aventurier {
                     i++;
                 }
                 
-            System.out.println("Saisissez numéro carte a défausser:");
-            int choix2 = sc.nextInt();
-            main.remove(choix2-1);
+            //System.out.println("Saisissez numéro carte a défausser:");
+            //int choix2 = sc.nextInt();
+            getInput();
         }
     }
  
+    public void getInput() {
+    try {
+        System.out.println("Saisissez la carte a défausser : ");
+        Scanner sc = new Scanner(System.in);
+        int choix = sc.nextInt();
+        
+        main.remove(choix-1);
+        System.out.println("La carte n°"+choix+" a été défaussée");
+    } catch (IndexOutOfBoundsException ime) {
+        System.out.println("Entrée invalide, recommence fdp.");
+        getInput();
+    }
+}
+    
     public void donnerCarte(Aventurier a){
         if (main.size() > 0){
             int i = 1;

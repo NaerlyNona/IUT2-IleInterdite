@@ -346,7 +346,7 @@ public class Controleur implements Observateur {
     public void setFinDuTour(boolean finDuTour) {
         this.finDuTour = finDuTour;
     }
-
+    
     public void finDuTourPartie1() {
         if (isGagne()) {
             System.out.println("c gagné");

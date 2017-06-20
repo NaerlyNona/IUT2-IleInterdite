@@ -268,6 +268,22 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         paJoueur.setText("PA: " + aventurier.getPA());
         roleJoueur.setText(aventurier.getNomRole());
     }
+    
+    public void MAJMain(Aventurier aventurier) {
+        ArrayList<Carte> laMain = aventurier.getMain();
+        int i = 0;
+
+        while ((i < laMain.size()) && (i <= 4)) {
+            main[i].setText(laMain.get(i).getNomCarte());
+            i++;
+        }
+
+        while ((i <= 4)) {
+            main[i].setText("Vide");
+            i++;
+        }
+
+    } 
 
   
     public void MAJTuile(Grille laGrille, ArrayList<Aventurier> lesAventuriers, Aventurier aventurier) {

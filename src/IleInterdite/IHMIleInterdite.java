@@ -39,7 +39,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     private JLabel nomJoueur;
     private JLabel roleJoueur;
     private JLabel paJoueur;
-
+    private JLabel texteF;
+    private JFrame fenetreF;
     private JPanel panelPlateau = new JPanel(); // le panel du milieu où le plateau est présent
     private JButtonTuile[][] tuiles = new JButtonTuile[6][6];
 
@@ -206,8 +207,22 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         setSize(650, 700);
         setVisible(true);
+        
+        
+        fenetreF = new JFrame();
+        fenetreF.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        
+        texteF = new JLabel("Félicitations ! Vous avez perdu.");
+        fenetreF.setSize(300,100);
+        fenetreF.setVisible(true);
+        fenetreF.add(texteF);
+        
     }
 
+    public void fin(){
+        this.setVisible(false);
+        fenetreF.setVisible(true);
+    }
     public void MAJJoueur(Aventurier aventurier) {
         nomJoueur.setText(aventurier.getNomJoueur());
         paJoueur.setText("PA: " + aventurier.getPA());

@@ -76,9 +76,10 @@ public class IHMDefausse extends JFrame implements ActionListener {
                 }
                 i++;
             }
-
-            observateur.traiterMessage(m);  
+            
+            observateur.traiterMessage(m);
             this.dispose();
+
         }
     }
     

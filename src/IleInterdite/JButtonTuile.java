@@ -5,7 +5,12 @@
  */
 package IleInterdite;
 
+import java.awt.Color;
+import java.awt.GridLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 /**
  *
  * @author monnetlu
@@ -13,6 +18,7 @@ import javax.swing.JButton;
 public class JButtonTuile extends JButtonSpecial {
     private int posX;
     private int posY;
+
     
     public JButtonTuile(int posX, int posY) {
         super(0);

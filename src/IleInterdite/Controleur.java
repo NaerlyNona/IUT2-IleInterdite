@@ -46,6 +46,7 @@ public class Controleur implements Observateur {
         ihmIleInterdite.afficher();
         ihmIleInterdite.MAJJoueur(getAventurierActuel());
         ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+        
     }
 
     public void InitialiserTestPartie() {
@@ -351,11 +352,11 @@ public class Controleur implements Observateur {
             System.out.println("c gagné");
         }
         if (isPerdu()) {
-
+            ihmIleInterdite.fin();
         }
-        
+
         piocheFinTour();
-        
+
         this.getAventurierActuel().reset();
         if (this.getLesAventuriers().size() - 1 == this.getLesAventuriers().lastIndexOf(getAventurierActuel())) {
             setAventurierActuel(getLesAventuriers().get(0));
@@ -363,7 +364,6 @@ public class Controleur implements Observateur {
             setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel()) + 1));
         }
 
-        
         InonderFinTour(getNiveauEau(), piocheInondation);
 
         setFinDuTour(false);
@@ -467,7 +467,6 @@ public class Controleur implements Observateur {
                     for (int c = 0; c <= 5; c++) {
 
     }*/
-
     public void recupererTresor() {
         int i = 0;
         System.out.println("test3");
@@ -486,45 +485,18 @@ public class Controleur implements Observateur {
                 System.out.println("recuperation du trésor en cours... ah c fini laul");
                 for (Carte main : getAventurierActuel().getMain()) {
                     if (main.getNomCarte() == laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor().getNom()) {
-                     
+
                         defausseTresor.add(main);
                         getAventurierActuel().removeMain(main);
                     }
                 }
             }
-             
-            } else {
-                System.out.println("Il n'y a pas de trésor ici starfoulila");
-            }
+
+        } else {
+            System.out.println("Il n'y a pas de trésor ici starfoulila");
         }
-    
-    public void donnerCarte(){
-        if (getAventurierActuel().getMain().size() > 0){
-            int i = 1;
-            System.out.println("====Carte a donner====");
-            for (Carte c : getAventurierActuel().getMain()){   
-                System.out.println("Carte n°"+i+" : "+c.getNomCarte());
-                i++;
-            }
-            Scanner sc = new Scanner(System.in);
-            int choix = sc.nextInt();
-            
-            for (Aventurier a : lesAventuriers){
-                System.out.println("====Donner a qui====");
-                if (a.getX()==getAventurierActuel().getX() && a.getY()==getAventurierActuel().getY()){
-                    
-                }
-            }
-                
-            //a.ajouterMain(getAventurierActuel().getMain().get(choix-1));
-            getAventurierActuel().getMain().remove(choix-1);
-        } else { System.out.println("starfoulila");
-        
-            
-        }  
     }
-    
-    
+
     /**
      * @return the niveauEau
      */
@@ -584,12 +556,44 @@ public class Controleur implements Observateur {
                 break;
             case AUTREACTION:
                 System.out.println("test2");
-                recupererTresor();
+                /*recupererTresor();
+                break;*/
+                donnerCarte();
                 break;
         }
 
     }
 
+    public void donnerCarte(){
+        if (getAventurierActuel().getMain().size() > 0) {
+                    int i = 1;
+                    System.out.println("====Carte a donner====");
+
+                    for (Carte c : getAventurierActuel().getMain()) {
+                        System.out.println("Carte n°" + i + " : " + c.getNomCarte());
+                        i++;
+                    }
+                    System.out.println("Saisir la carte a donner: ");
+                    Scanner sc = new Scanner(System.in);
+                    int choix = sc.nextInt();
+
+                    System.out.println("====Donner a qui====");
+
+                    System.out.println("Saisir a qui envoyer: ");
+                    String role = sc.next();
+                    for (Aventurier a : getLesAventuriers()) {
+                        System.out.println("Nom Rôle :" + a.getNomRole());
+                        System.out.println("role :" + role);
+                        if (a.getNomRole().equals(role)) {
+                            System.out.println("Test5");
+                            getAventurierActuel().donnerCarte(a, choix);
+                        }
+                    }
+                }
+    }
+    
+    
+    
     // Retourne true si c'est gagné
     public boolean isGagne() {
         int i = 0;
@@ -613,6 +617,9 @@ public class Controleur implements Observateur {
             System.out.println("l'houloucouptère a coulé");
             return true;
         }
+        
+        
+        
         int j = 0;
         for (Tresor tresor : tresorsRestant) {
 
@@ -639,7 +646,7 @@ public class Controleur implements Observateur {
         if (j == tresorsRestant.size()) {
             return false;
         } else {
-            System.out.println("le trésor a coulé");
+            System.out.println("le trésor a coulé encule");
             return true;
         }
 

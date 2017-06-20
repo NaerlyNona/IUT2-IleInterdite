@@ -46,6 +46,7 @@ public class Controleur implements Observateur {
         ihmIleInterdite.afficher();
         ihmIleInterdite.MAJJoueur(getAventurierActuel());
         ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+        
     }
 
     public void InitialiserTestPartie() {
@@ -351,7 +352,7 @@ public class Controleur implements Observateur {
             System.out.println("c gagné");
         }
         if (isPerdu()) {
-
+            ihmIleInterdite.fin();
         }
 
         piocheFinTour();
@@ -593,7 +594,9 @@ public class Controleur implements Observateur {
                 break;
             case AUTREACTION:
                 System.out.println("test2");
-                recupererTresor();
+                /*recupererTresor();
+                break;*/
+                donnerC();
                 break;
 
             case DEFAUSSER:
@@ -613,6 +616,36 @@ public class Controleur implements Observateur {
 
     }
 
+    public void donnerC(){
+        if (getAventurierActuel().getMain().size() > 0) {
+                    int i = 1;
+                    System.out.println("====Carte a donner====");
+
+                    for (Carte c : getAventurierActuel().getMain()) {
+                        System.out.println("Carte n°" + i + " : " + c.getNomCarte());
+                        i++;
+                    }
+                    System.out.println("Saisir la carte a donner: ");
+                    Scanner sc = new Scanner(System.in);
+                    int choix = sc.nextInt();
+
+                    System.out.println("====Donner a qui====");
+
+                    System.out.println("Saisir a qui envoyer: ");
+                    String role = sc.next();
+                    for (Aventurier a : getLesAventuriers()) {
+                        System.out.println("Nom Rôle :" + a.getNomRole());
+                        System.out.println("role :" + role);
+                        if (a.getNomRole().equals(role)) {
+                            System.out.println("Test5");
+                            getAventurierActuel().donnerCarte(a, choix);
+                        }
+                    }
+                }
+    }
+    
+    
+    
     // Retourne true si c'est gagné
     public boolean isGagne() {
         int i = 0;
@@ -636,6 +669,9 @@ public class Controleur implements Observateur {
             System.out.println("l'houloucouptère a coulé");
             return true;
         }
+        
+        
+        
         int j = 0;
         for (Tresor tresor : tresorsRestant) {
 
@@ -662,7 +698,7 @@ public class Controleur implements Observateur {
         if (j == tresorsRestant.size()) {
             return false;
         } else {
-            System.out.println("le trésor a coulé");
+            System.out.println("le trésor a coulé encule");
             return true;
         }
 

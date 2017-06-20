@@ -542,6 +542,7 @@ public class Controleur implements Observateur {
 
             case TERMINER_TOUR:
                 finDuTour();
+                ihmIleInterdite.MAJMain(getAventurierActuel());
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
         }

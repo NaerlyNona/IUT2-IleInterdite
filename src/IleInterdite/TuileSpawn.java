@@ -17,6 +17,7 @@ public class TuileSpawn extends Tuile{
     
     public TuileSpawn(String nom, Pion spawnAventurier) {
         super(nom);
+        super.setType(2);
         setSpawnAventurier(spawnAventurier);
     }
 

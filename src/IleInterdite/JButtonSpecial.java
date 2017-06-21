@@ -15,7 +15,7 @@ public class JButtonSpecial extends JButton {
     private int type;
     /* 0
     0 = Tuile
-    1 = MAin
+    1 = Main
     2 = Helicoptere
     3 = Sac de sable
     */

@@ -7,6 +7,7 @@ package IleInterdite;
 
 import Roles.Messager;
 import IleInterdite.Utils.Pion;
+import Roles.Explorateur;
 import Roles.Pilote;
 import Roles.Plongeur;
 import java.awt.Color;
@@ -104,8 +105,11 @@ public class Controleur implements Observateur {
         Collections.shuffle(piocheTresor);
 
         lesAventuriers = new ArrayList();
-        getLesAventuriers().add(new Pilote("Joueur1"));
-        getLesAventuriers().add(new Plongeur("Joueur2"));
+        getLesAventuriers().add(new Explorateur("Joueur1"));
+        getLesAventuriers().add(new Messager("Joueur2"));
+        
+        
+        
         /*getLesAventuriers().add(new Explorateur("Joueur3"));
         getLesAventuriers().add(new Messager("Joueur4"));*/
 
@@ -376,11 +380,12 @@ public class Controleur implements Observateur {
         } else {
             setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel()) + 1));
         }
-
+        
         InonderFinTour(getNiveauEau(), piocheInondation);
 
         setFinDuTour(false);
 ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
+        getAventurierActuel().setPouvoirPossible(true);
     }
 
     /**
@@ -625,22 +630,18 @@ ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
             case DONNER:
                 if (msg.aventurier != null && msg.carte != null){
                     getAventurierActuel().donnerC(msg.aventurier, msg.carte);
-                    
                 }
                 
                 ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
-                ihmIleInterdite.MAJMain(aventurierActuel);
+                ihmIleInterdite.MAJMain(getAventurierActuel());
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 
                 break;
             case BTNDONNER:
-                System.out.println("Test donnation");
                 new IHMDonner(getAventurierActuel(), this, this);
                 break;
             case SACDESABLE:
                 System.out.println("SAC DE SABLE");
-                
-                getAventurierActuel().setPA(getAventurierActuel().getPA()+1);
                 getAventurierActuel().Assécher(laGrille, "" + msg.posX + msg.posY);
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
@@ -656,22 +657,16 @@ ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
 
    
     
-    public int getNbJoueur(Aventurier aventurier){
+    public int getNbJoueurSurCase(){
         int i = 0;
         for (Aventurier a : getLesAventuriers() ){
-             if (a.getX() == aventurier.getX() && a.getY()==aventurier.getY() && a != aventurier){
-                 
+             if (getAventurierActuel().getX() == a.getX() && getAventurierActuel().getY()==a.getY()){
                  i++;
-             }
-             
-             
+             }    
          }
-        if (aventurier.getNomRole()=="Messager"){
-            return lesAventuriers.size()-1;
-        }
-        else {
-            return i;
-        }
+        
+        return i-1;
+
         
        
         

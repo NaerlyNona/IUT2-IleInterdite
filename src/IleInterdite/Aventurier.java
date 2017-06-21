@@ -38,11 +38,30 @@ public class Aventurier {
         setPouvoirPossible(false);
     }
 
+    public ArrayList<String> donnerPossible(Controleur controleur) {
+        ArrayList<String> test = new ArrayList();
+        
+            for (Aventurier a : controleur.getLesAventuriers()) {
+
+            if ((a.getX() == getX() && a.getY() == getY()) && (a != this) && (a.getMain().size()<5)) {
+                test.add(a.getNomJoueur());
+                
+            }
+          
+        
+        
+            
+
+        }
+        return test;
+    }
+    
     public void donnerC(Aventurier aventurier, Carte carte) {
+        setPA(getPA()-1);
         System.out.println("La carte " + carte.getNomCarte() + " a été donné a " + aventurier.getNomJoueur());
         aventurier.ajouterMain(carte);
         this.removeMain(carte);
-        setPA(getPA() - 1);
+        
     }
 
     public void ajouterMain(Carte carte) {
@@ -57,13 +76,13 @@ public class Aventurier {
     public void modifMain() {
         int i = 1;
         System.out.println("====MAIN====");
-        for (Carte c : main) {
+        for (Carte c : getMain()) {
             System.out.println(c.getNomCarte());
         }
         if (getMain().size() > 5) {
 
             System.out.println("====Carte a defausse====");
-            for (Carte c : main) {
+            for (Carte c : getMain()) {
                 System.out.println("Carte n°" + i + " : " + c.getNomCarte());
                 i++;
             }
@@ -82,7 +101,7 @@ public class Aventurier {
             getInput();
             System.out.println("====Carte a defausse====");
             i = 1;
-            for (Carte c : main) {
+            for (Carte c : getMain()) {
                 System.out.println("Carte n°" + i + " : " + c.getNomCarte());
                 i++;
             }
@@ -99,7 +118,7 @@ public class Aventurier {
             Scanner sc = new Scanner(System.in);
             int choix = sc.nextInt();
 
-            main.remove(choix - 1);
+            getMain().remove(choix - 1);
             System.out.println("La carte n°" + choix + " a été défaussée");
         } catch (IndexOutOfBoundsException ime) {
             System.out.println("Entrée invalide, recommence fdp.");
@@ -215,7 +234,7 @@ public class Aventurier {
     }
 
     public void reset() {
-        setPA(maxPA);
+        setPA(getMaxPA());
     }
 
     public ArrayList<Integer> DeplacementPossible(Grille laGrille) {

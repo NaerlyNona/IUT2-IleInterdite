@@ -45,8 +45,8 @@ public class IHMDonner extends JFrame implements ActionListener {
         this.setAlwaysOnTop(true);
         this.setUndecorated(false);
         lesCartes = new String[aventurier.getMain().size()];
-        
-        lesJoueurs = new String[controleur.getNbJoueur(aventurier)];
+
+        lesJoueurs = new String[controleur.getNbJoueurSurCase()+1];
 
         this.setLayout(new GridLayout(5, 1));
 
@@ -57,32 +57,22 @@ public class IHMDonner extends JFrame implements ActionListener {
         int i = 0;
         for (Carte uneCarte : aventurier.getMain()) {
             //if (uneCarte.getType() != Utils.TypeCarte.Spéciale){
-                lesCartes[i] = uneCarte.getNomCarte();
-                i++;
+            lesCartes[i] = uneCarte.getNomCarte();
+            i++;
             //}
-            
+
+        }
+        i = 0;
+        for (String unJoueur : aventurier.donnerPossible(controleur)) {
+            lesJoueurs[i] = unJoueur;
+            i++;
         }
         listeCarte = new JComboBox(lesCartes);
         this.add(listeCarte, BorderLayout.NORTH);
         this.add(texteJoueur, BorderLayout.NORTH);
 
         i = 0;
-        if ((aventurier.getNomRole()!="Messager")){
-            for (Aventurier a : controleur.getLesAventuriers()) {
 
-            if ((a.getX() == aventurier.getX() && a.getY() == aventurier.getY()) && (a != aventurier) && (a.getMain().size()<5)) {
-                lesJoueurs[i] = a.getNomJoueur();
-                i++;
-            }
-            if ((aventurier.getNomRole()=="Messager")){
-                lesJoueurs[i] = a.getNomJoueur();
-                i++;
-            }
-        }
-        
-            
-
-        }
         listeJoueur = new JComboBox(lesJoueurs);
         this.add(listeJoueur, BorderLayout.NORTH);
 
@@ -99,7 +89,7 @@ public class IHMDonner extends JFrame implements ActionListener {
             m.type = TypesMessage.DONNER;
 
             String nomCarte = ((String) (listeCarte.getSelectedItem()));
-            
+
             boolean carteTrouvé = false;
             int i = 0;
             while (!carteTrouvé) {
@@ -109,19 +99,16 @@ public class IHMDonner extends JFrame implements ActionListener {
                 }
                 i++;
             }
-            
+
             String nomJoueur = ((String) (listeJoueur.getSelectedItem()));
             for (Aventurier a : controleur.getLesAventuriers()) {
                 if (nomJoueur.equals(a.getNomJoueur())) {
-                    m.aventurier =a;
+                    m.aventurier = a;
                 }
-               
+
             }
             this.dispose();
             observateur.traiterMessage(m);
-            
-            
-           
 
         }
     }

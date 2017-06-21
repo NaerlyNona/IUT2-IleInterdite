@@ -67,13 +67,20 @@ public class IHMDonner extends JFrame implements ActionListener {
         this.add(texteJoueur, BorderLayout.NORTH);
 
         i = 0;
-        
-        for (Aventurier a : controleur.getLesAventuriers()) {
+        if ((aventurier.getNomRole()!="Messager")){
+            for (Aventurier a : controleur.getLesAventuriers()) {
 
             if ((a.getX() == aventurier.getX() && a.getY() == aventurier.getY()) && (a != aventurier) && (a.getMain().size()<5)) {
                 lesJoueurs[i] = a.getNomJoueur();
                 i++;
             }
+            if ((aventurier.getNomRole()=="Messager")){
+                lesJoueurs[i] = a.getNomJoueur();
+                i++;
+            }
+        }
+        
+            
 
         }
         listeJoueur = new JComboBox(lesJoueurs);

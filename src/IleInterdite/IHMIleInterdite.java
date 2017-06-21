@@ -58,7 +58,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     private JButton btnDonner = new JButton("Donner");
     private JButton btnRecuperer = new JButton("Récupérer");
 
-    private JButton[] main = new JButton[5];
+    private JButtonSpecial[] main = new JButtonSpecial[5];
+    
 
     private JButton btnTerminerTour = new JButton("Terminer Tour");
 
@@ -80,7 +81,11 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         btnRecuperer.addActionListener(this);
         btnTerminerTour.addActionListener(this);
         btnDonner.addActionListener(this);
-
+        
+        for(JButton button : main){
+            button.setEnabled(false);
+            button.addActionListener(this);
+        }
     }
 
     @Override
@@ -121,9 +126,23 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             }
         } else if (((JButtonSpecial) (e.getSource())).getType() == 1) {
             System.out.println("Main");
-        } else if(e.getSource()==main) {
             
+        } else if (((JButtonSpecial) (e.getSource())).getType() == 2) {
             
+                    System.out.println("TEST1");
+                    m.type = TypesMessage.HELICOPTERE;
+                    observateur.traiterMessage(m);
+                
+                
+            
+        } else if (((JButtonSpecial) (e.getSource())).getType() == 3) {
+               
+               
+                    System.out.println("TEST2");
+                    m.type = TypesMessage.SACDESABLE;
+                    observateur.traiterMessage(m);
+                
+    
         }
     }
 
@@ -209,7 +228,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         panelBoutons.add(new JLabel("Cartes", SwingConstants.CENTER), gbc);
 
         for (int i = 0; i <= 4; i++) {
-            main[i] = new JButtonMain();
+            main[i] = new JButtonSpecial(1);
             main[i].setHorizontalTextPosition(SwingConstants.CENTER);
             main[i].setText("Vide");
             this.main[i].addActionListener(this);
@@ -281,9 +300,13 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     }
 
     public void MAJBoutons(Aventurier aventurier, Controleur controleur) {
+        
         if (aventurier.getMain().isEmpty() || controleur.getNbJoueur(aventurier) == 0) {
             btnDonner.setEnabled(false);
         } else {
+            btnDonner.setEnabled(true);
+        }
+        if (controleur.getAventurierActuel().getNomRole()=="Messager" && aventurier.getMain().size() != 0  ){
             btnDonner.setEnabled(true);
         }
         int i = 0;
@@ -301,15 +324,32 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         } else {
             btnRecuperer.setEnabled(false);
         }
+        
+        
 
     }
 
     public void MAJMain(Aventurier aventurier) {
+        for(JButton button : main){
+            button.addActionListener(this);
+        }
         ArrayList<Carte> laMain = aventurier.getMain();
         int i = 0;
-
+        
         while ((i < laMain.size()) && (i <= 4)) {
+            
             main[i].setText(laMain.get(i).getNomCarte());
+            if (laMain.get(i).getNomCarte() == "houloucouptère"){
+                main[i].setType(2);
+            }
+            if (laMain.get(i).getNomCarte() == "Sac de sable"){
+                main[i].setType(3);
+            }
+            if (aventurier.getMain().get(i).getType() == Utils.TypeCarte.Spéciale){
+                main[i].setEnabled(true);
+            } else {
+                main[i].setEnabled(false);
+            }
             i++;
         }
 
@@ -317,6 +357,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             main[i].setText("Vide");
             i++;
         }
+        
 
     }
 

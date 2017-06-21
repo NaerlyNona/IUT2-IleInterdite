@@ -22,7 +22,7 @@ import java.util.*;
 public class Controleur implements Observateur {
 
     private IHMIleInterdite ihmIleInterdite;
-    private int nombreAventurier = 4;
+    private int nombreAventurier = 2;
     private double niveauEau = 2;
     private Grille laGrille = new Grille();
     private Tuile uneTuile;
@@ -365,6 +365,7 @@ public class Controleur implements Observateur {
         }
 
         piocheFinTour();
+        ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
 
     }
 
@@ -379,7 +380,7 @@ public class Controleur implements Observateur {
         InonderFinTour(getNiveauEau(), piocheInondation);
 
         setFinDuTour(false);
-
+ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
     }
 
     /**
@@ -636,6 +637,16 @@ public class Controleur implements Observateur {
                 System.out.println("Test donnation");
                 new IHMDonner(getAventurierActuel(), this, this);
                 break;
+            case SACDESABLE:
+                System.out.println("SAC DE SABLE");
+                
+                getAventurierActuel().setPA(getAventurierActuel().getPA()+1);
+                getAventurierActuel().Assécher(laGrille, "" + msg.posX + msg.posY);
+                ihmIleInterdite.MAJJoueur(getAventurierActuel());
+                ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
+                
+                break;
 
         }
 
@@ -643,7 +654,7 @@ public class Controleur implements Observateur {
 
    
 
-    
+   
     
     public int getNbJoueur(Aventurier aventurier){
         int i = 0;
@@ -655,8 +666,15 @@ public class Controleur implements Observateur {
              
              
          }
+        if (aventurier.getNomRole()=="Messager"){
+            return lesAventuriers.size()-1;
+        }
+        else {
+            return i;
+        }
+        
        
-        return i;
+        
         
     }
     // Retourne true si c'est gagné

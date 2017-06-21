@@ -70,13 +70,14 @@ public class Plongeur extends Aventurier {
         boolean test = false;
         while (test != true){
             if ((X + 1 <= 5) && (laGrille.getTuile(X + 1, Y) != null) && (laGrille.getTuile(X + 1, Y).getEtat() == Utils.EtatTuile.COULEE)) {
+                int j = 0;
                 for (int i : getTuilesAdjacentes(laGrille, X-1, Y)) {
                     String i2 = Integer.toString(i);
                     int x = Character.getNumericValue(i2.charAt(0));
                     int y = Character.getNumericValue(i2.charAt(1));
                     if (laGrille.getTuile(x, y).getEtat() != Utils.EtatTuile.COULEE){
-                        lesDeplacements.add(X+Y);
-                        int j = 1;
+                        lesDeplacements.add(Integer.valueOf(String.valueOf(x) + String.valueOf(y)));
+                        j++;
                     } else {
                         
                     }

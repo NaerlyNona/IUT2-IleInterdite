@@ -42,10 +42,12 @@ public class Controleur implements Observateur {
         InitialiserTestPartie();
 
         ihmIleInterdite = new IHMIleInterdite(this);
-
         ihmIleInterdite.afficher();
         ihmIleInterdite.MAJJoueur(getAventurierActuel());
         ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+        
+        
+        
 
     }
 
@@ -100,6 +102,8 @@ public class Controleur implements Observateur {
         lesAventuriers = new ArrayList();
         getLesAventuriers().add(new Explorateur("Joueur1"));
         getLesAventuriers().add(new Messager("Joueur2"));
+        getLesAventuriers().add(new Explorateur("Joueur3"));
+        getLesAventuriers().add(new Messager("Joueur4"));
 
         for (Aventurier unAventurier : getLesAventuriers()) {
             System.out.println(unAventurier.getNomJoueur());
@@ -117,6 +121,7 @@ public class Controleur implements Observateur {
         }
 
         System.out.println("Nearly la petite pute");
+        System.out.println("Là, là tu fais le ramadan là !");
         //En Haut à Gauche
         getLaGrille().addTuile(0, 0, null);
         getLaGrille().addTuile(0, 1, null);

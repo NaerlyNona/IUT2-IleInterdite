@@ -14,6 +14,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -30,6 +31,7 @@ public class FenetreDebut implements ActionListener {
 
     private final JFrame window;
     // Déclaration de la combobox pour la liste de joueurs
+    private IHMIleInterdite ihmIleInterdite;
     private final JComboBox listeDeroulante;
     // Déclaration de la combobox pour la liste de niveaux
 
@@ -56,28 +58,19 @@ public class FenetreDebut implements ActionListener {
     private final JButton btnContinuer;
     private final JButton btnAlea;
     private final JButton btnQuitter;
+    
+    private Grille laGrille = new Grille();
+    
+    private Controleur controleur;
+    
 
     //
     private ArrayList<String> aventuriers = new ArrayList();
+    
+    private ArrayList<String> aventurierAlea = new ArrayList();
 
     public FenetreDebut() {
-        listeRole = new JComboBox();
-        listeRole2 = new JComboBox();
-        listeRole3 = new JComboBox();
-        listeRole4 = new JComboBox();
-        //Liste de choix des niveaux
-        niveauxProposes = new String[]{"Novice", "Normal", "Elite", "Légendaire"};
-        //Liste de choix du nombre des joueurs
-        nbjoueursProposes = new String[]{"2", "3", "4"};
-        //Liste de choix des aventuriers
-        aventuriersProposes = new String[]{"Explorateur", "Pilote", "Navigateur", "Plongeur", "Ingénieur", "Messager"};
-
-        aventuriers = new ArrayList();
-
-        for (int i = 0; i < 6; i++) {
-            aventuriers.add(aventuriersProposes[i]);
-        }
-
+        
         window = new JFrame();
 
         // Définit la taille de la fenêtre en pixels
@@ -136,6 +129,25 @@ public class FenetreDebut implements ActionListener {
         //Panel positionné en bas
         JPanel panelBas = new JPanel();
         mainPanel.add(panelBas, BorderLayout.SOUTH);
+        
+        listeRole = new JComboBox();
+        listeRole2 = new JComboBox();
+        listeRole3 = new JComboBox();
+        listeRole4 = new JComboBox();
+        //Liste de choix des niveaux
+        niveauxProposes = new String[]{"Novice", "Normal", "Elite", "Légendaire"};
+        //Liste de choix du nombre des joueurs
+        nbjoueursProposes = new String[]{"2", "3", "4"};
+        //Liste de choix des aventuriers
+        aventuriersProposes = new String[]{"Explorateur", "Pilote", "Navigateur", "Plongeur", "Ingénieur", "Messager"};
+
+        aventuriers = new ArrayList();
+
+        for (int i = 0; i < 6; i++) {
+            aventuriers.add(aventuriersProposes[i]);
+        }
+
+        
 
         // Propriétés de JLabel: Nom du jeu
         JLabel nomJeu = new JLabel("Île Interdite");
@@ -243,10 +255,17 @@ public class FenetreDebut implements ActionListener {
                 if (listeDeroulante.getSelectedItem() == "3") {
                     panelJoueur3.setVisible(true);
                     panelJoueur4.setVisible(false);
+                    
+                    
 
+                    
                 } else if (listeDeroulante.getSelectedItem() == "4") {
                     panelJoueur3.setVisible(true);
                     panelJoueur4.setVisible(true);
+                    
+                    controleur.getLesAventuriers().add(new Explorateur("Joueur 3"));
+                    controleur.getLesAventuriers().add(new Messager("Joueur 4"));
+                    
                 } else if (listeDeroulante.getSelectedItem() == "2") {
                     panelJoueur3.setVisible(false);
                     panelJoueur4.setVisible(false);
@@ -392,6 +411,10 @@ public class FenetreDebut implements ActionListener {
         FenetreDebut f1 = new FenetreDebut();
     }
 
+    FenetreDebut(Controleur aThis) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     //ActionListener de l'interface de début
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -399,6 +422,7 @@ public class FenetreDebut implements ActionListener {
             System.out.println(listeRole.getSelectedItem());
 
         }
+        
         if (e.getSource() == btnContinuer) {
 
             if (listeRole.getSelectedItem() == listeRole2.getSelectedItem() || listeRole.getSelectedItem() == listeRole3.getSelectedItem() || listeRole.getSelectedItem() == listeRole4.getSelectedItem() || listeRole2.getSelectedItem() == listeRole.getSelectedItem() || listeRole2.getSelectedItem() == listeRole3.getSelectedItem() || listeRole2.getSelectedItem() == listeRole4.getSelectedItem() || listeRole3.getSelectedItem() == listeRole.getSelectedItem() || listeRole3.getSelectedItem() == listeRole2.getSelectedItem() || listeRole3.getSelectedItem() == listeRole4.getSelectedItem() || listeRole4.getSelectedItem() == listeRole.getSelectedItem() || listeRole4.getSelectedItem() == listeRole2.getSelectedItem() || listeRole4.getSelectedItem() == listeRole3.getSelectedItem()) {
@@ -435,7 +459,14 @@ public class FenetreDebut implements ActionListener {
 
                     System.out.print(champNom4.getText());
                     System.out.println(" qui prend le rôle: " + aventuriersProposes[listeRole4.getSelectedIndex()]);
+                     
+                    
                 }
+                
+                window.setVisible(false);
+                new Controleur();
+                
+                
             }
         }
 
@@ -446,6 +477,24 @@ public class FenetreDebut implements ActionListener {
         }
 
         if (e.getSource() == btnAlea) {
+            
+            int indiceAlea =0;
+            
+            for (int i = 0; i < aventuriers.size(); i++ ) {
+            
+          
+           do {//choix d'un indice aléatoire entre O et la taille du vecteur tmp
+                indiceAlea = (int) (Math.random()*aventuriers.size());            
+              }
+           while (aventuriers.contains(indiceAlea));
+                   
+                  //lire l'indice aléatoire générer
+                  roleAlea =aventuriers.get(indiceAlea);
+                  
+                  //ajout de d au vecteur                
+                  aventurierAlea.add(roleAlea);
+                                           
+                    }
 
         }
 

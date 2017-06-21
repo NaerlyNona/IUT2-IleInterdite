@@ -38,6 +38,24 @@ public class Aventurier {
         setPouvoirPossible(false);
     }
 
+    public ArrayList<String> donnerPossible(Controleur controleur) {
+        ArrayList<String> test = new ArrayList();
+        
+            for (Aventurier a : controleur.getLesAventuriers()) {
+
+            if ((a.getX() == getX() && a.getY() == getY()) && (a != this) && (a.getMain().size()<5)) {
+                test.add(a.getNomJoueur());
+                
+            }
+          
+        
+        
+            
+
+        }
+        return test;
+    }
+    
     public void donnerC(Aventurier aventurier, Carte carte) {
         System.out.println("La carte " + carte.getNomCarte() + " a été donné a " + aventurier.getNomJoueur());
         aventurier.ajouterMain(carte);

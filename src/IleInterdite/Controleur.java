@@ -671,21 +671,17 @@ public class Controleur implements Observateur {
 
     }
 
-    public int getNbJoueur(Aventurier aventurier) {
+    public int getNbJoueurSurCase() {
         int i = 0;
         for (Aventurier a : getLesAventuriers()) {
-            if (a.getX() == aventurier.getX() && a.getY() == aventurier.getY() && a != aventurier) {
+            if (a.getX() == getAventurierActuel().getX() && a.getY() == getAventurierActuel().getY() && a != getAventurierActuel()) {
 
                 i++;
             }
 
-        }
-        if (aventurier.getNomRole() == "Messager") {
-            return lesAventuriers.size() - 1;
-        } else {
-            return i;
-        }
-
+            
+    }
+        return i;
     }
 
     // Retourne true si c'est gagné

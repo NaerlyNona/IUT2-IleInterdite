@@ -46,7 +46,7 @@ public class IHMDonner extends JFrame implements ActionListener {
         this.setUndecorated(false);
         lesCartes = new String[aventurier.getMain().size()];
 
-        lesJoueurs = new String[controleur.getNbJoueurSurCase()+1];
+        lesJoueurs = new String[controleur.getNbJoueurSurCase()];
 
         this.setLayout(new GridLayout(5, 1));
 

@@ -16,4 +16,5 @@ public class Message {
     public int posY = 0;
     public Carte carte;
     public Aventurier aventurier;
+    
 }

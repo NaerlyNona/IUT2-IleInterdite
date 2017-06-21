@@ -38,6 +38,10 @@ public class Aventurier {
 
     public void donnerC(Aventurier aventurier, Carte carte) {
 
+        
+        
+        
+        
         System.out.println("La carte " + carte.getNomCarte() + " a été donné a " + aventurier.getNomJoueur());
         aventurier.ajouterMain(carte);
         this.removeMain(carte);

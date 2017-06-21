@@ -21,5 +21,7 @@ public enum TypesMessage {
     AUTREDEFAUSSE,
     RECUPERER,
     DONNER,
-    BTNDONNER
+    BTNDONNER,
+    HELICOPTERE,
+    SACDESABLE,
 }

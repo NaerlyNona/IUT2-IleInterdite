@@ -43,7 +43,7 @@ public class Aventurier {
         
             for (Aventurier a : controleur.getLesAventuriers()) {
 
-            if ((a.getX() == getX() && a.getY() == getY()) && (a != this) && (a.getMain().size()<5)) {
+            if ((a.getX() == getX() && a.getY() == getY()) && (a != this)) {
                 test.add(a.getNomJoueur());
                 
             }
@@ -70,59 +70,6 @@ public class Aventurier {
 
     public void removeMain(Carte carte) {
         getMain().remove(carte);
-    }
-
-    public void modifMain() {
-        int i = 1;
-        System.out.println("====MAIN====");
-        for (Carte c : main) {
-            System.out.println(c.getNomCarte());
-        }
-        if (getMain().size() > 5) {
-
-            System.out.println("====Carte a defausse====");
-            for (Carte c : main) {
-                System.out.println("Carte n°" + i + " : " + c.getNomCarte());
-                i++;
-            }
-        }
-
-        if (getMain().size() == 6) {
-            //System.out.println("Saisissez numéro carte a défausser:");
-            /*Scanner sc = new Scanner(System.in);
-             int choix = sc.nextInt();*/
-            getInput();
-        }
-        if (getMain().size() == 7) {
-            //System.out.println("Saisissez numéro carte a défausser:");
-            /*Scanner sc = new Scanner(System.in);
-             int choix = sc.nextInt();*/
-            getInput();
-            System.out.println("====Carte a defausse====");
-            i = 1;
-            for (Carte c : main) {
-                System.out.println("Carte n°" + i + " : " + c.getNomCarte());
-                i++;
-            }
-
-            //System.out.println("Saisissez numéro carte a défausser:");
-            //int choix2 = sc.nextInt();
-            getInput();
-        }
-    }
-
-    public void getInput() {
-        try {
-            System.out.println("Saisissez la carte a défausser : ");
-            Scanner sc = new Scanner(System.in);
-            int choix = sc.nextInt();
-
-            main.remove(choix - 1);
-            System.out.println("La carte n°" + choix + " a été défaussée");
-        } catch (IndexOutOfBoundsException ime) {
-            System.out.println("Entrée invalide, recommence fdp.");
-            getInput();
-        }
     }
 
     public void donnerCarte(Aventurier a, int choix) {

@@ -19,7 +19,6 @@ import javax.swing.JTextField;
 public class Pilote extends Aventurier {
 
     private String nomRole;
-    private boolean pouvoirPossible;
 
     public Pilote(String leNomJoueur) {
         super(leNomJoueur, Utils.Pion.BLEU);
@@ -41,20 +40,6 @@ public class Pilote extends Aventurier {
         this.nomRole = nomRole;
     }
 
-    /**
-     * @return the pouvoirPossible
-     */
-    public boolean isPouvoirPossible() {
-        return pouvoirPossible;
-    }
-
-    /**
-     * @param pouvoirPossible the pouvoirPossible to set
-     */
-    public void setPouvoirPossible(boolean pouvoirPossible) {
-        this.pouvoirPossible = pouvoirPossible;
-    }
-
     public ArrayList<Integer> DeplacementPossiblePouvoir(Grille laGrille) {
         ArrayList<Integer> lesDeplacements = new ArrayList();
         lesDeplacements.clear();
@@ -68,9 +53,11 @@ public class Pilote extends Aventurier {
                 }
             }
         }
-
-        for (int unDeplacementPossible : lesDeplacements) {
-            System.out.println(unDeplacementPossible);
+        
+        for (int uneTuile : (ArrayList<Integer>)lesDeplacements.clone()) {
+            if ((Utils.getChiffre(uneTuile, 2) == getX()) && (Utils.getChiffre(uneTuile, 1) == getY())) {
+                lesDeplacements.remove( ((Object)(uneTuile)) );
+            }
         }
 
         return lesDeplacements;

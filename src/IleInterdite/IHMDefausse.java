@@ -23,6 +23,7 @@ public class IHMDefausse extends JFrame implements ActionListener {
 
      private Observateur observateur;
      private Aventurier aventurier;
+     private boolean finDuTour;
      
      private JLabel texteDefausse;
      private JComboBox listeCarte;
@@ -32,9 +33,10 @@ public class IHMDefausse extends JFrame implements ActionListener {
      
      private String[] lesCartes = new String[7];
      
-     public IHMDefausse (Aventurier aventurier, Observateur observateur){
+     public IHMDefausse (Aventurier aventurier, Observateur observateur, boolean finDuTour){
          this.observateur = observateur;
          this.aventurier = aventurier;
+         this.finDuTour = finDuTour;
          
          this.setSize(new Dimension(300,100));
          this.setLocationRelativeTo(null);
@@ -64,8 +66,11 @@ public class IHMDefausse extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnConfirmer){
             Message m = new Message();
-            m.type = TypesMessage.DEFAUSSER;
-            
+            if (finDuTour){
+                 m.type = TypesMessage.DEFAUSSERFINDUTOUR;
+            } else {
+                 m.type = TypesMessage.DEFAUSSER;
+            }
             String nomCarte = ((String)(listeCarte.getSelectedItem()));
             boolean carteTrouvé = false;
             int i = 0;

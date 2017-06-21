@@ -15,9 +15,9 @@ import java.util.ArrayList;
  * @author monnetlu
  */
 public class Ingenieur extends Aventurier {
-    
-   private String nomRole;
-    
+
+    private String nomRole;
+
     public Ingenieur(String leNomJoueur) {
         super(leNomJoueur, Utils.Pion.ROUGE);
         setNomRole("Ingenieur");
@@ -36,7 +36,7 @@ public class Ingenieur extends Aventurier {
     public void setNomRole(String nomRole) {
         this.nomRole = nomRole;
     }
-    
+
     @Override
     public void Assécher(Grille laGrille, String laPosition) {
 
@@ -44,14 +44,39 @@ public class Ingenieur extends Aventurier {
 
         int x = Character.getNumericValue(laPosition.charAt(0));
         int y = Character.getNumericValue(laPosition.charAt(1));
-
+        
         for (int unAssechementPossible : AssechementPossible) {
             if (unAssechementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
-                laGrille.getTuile(x, y).setEtat(Utils.EtatTuile.ASSECHEE);
-                setPA(getPA() - 1);
-                
+                if (isPouvoirPossible()) {
+                    laGrille.getTuile(x, y).setEtat(Utils.EtatTuile.ASSECHEE);
+                    setPouvoirPossible(false);
+                } else {
+                    laGrille.getTuile(x, y).setEtat(Utils.EtatTuile.ASSECHEE);
+                    setPA(getPA() - 1);
+                    setPouvoirPossible(true);
+                }
             }
         }
     }
-    
+
+    @Override
+    public void SeDeplacer(Grille laGrille, String laPosition) {
+
+        ArrayList<Integer> DeplacementPossible = DeplacementPossible(laGrille);
+
+        int x = Character.getNumericValue(laPosition.charAt(0));
+        int y = Character.getNumericValue(laPosition.charAt(1));
+
+        for (int unDeplacementPossible : DeplacementPossible) {
+
+            if (unDeplacementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
+                this.setPosition(x, y);
+                setPA(getPA() - 1);
+                setPouvoirPossible(false);
+                break;
+            }
+        }
+
+    }
+
 }

@@ -19,6 +19,7 @@ public class Navigateur extends Aventurier{
         super(leNomJoueur, Utils.Pion.JAUNE);
         setNomRole("Navigateur");
         setMaxPA(4);
+        setPA(getMaxPA());
     }
 
     /**

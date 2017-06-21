@@ -60,6 +60,12 @@ public class Plongeur extends Aventurier {
             }
         }
 
+        for (int uneTuile : (ArrayList<Integer>)lesDeplacements.clone()) {
+            if ((Utils.getChiffre(uneTuile, 2) == getX()) && (Utils.getChiffre(uneTuile, 1) == getY())) {
+                lesDeplacements.remove( ((Object)(uneTuile)) );
+            }
+        }
+
         return lesDeplacements;
     }
 
@@ -69,7 +75,7 @@ public class Plongeur extends Aventurier {
         ArrayList<Integer> lesCoulées = new ArrayList();
         //Parcourt les Tuiles, si la tuile n'est pas coulée, on l'ajoute à la liste des déplacements possibles
         for (int uneTuile : lesTuiles) {
-            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() != Utils.EtatTuile.ASSECHEE && (!lesCoulées.contains(uneTuile)) ) {
+            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() != Utils.EtatTuile.ASSECHEE && (!lesCoulées.contains(uneTuile))) {
                 lesCoulées.add(uneTuile);
                 lesCoulées.addAll(DeplacementPossiblePlongée(laGrille, Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1), lesCoulées));
             }
@@ -84,7 +90,7 @@ public class Plongeur extends Aventurier {
         ArrayList<Integer> lesCoulées = coulées;
         //Parcourt les Tuiles, si la tuile n'est pas coulée, on l'ajoute à la liste des déplacements possibles
         for (int uneTuile : lesTuiles) {
-            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() != Utils.EtatTuile.ASSECHEE && (!lesCoulées.contains(uneTuile)) ) {
+            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() != Utils.EtatTuile.ASSECHEE && (!lesCoulées.contains(uneTuile))) {
                 lesCoulées.add(uneTuile);
                 lesCoulées.addAll(DeplacementPossiblePlongée(laGrille, Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1), lesCoulées));
             }
@@ -142,9 +148,8 @@ public class Plongeur extends Aventurier {
         }
 
         /*if ((laGrille.getTuile(X, Y) != null)) {
-            tuilesAdjacentes.add(Integer.valueOf(String.valueOf(X) + String.valueOf(Y)));
-        }*/
-
+         tuilesAdjacentes.add(Integer.valueOf(String.valueOf(X) + String.valueOf(Y)));
+         }*/
         return tuilesAdjacentes;
 
     }

@@ -294,6 +294,7 @@ public class Aventurier {
             if (unAssechementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
                 laGrille.getTuile(x, y).setEtat(Utils.EtatTuile.ASSECHEE);
                 setPA(getPA() - 1);
+                break;
             }
         }
     }

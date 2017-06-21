@@ -101,7 +101,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             btnDeplacer.setEnabled(true);
             btnAssecher.setEnabled(false);
         } else if (e.getSource() == btnTerminerTour) {
-            m.type = TypesMessage.TERMINER_TOUR;
+            m.type = TypesMessage.TERMINER_TOUR_INITIALISATION;
             observateur.traiterMessage(m);
         } else if (e.getSource() == btnDonner) {
             m.type = TypesMessage.BTNDONNER;
@@ -287,8 +287,11 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
     public void MAJJoueur(Aventurier aventurier) {
         nomJoueur.setText(aventurier.getNomJoueur());
-        paJoueur.setText("PA: " + aventurier.getPA());
+        paJoueur.setText("<html><p align=\"center\"> PA: " + aventurier.getPA());
         roleJoueur.setText(aventurier.getNomRole());
+        if (aventurier.isPouvoirPossible()){
+            paJoueur.setText(paJoueur.getText() + "<br> Pouvoir Disponible");
+        }
 
     }
 
@@ -363,7 +366,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     tuiles[l][c].setEnabled(false);
                 } else {
                     //tuiles[l][c].setText(laGrille.getTuile(l, c).getNom()+"<html><br>");
-                    tuiles[l][c].setText("<html>");
+                    tuiles[l][c].setText("<html><p align=\"center\">");
                     if (laGrille.getTuile(l, c).getEtat() == Utils.EtatTuile.ASSECHEE) {
                         tuiles[l][c].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.ORANGE));
                         tuiles[l][c].setBackground(Color.WHITE);

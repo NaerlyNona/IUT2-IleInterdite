@@ -52,6 +52,8 @@ public class Controleur implements Observateur {
         ihmIleInterdite.MAJJoueur(getAventurierActuel());
         ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
         ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+        ihmIleInterdite.MAJMain(getAventurierActuel());
+        ihmIleInterdite.MAJInfo(this);
 
     }
 
@@ -64,7 +66,7 @@ public class Controleur implements Observateur {
         piocheInondation = new ArrayList();
         piocheTresor = new ArrayList();
         defausseTresor = new ArrayList();
-        tresors = new ArrayList();
+        setTresors((ArrayList<Tresor>) new ArrayList());
         tresorsRestant = new ArrayList();
 
         Tresor calice = new Tresor("Le Calice de l’onde", Utils.TypeTresor.BLEU);
@@ -113,6 +115,10 @@ public class Controleur implements Observateur {
             System.out.println(unAventurier.getNomJoueur());
             if (unAventurier.getNomRole() == "Messager") {
                 unAventurier.setPosition(3, 5);
+                for (int i = 0; i < 5; i++) {
+                carte = new CarteTrésor("Le Calice de l’onde", calice, Utils.TypeCarte.Trésor);
+                unAventurier.ajouterMain(carte);
+                }
             }
 
             if (unAventurier.getNomRole() == "Pilote") {
@@ -373,6 +379,9 @@ public class Controleur implements Observateur {
         } else {
             setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel()) + 1));
         }
+        
+        InonderFinTour(getNiveauEau(), piocheInondation);
+        ihmIleInterdite.MAJInfo(this);
 
         ihmIleInterdite.MAJMain(getAventurierActuel());
         ihmIleInterdite.MAJJoueur(getAventurierActuel());
@@ -383,9 +392,8 @@ public class Controleur implements Observateur {
 
     public void finDuTourPartie2() {
 
-        InonderFinTour(getNiveauEau(), piocheInondation);
-
         setFinDuTour(false);
+;
         ihmIleInterdite.MAJMain(getAventurierActuel());
         ihmIleInterdite.setEnabled(true);
 
@@ -504,10 +512,10 @@ public class Controleur implements Observateur {
                 }
             }
             if (i == 4) {
-                tresors.add(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
+                getTresors().add(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
                 tresorsRestant.remove(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
                 System.out.println("recuperation du trésor en cours... ah c fini laul");
-                for (Carte main : getAventurierActuel().getMain()) {
+                for (Carte main : (ArrayList<Carte>)(getAventurierActuel().getMain().clone())) {
                     if (main.getNomCarte() == laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor().getNom()) {
 
                         defausseTresor.add(main);
@@ -636,6 +644,7 @@ public class Controleur implements Observateur {
 
             case RECUPERER:
                 recupererTresor();
+                ihmIleInterdite.MAJTresor(this);
                 break;
 
             case DEFAUSSER:
@@ -752,6 +761,20 @@ public class Controleur implements Observateur {
             return true;
         }
 
+    }
+
+    /**
+     * @return the tresors
+     */
+    public ArrayList<Tresor> getTresors() {
+        return tresors;
+    }
+
+    /**
+     * @param tresors the tresors to set
+     */
+    public void setTresors(ArrayList<Tresor> tresors) {
+        this.tresors = tresors;
     }
 
 }

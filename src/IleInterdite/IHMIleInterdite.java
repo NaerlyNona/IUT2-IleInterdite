@@ -14,14 +14,17 @@ import static java.awt.GridBagConstraints.BOTH;
 import static java.awt.GridBagConstraints.CENTER;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
@@ -44,17 +47,29 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     private JPanel panelPlateau = new JPanel(); // le panel du milieu où le plateau est présent
     private JButtonTuile[][] tuiles = new JButtonTuile[6][6];
 
-    private JPanel panelInterface = new JPanel(); // le panel de droite où l'interface est présente
+    private JPanel panelInterface = new JPanel(); // le panel de droite où l'interface est présente: contient panel Info, Boutons et Terminer Tour
+
+    private JPanel panelInfo = new JPanel(); // le panel de droite où se trouve le panel joueur,trésor et niveau d'eau
 
     private JPanel panelJoueur = new JPanel(); // le panel du haut-droite où est affiché les informations du joueur courant
     private JLabel nomJoueur = new JLabel("Nom", SwingConstants.CENTER);
     private JLabel roleJoueur = new JLabel("Role", SwingConstants.CENTER);
 
+    private JPanel panelTresor = new JPanel();
+    private JButton btnCalice = new JButton("Calice");
+    private JButton btnPierre = new JButton("Pierre");
+    private JButton btnStatue = new JButton("Statue");
+    private JButton btnCristal = new JButton("Cristal");
+
+    private JPanel panelNiveauEau = new JPanel();
+    private JLabel labelNiveauEau = new JLabel("", SwingConstants.CENTER);
+    private double niveauEau = 0;
+    private JSlider sliderNiveauEau = new JSlider(0, 20, 0);
+
     private JPanel panelBoutons = new JPanel(); // le panel du bas-droite où les boutons sont présents
     private JLabel paJoueur = new JLabel("PA : X", SwingConstants.CENTER);
     private JButton btnDeplacer = new JButton("Déplacer");
     private JButton btnAssecher = new JButton("Assécher");
-
     private JButton btnDonner = new JButton("Donner");
     private JButton btnRecuperer = new JButton("Récupérer");
 
@@ -168,15 +183,35 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         panelMain.add(panelPlateau, BorderLayout.CENTER);
 
         //panelInterface
+        panelInterface.setLayout(new BorderLayout());
+        //panelInfo
+        panelInfo.setLayout(new BorderLayout());
         //panelJoueur
         panelJoueur.setLayout(new GridLayout(1, 2));
         panelJoueur.setBorder(BorderFactory.createRaisedBevelBorder());
-        //panelJoueur.setBackground(Color.RED);
         panelJoueur.add(nomJoueur);
         panelJoueur.add(roleJoueur);
+        //panelTresor          
+        panelTresor.setLayout(new GridLayout(1, 4));
+        panelTresor.add(btnCalice);
+        panelTresor.add(btnPierre);
+        panelTresor.add(btnStatue);
+        panelTresor.add(btnCristal);
+        //panelNiveauEau
+        panelNiveauEau.setLayout(new BorderLayout());
+        labelNiveauEau.setText("<html><p align=\"center\">Niveau de l'eau: " + niveauEau);
+        panelNiveauEau.add(labelNiveauEau, BorderLayout.NORTH);
+        sliderNiveauEau.setEnabled(false);
+        sliderNiveauEau.setMajorTickSpacing(2);
+        sliderNiveauEau.setMinorTickSpacing(1);
+        sliderNiveauEau.setPaintTicks(true);
+        panelNiveauEau.add(sliderNiveauEau, BorderLayout.CENTER);
 
-        panelInterface.setLayout(new BorderLayout());
-        panelInterface.add(panelJoueur, BorderLayout.NORTH);
+        panelInfo.add(panelJoueur, BorderLayout.NORTH);
+        panelInfo.add(panelTresor, BorderLayout.CENTER);
+        panelInfo.add(panelNiveauEau, BorderLayout.SOUTH);
+
+        panelInterface.add(panelInfo, BorderLayout.NORTH);
 
         //panelBoutons
         panelBoutons.setLayout(new GridBagLayout());
@@ -194,6 +229,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         gbc.gridy = 1;
         gbc.gridheight = 1;
         gbc.gridwidth = 2;
+        btnDeplacer.setEnabled(false);
         panelBoutons.add(btnDeplacer, gbc);
 
         gbc.gridx = 2;
@@ -267,8 +303,10 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
     public void afficher() {
         setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        //setSize(900, 600);
+        setSize(1080, 720);
         setVisible(true);
+        this.setResizable(false);
 
         fenetreF = new JFrame();
 
@@ -289,8 +327,28 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         nomJoueur.setText(aventurier.getNomJoueur());
         paJoueur.setText("<html><p align=\"center\"> PA: " + aventurier.getPA());
         roleJoueur.setText(aventurier.getNomRole());
-        if (aventurier.isPouvoirPossible()){
+        if (aventurier.isPouvoirPossible()) {
             paJoueur.setText(paJoueur.getText() + "<br> Pouvoir Disponible");
+        }
+    }
+
+    public void MAJInfo(Controleur leControleur) {
+        niveauEau = leControleur.getNiveauEau();
+        labelNiveauEau.setText("<html><p align=\"center\">Niveau de l'eau: " + niveauEau);
+        sliderNiveauEau.setValue((int) (niveauEau * 2));
+    }
+
+    public void MAJTresor(Controleur leControleur) {
+        for (Tresor unTresor : leControleur.getTresors()) {
+            if (unTresor.getType() == Utils.TypeTresor.BLEU) {
+                btnCalice.setEnabled(false);
+            } else if (unTresor.getType() == Utils.TypeTresor.GRIS) {
+                btnPierre.setEnabled(false);
+            } else if (unTresor.getType() == Utils.TypeTresor.JAUNE) {
+                btnStatue.setEnabled(false);
+            } else if (unTresor.getType() == Utils.TypeTresor.ROUGE) {
+                btnCristal.setEnabled(false);
+            }
         }
 
     }
@@ -358,28 +416,41 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     }
 
     public void MAJTuile(Grille laGrille, ArrayList<Aventurier> lesAventuriers, Aventurier aventurier) {
+        Tuile uneTuile;
+        ImageIcon icon;
+        String iconPath;
         for (int l = 0; l <= 5; l++) {
             for (int c = 0; c <= 5; c++) {
-                if (laGrille.getTuile(l, c) == null) {
+                uneTuile = laGrille.getTuile(l, c);
+                if (uneTuile == null) {
                     tuiles[l][c].setBorder(null);
                     tuiles[l][c].setBackground(Color.LIGHT_GRAY);
                     tuiles[l][c].setEnabled(false);
                 } else {
                     //tuiles[l][c].setText(laGrille.getTuile(l, c).getNom()+"<html><br>");
-                    tuiles[l][c].setText("<html><p align=\"center\">");
+                    tuiles[l][c].setText("<html><p align=\"center\">");  
+   
+                    iconPath = ("/img/resources/tiles/" + uneTuile.getNom() + ".png");
+                    tuiles[l][c].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
                     if (laGrille.getTuile(l, c).getEtat() == Utils.EtatTuile.ASSECHEE) {
-                        tuiles[l][c].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.ORANGE));
+                        //tuiles[l][c].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.ORANGE));
                         tuiles[l][c].setBackground(Color.WHITE);
                         tuiles[l][c].setEnabled(true);
                     } else if (laGrille.getTuile(l, c).getEtat() == Utils.EtatTuile.INONDEE) {
-                        tuiles[l][c].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.CYAN));
+                        //tuiles[l][c].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.CYAN));
                         tuiles[l][c].setBackground(Color.WHITE);
                         tuiles[l][c].setEnabled(true);
+                        iconPath = ("/img/resources/tiles/" + uneTuile.getNom() + "_flood.png");
                     } else if (laGrille.getTuile(l, c).getEtat() == Utils.EtatTuile.COULEE) {
                         tuiles[l][c].setBorder(null);
                         tuiles[l][c].setBackground(Color.GRAY);
                         tuiles[l][c].setEnabled(false);
                     }
+                    icon = createImageIcon(iconPath, uneTuile.getNom());
+                    Image img = icon.getImage();
+                    Image newimg = img.getScaledInstance( tuiles[l][c].getWidth(), tuiles[l][c].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
+                    icon = new ImageIcon( newimg );
+                    tuiles[l][c].setIcon(icon);
 
                     if (laGrille.getTuile(l, c).getType() == 1) {
                         tuiles[l][c].setText(tuiles[l][c].getText() + ((TuileTresor) (laGrille.getTuile(l, c))).getTresor().getNom() + "<br>");
@@ -398,5 +469,16 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         }
 
     }
+    
+    protected ImageIcon createImageIcon(String path,
+                                           String description) {
+    java.net.URL imgURL = getClass().getResource(path);
+    if (imgURL != null) {
+        return new ImageIcon(imgURL, description);
+    } else {
+        System.err.println("Couldn't find file: " + path);
+        return null;
+    }
+}
 
 }

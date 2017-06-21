@@ -6,7 +6,9 @@
 package Roles;
 
 import IleInterdite.Aventurier;
+import IleInterdite.Grille;
 import IleInterdite.Utils;
+import java.util.ArrayList;
 
 /**
  *
@@ -33,6 +35,23 @@ public class Ingenieur extends Aventurier {
      */
     public void setNomRole(String nomRole) {
         this.nomRole = nomRole;
+    }
+    
+    @Override
+    public void Assécher(Grille laGrille, String laPosition) {
+
+        ArrayList<Integer> AssechementPossible = AssechementPossible(laGrille);
+
+        int x = Character.getNumericValue(laPosition.charAt(0));
+        int y = Character.getNumericValue(laPosition.charAt(1));
+
+        for (int unAssechementPossible : AssechementPossible) {
+            if (unAssechementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
+                laGrille.getTuile(x, y).setEtat(Utils.EtatTuile.ASSECHEE);
+                setPA(getPA() - 1);
+                
+            }
+        }
     }
     
 }

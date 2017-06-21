@@ -5,9 +5,9 @@
  */
 package IleInterdite;
 
-import Roles.Explorateur;
 import Roles.Messager;
 import IleInterdite.Utils.Pion;
+import Roles.Pilote;
 import Roles.Plongeur;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -104,8 +104,8 @@ public class Controleur implements Observateur {
         Collections.shuffle(piocheTresor);
 
         lesAventuriers = new ArrayList();
-        getLesAventuriers().add(new Plongeur("Joueur1"));
-        getLesAventuriers().add(new Messager("Joueur2"));
+        getLesAventuriers().add(new Pilote("Joueur1"));
+        getLesAventuriers().add(new Plongeur("Joueur2"));
         /*getLesAventuriers().add(new Explorateur("Joueur3"));
         getLesAventuriers().add(new Messager("Joueur4"));*/
 

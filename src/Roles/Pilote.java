@@ -58,61 +58,62 @@ public class Pilote extends Aventurier {
     public ArrayList<Integer> DeplacementPossiblePouvoir(Grille laGrille) {
         ArrayList<Integer> lesDeplacements = new ArrayList();
         lesDeplacements.clear();
-        System.out.println(laGrille.getTuile(getX(), getY()).getNom());
 
         for (int x = 0; x <= 5; x++) {
             for (int y = 0; y <= 5; y++) {
                 if (laGrille.getTuile(x, y) != null) {
-                    lesDeplacements.add(Integer.valueOf(String.valueOf(x) + String.valueOf(y)));
+                    if (laGrille.getTuile(x, y).getEtat() != Utils.EtatTuile.COULEE) {
+                        lesDeplacements.add(Integer.valueOf(String.valueOf(x) + String.valueOf(y)));
+                    }
                 }
             }
         }
-        
-        System.out.println("TEST");
+
         for (int unDeplacementPossible : lesDeplacements) {
             System.out.println(unDeplacementPossible);
         }
-System.out.println("TEST");
+
         return lesDeplacements;
     }
 
-   /* @Override
-    public void SeDeplacer(Grille laGrille, JTextField leChampCommande) {
+    @Override
+    public void SeDeplacer(Grille laGrille, String laPosition) {
 
         ArrayList<Integer> DeplacementPossible = DeplacementPossible(laGrille);
         ArrayList<Integer> DeplacementPossiblePouvoir = DeplacementPossiblePouvoir(laGrille);
 
+        int x = Character.getNumericValue(laPosition.charAt(0));
+        int y = Character.getNumericValue(laPosition.charAt(1));
+
         boolean deplacementFait = false;
 
-        System.out.println("Déplacements possibles:");
         for (int unDeplacementPossible : DeplacementPossible) {
-            System.out.println(unDeplacementPossible);
-        }
 
-        System.out.println("Avant " + getX() + "," + getY());
-
-        int x = Character.getNumericValue(leChampCommande.getText().charAt(0));
-        int y = Character.getNumericValue(leChampCommande.getText().charAt(leChampCommande.getText().length() - 1));
-        for (int unDeplacementPossible : DeplacementPossible) {
             if (unDeplacementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
                 this.setPosition(x, y);
                 setPA(getPA() - 1);
                 deplacementFait = true;
+                break;
             }
         }
 
-        if (!deplacementFait && isPouvoirPossible()) {
+        if (isPouvoirPossible() && !deplacementFait) {
             for (int unDeplacementPossiblePouvoir : DeplacementPossiblePouvoir) {
+
                 if (unDeplacementPossiblePouvoir == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
                     this.setPosition(x, y);
-                    setPA(getPA() - 1);
                     setPouvoirPossible(false);
-                    deplacementFait = true;
+                    setPA(getPA() - 1);
+                    break;
                 }
             }
-            System.out.println("Pouvoir utilisé");
         }
-        System.out.println("Apres " + getX() + "," + getY());
+
     }
-*/
+
+    @Override
+    public void reset() {
+        super.reset();
+        setPouvoirPossible(true);
+    }
 }

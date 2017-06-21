@@ -25,6 +25,8 @@ public class Aventurier {
     private int maxPA;
     private Utils.Pion pion;
     private ArrayList<Carte> main;
+    
+    private boolean pouvoirPossible;
 
     public Aventurier(String leNomJoueur, Pion lePion) {
         setNomJoueur(leNomJoueur);
@@ -33,11 +35,10 @@ public class Aventurier {
         main = new ArrayList();
         setMaxPA(3);
         setPA(getMaxPA());
-
+        setPouvoirPossible(false);
     }
 
     public void donnerC(Aventurier aventurier, Carte carte) {
-
         System.out.println("La carte " + carte.getNomCarte() + " a été donné a " + aventurier.getNomJoueur());
         aventurier.ajouterMain(carte);
         this.removeMain(carte);
@@ -239,9 +240,11 @@ public class Aventurier {
         int y = Character.getNumericValue(laPosition.charAt(1));
 
         for (int unDeplacementPossible : DeplacementPossible) {
+
             if (unDeplacementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
                 this.setPosition(x, y);
                 setPA(getPA() - 1);
+                break;
             }
         }
 
@@ -264,29 +267,23 @@ public class Aventurier {
     public void Assécher(Grille laGrille, String laPosition) {
 
         ArrayList<Integer> AssechementPossible = AssechementPossible(laGrille);
-        System.out.println("Assèchement possibles:");
-        for (int unAssechementPossible : AssechementPossible) {
-            System.out.println(unAssechementPossible);
-        }
 
         int x = Character.getNumericValue(laPosition.charAt(0));
         int y = Character.getNumericValue(laPosition.charAt(1));
 
-        System.out.println("Avant: " + laGrille.getTuile(x, y).getEtat());
-        System.out.println("Essai sur : " + x + y);
         for (int unAssechementPossible : AssechementPossible) {
             if (unAssechementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
                 laGrille.getTuile(x, y).setEtat(Utils.EtatTuile.ASSECHEE);
                 setPA(getPA() - 1);
             }
         }
-        System.out.println("Après: " + laGrille.getTuile(x, y).getEtat());
     }
 
     public ArrayList<Integer> getTuilesAdjacentes(Grille laGrille) {
 
         ArrayList<Integer> tuilesAdjacentes = new ArrayList();
 
+        //Aller à Droite possible?
         if ((this.getX() + 1 <= 5) && (laGrille.getTuile(getX() + 1, getY()) != null)) {
             tuilesAdjacentes.add(Integer.valueOf(String.valueOf(getX() + 1) + String.valueOf(getY())));
         }
@@ -340,6 +337,20 @@ public class Aventurier {
      */
     public void setMain(ArrayList<Carte> main) {
         this.main = main;
+    }
+
+    /**
+     * @return the pouvoirPossible
+     */
+    public boolean isPouvoirPossible() {
+        return pouvoirPossible;
+    }
+
+    /**
+     * @param pouvoirPossible the pouvoirPossible to set
+     */
+    public void setPouvoirPossible(boolean pouvoirPossible) {
+        this.pouvoirPossible = pouvoirPossible;
     }
 
 }

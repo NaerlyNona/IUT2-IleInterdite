@@ -23,7 +23,8 @@ public class IHMDefausse extends JFrame implements ActionListener {
 
      private Observateur observateur;
      private Aventurier aventurier;
-     private boolean finDuTour;
+     private int nbDefausse;
+     private int partieFinDuTour;
      
      private JLabel texteDefausse;
      private JComboBox listeCarte;
@@ -33,10 +34,11 @@ public class IHMDefausse extends JFrame implements ActionListener {
      
      private String[] lesCartes = new String[7];
      
-     public IHMDefausse (Aventurier aventurier, Observateur observateur, boolean finDuTour){
+     public IHMDefausse (Aventurier aventurier, Observateur observateur, int nbDefausse, int partieFinDuTour){
          this.observateur = observateur;
          this.aventurier = aventurier;
-         this.finDuTour = finDuTour;
+         this.nbDefausse = nbDefausse;
+         this.partieFinDuTour = partieFinDuTour;
          
          this.setSize(new Dimension(300,100));
          this.setLocationRelativeTo(null);
@@ -45,7 +47,7 @@ public class IHMDefausse extends JFrame implements ActionListener {
          //this.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
          this.setLayout(new BorderLayout());
          
-         texteDefausse = new JLabel("Choississez une carte à défausser:");
+         texteDefausse = new JLabel("<html><p align=\"center\">"+aventurier.getNomJoueur() +"<br>Choississez une carte à défausser:<br>(Encore " + nbDefausse + ")" );
          this.add(texteDefausse,BorderLayout.NORTH);
          
          int i = 0;
@@ -66,11 +68,8 @@ public class IHMDefausse extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnConfirmer){
             Message m = new Message();
-            if (finDuTour){
-                 m.type = TypesMessage.DEFAUSSERFINDUTOUR;
-            } else {
-                 m.type = TypesMessage.DEFAUSSER;
-            }
+            m.type = TypesMessage.DEFAUSSER;
+                 
             String nomCarte = ((String)(listeCarte.getSelectedItem()));
             boolean carteTrouvé = false;
             int i = 0;
@@ -83,8 +82,14 @@ public class IHMDefausse extends JFrame implements ActionListener {
             }
             
             observateur.traiterMessage(m);
+            m = new Message();
+            if (partieFinDuTour == 1){
+                m.type = TypesMessage.TERMINER_TOUR_PARTIE1;
+            } else {
+                m.type = TypesMessage.TERMINER_TOUR_PARTIE1;
+            } 
+            observateur.traiterMessage(m);
             this.dispose();
-
         }
     }
     

@@ -103,7 +103,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             btnDeplacer.setEnabled(true);
             btnAssecher.setEnabled(false);
         } else if (e.getSource() == btnTerminerTour) {
-            m.type = TypesMessage.TERMINER_TOUR_PARTIE1;
+            m.type = TypesMessage.TERMINER_TOUR_INITIALISATION;
             observateur.traiterMessage(m);
         } else if (e.getSource() == btnDonner) {
             m.type = TypesMessage.BTNDONNER;

@@ -7,6 +7,8 @@ package IleInterdite;
 
 import Roles.Messager;
 import IleInterdite.Utils.Pion;
+import Roles.Ingenieur;
+import Roles.Navigateur;
 import Roles.Pilote;
 import Roles.Plongeur;
 import java.awt.Color;
@@ -47,11 +49,8 @@ public class Controleur implements Observateur {
         ihmIleInterdite = new IHMIleInterdite(this);
         ihmIleInterdite.afficher();
         ihmIleInterdite.MAJJoueur(getAventurierActuel());
-        ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
+        ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
         ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
-        
-        
-        
 
     }
 
@@ -76,9 +75,9 @@ public class Controleur implements Observateur {
         Tresor cristal = new Tresor("Le Cristal ardent", Utils.TypeTresor.ROUGE);
         tresorsRestant.add(cristal);
 
-        carte = new CarteMontée("Montée",Utils.TypeCarte.Montée);
+        carte = new CarteMontée("Montée", Utils.TypeCarte.Montée);
         piocheTresor.add(carte);
-        carte = new CarteMontée("Montée",Utils.TypeCarte.Montée);
+        carte = new CarteMontée("Montée", Utils.TypeCarte.Montée);
         piocheTresor.add(carte);
         for (int i = 0; i < 5; i++) {
             carte = new CarteTrésor("Le Calice de l’onde", calice, Utils.TypeCarte.Trésor);
@@ -104,10 +103,10 @@ public class Controleur implements Observateur {
         Collections.shuffle(piocheTresor);
 
         lesAventuriers = new ArrayList();
-        getLesAventuriers().add(new Pilote("Joueur1"));
-        getLesAventuriers().add(new Plongeur("Joueur2"));
+        getLesAventuriers().add(new Ingenieur("Joueur1"));
+        getLesAventuriers().add(new Pilote("Joueur2"));
         /*getLesAventuriers().add(new Explorateur("Joueur3"));
-        getLesAventuriers().add(new Messager("Joueur4"));*/
+         getLesAventuriers().add(new Messager("Joueur4"));*/
 
         for (Aventurier unAventurier : getLesAventuriers()) {
             System.out.println(unAventurier.getNomJoueur());
@@ -282,8 +281,8 @@ public class Controleur implements Observateur {
         setAventurierActuel(lesAventuriers.get(0));
 
         /*for (CarteInondation test : getPiocheInondation()){
-            System.out.println(test.getNom());
-        }*/
+         System.out.println(test.getNom());
+         }*/
     }
 
     /**
@@ -355,7 +354,7 @@ public class Controleur implements Observateur {
     public void setFinDuTour(boolean finDuTour) {
         this.finDuTour = finDuTour;
     }
-    
+
     public void finDuTourPartie1() {
         if (isGagne()) {
             System.out.println("c gagné");
@@ -364,12 +363,9 @@ public class Controleur implements Observateur {
             ihmIleInterdite.fin();
         }
 
+        ihmIleInterdite.setEnabled(false);
         piocheFinTour();
-        ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
 
-    }
-
-    public void finDuTourPartie2() {
         this.getAventurierActuel().reset();
         if (this.getLesAventuriers().size() - 1 == this.getLesAventuriers().lastIndexOf(getAventurierActuel())) {
             setAventurierActuel(getLesAventuriers().get(0));
@@ -377,10 +373,21 @@ public class Controleur implements Observateur {
             setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel()) + 1));
         }
 
+        ihmIleInterdite.MAJMain(getAventurierActuel());
+        ihmIleInterdite.MAJJoueur(getAventurierActuel());
+        ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+        ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
+
+    }
+
+    public void finDuTourPartie2() {
+
         InonderFinTour(getNiveauEau(), piocheInondation);
 
         setFinDuTour(false);
-ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
+        ihmIleInterdite.MAJMain(getAventurierActuel());
+        ihmIleInterdite.setEnabled(true);
+
     }
 
     /**
@@ -443,12 +450,11 @@ ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
             }
         }
 
-        System.out.println(piocheTresor.size());
-        if (getAventurierActuel().getMain().size() > 5) {
-            ihmIleInterdite.setEnabled(false);
-            new IHMDefausse(getAventurierActuel(), this);
-        }
-
+        /*System.out.println(piocheTresor.size());
+         if (getAventurierActuel().getMain().size() > 5) {
+         ihmIleInterdite.setEnabled(false);
+         new IHMDefausse(getAventurierActuel(), this, true);
+         }*/
     }
 
     public void InonderFinTour(double niveau, ArrayList<CarteInondation> cartes) {
@@ -477,13 +483,13 @@ ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
     }
 
     /*public boolean verifTresor() {
-        int x = getAventurierActuel().getX();
-        int y = getAventurierActuel().getY();
-        return 
-                for (int l = 0; l <= 5; l++) {
-                    for (int c = 0; c <= 5; c++) {
+     int x = getAventurierActuel().getX();
+     int y = getAventurierActuel().getY();
+     return 
+     for (int l = 0; l <= 5; l++) {
+     for (int c = 0; c <= 5; c++) {
 
-    }*/
+     }*/
     public void recupererTresor() {
         int i = 0;
         System.out.println("test3");
@@ -507,7 +513,9 @@ ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
                         getAventurierActuel().removeMain(main);
                     }
                 }
-            } else { System.out.println("T'as pas assez de carte enculé"); }
+            } else {
+                System.out.println("T'as pas assez de carte enculé");
+            }
 
         } else {
             System.out.println("Il n'y a pas de trésor ici starfoulila");
@@ -570,11 +578,12 @@ ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
 
     @Override
     public void traiterMessage(Message msg) {
+        Message m = new Message();
         switch (msg.type) {
             case DEMARRER:
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
-                ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
+                ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
                 break;
 
             case DEPLACER:
@@ -582,56 +591,66 @@ ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
                     getAventurierActuel().SeDeplacer(laGrille, "" + msg.posX + msg.posY);
                     ihmIleInterdite.MAJJoueur(getAventurierActuel());
                     ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
-                    ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
+                    ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
                 }
                 break;
 
             case ASSECHER:
-                if (getAventurierActuel().getPA() > 0) {
+                if ((getAventurierActuel().getPA() > 0) || ((getAventurierActuel().getNomRole() == "Ingenieur") && (getAventurierActuel().isPouvoirPossible()))) {
                     getAventurierActuel().Assécher(laGrille, "" + msg.posX + msg.posY);
                     ihmIleInterdite.MAJJoueur(getAventurierActuel());
                     ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
-                    ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
+                    ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
                 }
                 break;
 
-            case TERMINER_TOUR:
+            case TERMINER_TOUR_INITIALISATION:
                 finDuTourPartie1();
+                m = new Message();
+                m.type = TypesMessage.TERMINER_TOUR_PARTIE1;
+                this.traiterMessage(m);
+                break;
+
+            case TERMINER_TOUR_PARTIE1:
                 if (getAventurierActuel().getMain().size() <= 5) {
+                    System.out.println("Fin de tour partie 1");
                     finDuTourPartie2();
-                    ihmIleInterdite.setEnabled(true);
-                    ihmIleInterdite.MAJMain(getAventurierActuel());
-                    ihmIleInterdite.MAJJoueur(getAventurierActuel());
-                    ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
-                    ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
+                    m = new Message();
+                    m.type = TypesMessage.TERMINER_TOUR_PARTIE2;
+                    this.traiterMessage(m);
+                } else {
+                    System.out.println(getAventurierActuel().getMain().size() - 5);
+                    new IHMDefausse(getAventurierActuel(), this, getAventurierActuel().getMain().size() - 5, 1);
                 }
                 break;
+
+            case TERMINER_TOUR_PARTIE2:
+                if (getAventurierActuel().getMain().size() <= 5) {
+                    System.out.println("Fin de tour partie 2");
+                    ihmIleInterdite.setEnabled(true);
+                } else {
+                    new IHMDefausse(getAventurierActuel(), this, getAventurierActuel().getMain().size() - 5, 2);
+                }
+                break;
+
             case RECUPERER:
                 recupererTresor();
                 break;
+
             case DEFAUSSER:
                 getAventurierActuel().removeMain(msg.carte);
-                if (getAventurierActuel().getMain().size() <= 5) {
-                    finDuTourPartie2();
-                    ihmIleInterdite.setEnabled(true);
-                    ihmIleInterdite.MAJMain(getAventurierActuel());
-                    ihmIleInterdite.MAJJoueur(getAventurierActuel());
-                    ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
-                    ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
-                } else {
-                    new IHMDefausse(getAventurierActuel(), this);
-                }
                 break;
+
             case DONNER:
-                if (msg.aventurier != null && msg.carte != null){
+                if (msg.aventurier != null && msg.carte != null) {
                     getAventurierActuel().donnerC(msg.aventurier, msg.carte);
-                    
+
                 }
-                
-                ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
+
+                ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
                 ihmIleInterdite.MAJMain(aventurierActuel);
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
-                
+
                 break;
             case BTNDONNER:
                 System.out.println("Test donnation");
@@ -639,44 +658,36 @@ ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
                 break;
             case SACDESABLE:
                 System.out.println("SAC DE SABLE");
-                
-                getAventurierActuel().setPA(getAventurierActuel().getPA()+1);
+
+                getAventurierActuel().setPA(getAventurierActuel().getPA() + 1);
                 getAventurierActuel().Assécher(laGrille, "" + msg.posX + msg.posY);
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
-                ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
-                
+                ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
+
                 break;
 
         }
 
     }
 
-   
-
-   
-    
-    public int getNbJoueur(Aventurier aventurier){
+    public int getNbJoueur(Aventurier aventurier) {
         int i = 0;
-        for (Aventurier a : getLesAventuriers() ){
-             if (a.getX() == aventurier.getX() && a.getY()==aventurier.getY() && a != aventurier){
-                 
-                 i++;
-             }
-             
-             
-         }
-        if (aventurier.getNomRole()=="Messager"){
-            return lesAventuriers.size()-1;
+        for (Aventurier a : getLesAventuriers()) {
+            if (a.getX() == aventurier.getX() && a.getY() == aventurier.getY() && a != aventurier) {
+
+                i++;
+            }
+
         }
-        else {
+        if (aventurier.getNomRole() == "Messager") {
+            return lesAventuriers.size() - 1;
+        } else {
             return i;
         }
-        
-       
-        
-        
+
     }
+
     // Retourne true si c'est gagné
     public boolean isGagne() {
         int i = 0;
@@ -722,8 +733,8 @@ ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
             for (int l = 0; l <= 5; l++) {
                 for (int c = 0; c <= 5; c++) {
                     /*System.out.println(laGrille.getTuile(l, c) != null);
-                    System.out.println(laGrille.getTuile(l, c).getEtat() != Utils.EtatTuile.COULEE);
-                    System.out.println(laGrille.getTuile(l, c).getTresor() == tresor);*/
+                     System.out.println(laGrille.getTuile(l, c).getEtat() != Utils.EtatTuile.COULEE);
+                     System.out.println(laGrille.getTuile(l, c).getTresor() == tresor);*/
 
                     if (laGrille.getTuile(l, c) != null) {
                         if ((laGrille.getTuile(l, c).getEtat() != Utils.EtatTuile.COULEE) && (laGrille.getTuile(l, c).getTresor() == tresor)) {

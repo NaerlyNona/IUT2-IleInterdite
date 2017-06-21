@@ -42,7 +42,7 @@ public class Aventurier {
         System.out.println("La carte "+carte.getNomCarte()+" a été donné a "+aventurier.getNomJoueur());
         aventurier.ajouterMain(carte);
         this.removeMain(carte); 
-  
+        setPA(getPA()-1);
     }
     
     public void ajouterMain(Carte carte) {
@@ -227,7 +227,7 @@ public class Aventurier {
 
         //Parcourt les Tuiles, si la tuile n'est pas coulée, on l'ajoute à la liste des déplacements possibles    
         for (int uneTuile : lesTuiles) {
-            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() != Utils.EtatTuile.COULEE) {
+            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() != Utils.EtatTuile.COULEE && uneTuile != Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY()))) {
                 lesDeplacements.add(uneTuile);
             }
         }

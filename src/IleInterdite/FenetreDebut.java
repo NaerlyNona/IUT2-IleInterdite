@@ -263,8 +263,8 @@ public class FenetreDebut implements ActionListener {
                     panelJoueur3.setVisible(true);
                     panelJoueur4.setVisible(true);
                     
-                    controleur.getLesAventuriers().add(new Explorateur("Joueur 3"));
-                    controleur.getLesAventuriers().add(new Messager("Joueur 4"));
+                    /*controleur.getLesAventuriers().add(new Explorateur("Joueur 3"));
+                    controleur.getLesAventuriers().add(new Messager("Joueur 4"));*/
                     
                 } else if (listeDeroulante.getSelectedItem() == "2") {
                     panelJoueur3.setVisible(false);
@@ -489,10 +489,10 @@ public class FenetreDebut implements ActionListener {
            while (aventuriers.contains(indiceAlea));
                    
                   //lire l'indice aléatoire générer
-                  roleAlea =aventuriers.get(indiceAlea);
+                  /*roleAlea =aventuriers.get(indiceAlea);
                   
                   //ajout de d au vecteur                
-                  aventurierAlea.add(roleAlea);
+                  aventurierAlea.add(roleAlea);*/
                                            
                     }
 

@@ -8,6 +8,7 @@ package IleInterdite;
 import Roles.Explorateur;
 import Roles.Messager;
 import IleInterdite.Utils.Pion;
+import Roles.Plongeur;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -103,10 +104,10 @@ public class Controleur implements Observateur {
         Collections.shuffle(piocheTresor);
 
         lesAventuriers = new ArrayList();
-        getLesAventuriers().add(new Explorateur("Joueur1"));
+        getLesAventuriers().add(new Plongeur("Joueur1"));
         getLesAventuriers().add(new Messager("Joueur2"));
-        getLesAventuriers().add(new Explorateur("Joueur3"));
-        getLesAventuriers().add(new Messager("Joueur4"));
+        /*getLesAventuriers().add(new Explorateur("Joueur3"));
+        getLesAventuriers().add(new Messager("Joueur4"));*/
 
         for (Aventurier unAventurier : getLesAventuriers()) {
             System.out.println(unAventurier.getNomJoueur());
@@ -628,6 +629,7 @@ public class Controleur implements Observateur {
                 
                 ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
                 ihmIleInterdite.MAJMain(aventurierActuel);
+                ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 
                 break;
             case BTNDONNER:

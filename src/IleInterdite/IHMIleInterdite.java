@@ -86,6 +86,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Message m = new Message();
+        
+        
         if (e.getSource() == btnDeplacer) {
             mode = 0;
             btnDeplacer.setEnabled(false);
@@ -119,9 +121,20 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             }
         } else if (((JButtonSpecial) (e.getSource())).getType() == 1) {
             System.out.println("Main");
+        } else if(e.getSource()==main) {
+            
+            
         }
     }
 
+    /*public JButton getSpeciale(){
+        for(JButton button : main){
+            if (button.getName() == "houloucouptère" || button.getName()=="SacDeSable"){
+                return button;
+            } else {return null; }
+        }
+    }*/
+    
     public void setObservateur(Observateur o) {
         observateur = o;
     }

@@ -65,28 +65,39 @@ public class Plongeur extends Aventurier {
         if ((Y - 1 >= 0) && (laGrille.getTuile(X, Y - 1) != null) && (laGrille.getTuile(X, Y - 1).getEtat() != Utils.EtatTuile.COULEE)) {
             lesDeplacements.add(Integer.valueOf(String.valueOf(X) + String.valueOf(Y - 1)));
         }
-
-        for (int unePlongée : lesPlongées) {
-            if ((X + 1 <= 5) && (laGrille.getTuile((unePlongée/(10^2))%10 + 1, (unePlongée/(10^1))%10) != null) && (laGrille.getTuile((unePlongée/(10^2))%10 + 1, (unePlongée/(10^1))%10).getEtat() != Utils.EtatTuile.COULEE) && !lesDeplacements.contains(unePlongée)) {
-                lesDeplacements.add(Integer.valueOf(String.valueOf((unePlongée/(10^2))%10 + 1) + String.valueOf((unePlongée/(10^1))%10)));
-            }
+        
+        
+        boolean test = false;
+        while (test != true){
+            /*if ((X + 1 <= 5) && (laGrille.getTuile(X + 1, Y) != null) && (laGrille.getTuile(X + 1, Y).getEtat() == Utils.EtatTuile.COULEE)) {
+                for (Tuile tuile : getTuilesAdjacentes(laGrille, X+1, Y) ){
+                    
+                }
+                    
+            }*/
 
             // Aller à Gauche possible?
-            if ((X - 1 >= 0) && (laGrille.getTuile((unePlongée/(10^2))%10 - 1, (unePlongée/(10^1))%10) != null) && (laGrille.getTuile((unePlongée/(10^2))%10 - 1, (unePlongée/(10^1))%10).getEtat() != Utils.EtatTuile.COULEE) && !lesDeplacements.contains(unePlongée)) {
-                lesDeplacements.add(Integer.valueOf(String.valueOf((unePlongée/(10^2))%10 - 1) + String.valueOf((unePlongée/(10^1))%10)));
+            if ((X - 1 >= 0) && (laGrille.getTuile(X - 1, Y) != null) && (laGrille.getTuile(X - 1, Y).getEtat() == Utils.EtatTuile.COULEE)) {
+                getTuilesAdjacentes(laGrille, X-1, Y);
             }
 
             // Aller en Bas possible?
-            if ((Y + 1 <= 5) && (laGrille.getTuile((unePlongée/(10^2))%10, (unePlongée/(10^1))%10 + 1) != null) && (laGrille.getTuile((unePlongée/(10^2))%10, (unePlongée/(10^1))%10 + 1).getEtat() != Utils.EtatTuile.COULEE) && !lesDeplacements.contains(unePlongée)) {
-                lesDeplacements.add(Integer.valueOf(String.valueOf((unePlongée/(10^2))%10) + String.valueOf((unePlongée/(10^1))%10 + 1)));
+            if ((Y + 1 <= 5) && (laGrille.getTuile(X, Y + 1) != null) && (laGrille.getTuile(X, Y + 1).getEtat() == Utils.EtatTuile.COULEE)) {
+                getTuilesAdjacentes(laGrille, X, Y+1);
             }
 
             // Aller en Haut possible?
-            if ((Y - 1 >= 0) && (laGrille.getTuile((unePlongée/(10^2))%10, (unePlongée/(10^1))%10 - 1) != null) && (laGrille.getTuile((unePlongée/(10^2))%10, (unePlongée/(10^1))%10 - 1).getEtat() != Utils.EtatTuile.COULEE) && !lesDeplacements.contains(unePlongée)) {
-                lesDeplacements.add(Integer.valueOf(String.valueOf((unePlongée/(10^2))%10) + String.valueOf((unePlongée/(10^1))%10 - 1)));
+            if ((Y - 1 >= 0) && (laGrille.getTuile(X, Y - 1) != null) && (laGrille.getTuile(X, Y - 1).getEtat() == Utils.EtatTuile.COULEE)) {
+                getTuilesAdjacentes(laGrille, X, Y-1);
             }
-
         }
+            
+            
+            
+        
+        
+
+       
 
         return lesDeplacements;
     }
@@ -121,6 +132,8 @@ public class Plongeur extends Aventurier {
             lesDeplacements.add(Integer.valueOf(String.valueOf(X) + String.valueOf(Y - 1)));
             lesDeplacements.addAll(DeplacementPossiblePlongée(X - 1, Y, laGrille, false));
         }
+        
+        
 
         return lesDeplacements;
     }
@@ -149,4 +162,35 @@ public class Plongeur extends Aventurier {
         System.out.println("Apres " + getX() + "," + getY());
     }
 */
+    
+    
+    
+    public ArrayList<Integer> getTuilesAdjacentes(Grille laGrille ,int X, int Y) {
+
+        ArrayList<Integer> tuilesAdjacentes = new ArrayList();
+
+        if ((this.getX() + 1 <= 5) && (laGrille.getTuile(X + 1, Y) != null)) {
+            tuilesAdjacentes.add(Integer.valueOf(String.valueOf(X + 1) + String.valueOf(Y)));
+        }
+
+        // Aller à Gauche possible?
+        if ((this.getX() - 1 >= 0) && (laGrille.getTuile(X - 1, Y) != null)) {
+            tuilesAdjacentes.add(Integer.valueOf(String.valueOf(X - 1) + String.valueOf(Y)));
+        }
+
+        // Aller en Bas possible?
+        if ((this.getY() + 1 <= 5) && (laGrille.getTuile(X, Y + 1) != null)) {
+            tuilesAdjacentes.add(Integer.valueOf(String.valueOf(getX()) + String.valueOf(getY() + 1)));
+        }
+
+        // Aller en Haut possible?
+        if ((this.getY() - 1 >= 0) && (laGrille.getTuile(X, Y - 1) != null)) {
+            tuilesAdjacentes.add(Integer.valueOf(String.valueOf(X) + String.valueOf(Y - 1)));
+        }
+
+        
+
+        return tuilesAdjacentes;
+
+    }
 }

@@ -69,26 +69,65 @@ public class Plongeur extends Aventurier {
         
         boolean test = false;
         while (test != true){
-            /*if ((X + 1 <= 5) && (laGrille.getTuile(X + 1, Y) != null) && (laGrille.getTuile(X + 1, Y).getEtat() == Utils.EtatTuile.COULEE)) {
-                for (Tuile tuile : getTuilesAdjacentes(laGrille, X+1, Y) ){
-                    
+            if ((X + 1 <= 5) && (laGrille.getTuile(X + 1, Y) != null) && (laGrille.getTuile(X + 1, Y).getEtat() == Utils.EtatTuile.COULEE)) {
+                for (int i : getTuilesAdjacentes(laGrille, X-1, Y)) {
+                    String i2 = Integer.toString(i);
+                    int x = Character.getNumericValue(i2.charAt(0));
+                    int y = Character.getNumericValue(i2.charAt(1));
+                    if (laGrille.getTuile(x, y).getEtat() != Utils.EtatTuile.COULEE){
+                        lesDeplacements.add(X+Y);
+                        int j = 1;
+                    } else {
+                        
+                    }
                 }
                     
-            }*/
+            }
 
             // Aller à Gauche possible?
             if ((X - 1 >= 0) && (laGrille.getTuile(X - 1, Y) != null) && (laGrille.getTuile(X - 1, Y).getEtat() == Utils.EtatTuile.COULEE)) {
-                getTuilesAdjacentes(laGrille, X-1, Y);
+                for (int i : getTuilesAdjacentes(laGrille, X-1, Y)) {
+                    String i2 = Integer.toString(i);
+                    int x = Character.getNumericValue(i2.charAt(0));
+                    int y = Character.getNumericValue(i2.charAt(1));
+                    if (laGrille.getTuile(x, y).getEtat() != Utils.EtatTuile.COULEE){
+                        lesDeplacements.add(Integer.valueOf(String.valueOf(x + 1) + String.valueOf(y)));
+                        int j = 1;
+                    } else {
+                        
+                    }
+                }
+                
             }
 
             // Aller en Bas possible?
             if ((Y + 1 <= 5) && (laGrille.getTuile(X, Y + 1) != null) && (laGrille.getTuile(X, Y + 1).getEtat() == Utils.EtatTuile.COULEE)) {
-                getTuilesAdjacentes(laGrille, X, Y+1);
+                for (int i : getTuilesAdjacentes(laGrille, X-1, Y)) {
+                    String i2 = Integer.toString(i);
+                    int x = Character.getNumericValue(i2.charAt(0));
+                    int y = Character.getNumericValue(i2.charAt(1));
+                    if (laGrille.getTuile(x, y).getEtat() != Utils.EtatTuile.COULEE){
+                        lesDeplacements.add(X+Y);
+                        int j = 1;
+                    } else {
+                        
+                    }
+                }
             }
 
             // Aller en Haut possible?
             if ((Y - 1 >= 0) && (laGrille.getTuile(X, Y - 1) != null) && (laGrille.getTuile(X, Y - 1).getEtat() == Utils.EtatTuile.COULEE)) {
-                getTuilesAdjacentes(laGrille, X, Y-1);
+                for (int i : getTuilesAdjacentes(laGrille, X, Y-1)) {
+                    String i2 = Integer.toString(i);
+                    int x = Character.getNumericValue(i2.charAt(0));
+                    int y = Character.getNumericValue(i2.charAt(1));
+                    if (laGrille.getTuile(x, y).getEtat() != Utils.EtatTuile.COULEE){
+                        lesDeplacements.add(X+Y-1);
+                        int j = 1;
+                    } else {
+                        
+                    }
+                }
             }
         }
             

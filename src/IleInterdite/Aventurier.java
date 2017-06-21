@@ -17,7 +17,6 @@ import javax.swing.JTextField;
  */
 public class Aventurier {
 
-    
     private String nomJoueur;
     private String nomRole;
     private int X;
@@ -36,15 +35,15 @@ public class Aventurier {
         setPA(getMaxPA());
 
     }
-    
-     public void donnerC(Aventurier aventurier, Carte carte) {
-        
-        System.out.println("La carte "+carte.getNomCarte()+" a été donné a "+aventurier.getNomJoueur());
+
+    public void donnerC(Aventurier aventurier, Carte carte) {
+
+        System.out.println("La carte " + carte.getNomCarte() + " a été donné a " + aventurier.getNomJoueur());
         aventurier.ajouterMain(carte);
-        this.removeMain(carte); 
-        setPA(getPA()-1);
+        this.removeMain(carte);
+        setPA(getPA() - 1);
     }
-    
+
     public void ajouterMain(Carte carte) {
         getMain().add(carte);
 
@@ -72,13 +71,13 @@ public class Aventurier {
         if (getMain().size() == 6) {
             //System.out.println("Saisissez numéro carte a défausser:");
             /*Scanner sc = new Scanner(System.in);
-            int choix = sc.nextInt();*/
+             int choix = sc.nextInt();*/
             getInput();
         }
         if (getMain().size() == 7) {
             //System.out.println("Saisissez numéro carte a défausser:");
             /*Scanner sc = new Scanner(System.in);
-            int choix = sc.nextInt();*/
+             int choix = sc.nextInt();*/
             getInput();
             System.out.println("====Carte a defausse====");
             i = 1;
@@ -107,22 +106,19 @@ public class Aventurier {
         }
     }
 
-    
     public void donnerCarte(Aventurier a, int choix) {
-    
 
-            /* for (Aventurier a : controleur.getLesAventuriers()){
-                     System.out.println("a.getNomRole()"+a.getNomRole());
-                     System.out.println("role"+role);
-                      if (a.getNomRole() == role){ 
-                         System.out.println("Test5"); */
-            if (a.getMain().size() < 5) {
-                System.out.println("La carte " + getMain().get(choix - 1).getNomCarte() + " a été envoyé à " + a.getNomRole());
-                a.ajouterMain(getMain().get(choix - 1));
-                getMain().remove(choix - 1);
-            }
 
-            else {
+        /* for (Aventurier a : controleur.getLesAventuriers()){
+         System.out.println("a.getNomRole()"+a.getNomRole());
+         System.out.println("role"+role);
+         if (a.getNomRole() == role){ 
+         System.out.println("Test5"); */
+        if (a.getMain().size() < 5) {
+            System.out.println("La carte " + getMain().get(choix - 1).getNomCarte() + " a été envoyé à " + a.getNomRole());
+            a.ajouterMain(getMain().get(choix - 1));
+            getMain().remove(choix - 1);
+        } else {
             System.out.println("starfoulila");
 
         }
@@ -238,12 +234,6 @@ public class Aventurier {
     public void SeDeplacer(Grille laGrille, String laPosition) {
 
         ArrayList<Integer> DeplacementPossible = DeplacementPossible(laGrille);
-        System.out.println("Assèchement possibles:");
-        for (int unAssechementPossible : DeplacementPossible) {
-            System.out.println(unAssechementPossible);
-        }
-
-        System.out.println("Avant " + getX() + "," + getY());
 
         int x = Character.getNumericValue(laPosition.charAt(0));
         int y = Character.getNumericValue(laPosition.charAt(1));
@@ -254,25 +244,20 @@ public class Aventurier {
                 setPA(getPA() - 1);
             }
         }
-        System.out.println("Apres " + getX() + "," + getY());
+
     }
 
     public ArrayList<Integer> AssechementPossible(Grille laGrille) {
         ArrayList<Integer> lesTuiles = getTuilesAdjacentes(laGrille);
         ArrayList<Integer> lesAssechements = new ArrayList();
 
-        int z = 321;
-        System.out.println(Utils.getChiffre(z, 1));
-        System.out.println(Utils.getChiffre(z, 2));
-        System.out.println(Utils.getChiffre(z, 3));
-        System.out.println(Utils.getChiffre(z, 4));
         //Parcourt les Tuiles, si la tuile est inondé, on l'ajoute à la liste des assèchements possibles
         for (int uneTuile : lesTuiles) {
             if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() == Utils.EtatTuile.INONDEE) {
                 lesAssechements.add(uneTuile);
             }
         }
-
+ 
         return lesAssechements;
     }
 

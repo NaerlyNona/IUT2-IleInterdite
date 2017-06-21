@@ -13,7 +13,7 @@ public class CarteMontée extends Carte {
     
     
     
-    public CarteMontée(String nom){
-        super(nom);
+    public CarteMontée(String nom, Utils.TypeCarte type){
+        super(nom, type);
     }
 }

@@ -13,8 +13,8 @@ public class CarteSpéciale extends Carte {
     private String effet;
     private Utils.TypeSpéciale type;
     
-    public CarteSpéciale(String nom, Utils.TypeSpéciale type){
-        super(nom);
+    public CarteSpéciale(String nom, Utils.TypeSpéciale type, Utils.TypeCarte typeC){
+        super(nom,typeC);
         this.type = type;
     }
 

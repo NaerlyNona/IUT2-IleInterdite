@@ -5,6 +5,8 @@
  */
 package IleInterdite;
 
+import Roles.Explorateur;
+import Roles.Messager;
 import IleInterdite.Utils.Pion;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -45,6 +47,7 @@ public class Controleur implements Observateur {
 
         ihmIleInterdite.afficher();
         ihmIleInterdite.MAJJoueur(getAventurierActuel());
+        ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
         ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
 
     }
@@ -70,29 +73,29 @@ public class Controleur implements Observateur {
         Tresor cristal = new Tresor("Le Cristal ardent", Utils.TypeTresor.ROUGE);
         tresorsRestant.add(cristal);
 
-        carte = new CarteMontée("Montée");
+        carte = new CarteMontée("Montée",Utils.TypeCarte.Montée);
         piocheTresor.add(carte);
-        carte = new CarteMontée("Montée");
+        carte = new CarteMontée("Montée",Utils.TypeCarte.Montée);
         piocheTresor.add(carte);
         for (int i = 0; i < 5; i++) {
-            carte = new CarteTrésor("Le Calice de l’onde", calice);
+            carte = new CarteTrésor("Le Calice de l’onde", calice, Utils.TypeCarte.Trésor);
             piocheTresor.add(carte);
-            carte = new CarteTrésor("La Pierre sacrée", pierre);
+            carte = new CarteTrésor("La Pierre sacrée", pierre, Utils.TypeCarte.Trésor);
             piocheTresor.add(carte);
-            carte = new CarteTrésor("La Statue du zéphyr", statue);
+            carte = new CarteTrésor("La Statue du zéphyr", statue, Utils.TypeCarte.Trésor);
             piocheTresor.add(carte);
-            carte = new CarteTrésor("Le Cristal ardent", cristal);
+            carte = new CarteTrésor("Le Cristal ardent", cristal, Utils.TypeCarte.Trésor);
             piocheTresor.add(carte);
         }
-        carte = new CarteSpéciale("Sac de sable", Utils.TypeSpéciale.SacDeSable);
+        carte = new CarteSpéciale("Sac de sable", Utils.TypeSpéciale.SacDeSable, Utils.TypeCarte.Spéciale);
         piocheTresor.add(carte);
-        carte = new CarteSpéciale("Sac de sable", Utils.TypeSpéciale.SacDeSable);
+        carte = new CarteSpéciale("Sac de sable", Utils.TypeSpéciale.SacDeSable, Utils.TypeCarte.Spéciale);
         piocheTresor.add(carte);
-        carte = new CarteSpéciale("houloucouptère", Utils.TypeSpéciale.Helicoptère);
+        carte = new CarteSpéciale("houloucouptère", Utils.TypeSpéciale.Helicoptère, Utils.TypeCarte.Spéciale);
         piocheTresor.add(carte);
-        carte = new CarteSpéciale("houloucouptère", Utils.TypeSpéciale.Helicoptère);
+        carte = new CarteSpéciale("houloucouptère", Utils.TypeSpéciale.Helicoptère, Utils.TypeCarte.Spéciale);
         piocheTresor.add(carte);
-        carte = new CarteSpéciale("houloucouptère", Utils.TypeSpéciale.Helicoptère);
+        carte = new CarteSpéciale("houloucouptère", Utils.TypeSpéciale.Helicoptère, Utils.TypeCarte.Spéciale);
         piocheTresor.add(carte);
 
         Collections.shuffle(piocheTresor);
@@ -497,14 +500,14 @@ public class Controleur implements Observateur {
                         getAventurierActuel().removeMain(main);
                     }
                 }
-            }
+            } else { System.out.println("T'as pas assez de carte enculé"); }
 
         } else {
             System.out.println("Il n'y a pas de trésor ici starfoulila");
         }
     }
 
-    public void donnerCarte() {
+    public void donnerCarte(Aventurier aventurier, Carte carte) {
         if (getAventurierActuel().getMain().size() > 0) {
             int i = 1;
             System.out.println("====Carte a donner====");
@@ -564,6 +567,7 @@ public class Controleur implements Observateur {
             case DEMARRER:
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
                 break;
 
             case DEPLACER:
@@ -571,6 +575,7 @@ public class Controleur implements Observateur {
                     getAventurierActuel().SeDeplacer(laGrille, "" + msg.posX + msg.posY);
                     ihmIleInterdite.MAJJoueur(getAventurierActuel());
                     ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                    ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
                 }
                 break;
 
@@ -579,6 +584,7 @@ public class Controleur implements Observateur {
                     getAventurierActuel().Assécher(laGrille, "" + msg.posX + msg.posY);
                     ihmIleInterdite.MAJJoueur(getAventurierActuel());
                     ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                    ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
                 }
                 break;
 
@@ -590,15 +596,12 @@ public class Controleur implements Observateur {
                     ihmIleInterdite.MAJMain(getAventurierActuel());
                     ihmIleInterdite.MAJJoueur(getAventurierActuel());
                     ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                    ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
                 }
                 break;
-            case AUTREACTION:
-                System.out.println("test");
-                /*recupererTresor();
-                break;*/
-                donnerC();
+            case RECUPERER:
+                recupererTresor();
                 break;
-
             case DEFAUSSER:
                 getAventurierActuel().removeMain(msg.carte);
                 if (getAventurierActuel().getMain().size() <= 5) {
@@ -607,48 +610,48 @@ public class Controleur implements Observateur {
                     ihmIleInterdite.MAJMain(getAventurierActuel());
                     ihmIleInterdite.MAJJoueur(getAventurierActuel());
                     ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                    ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
                 } else {
                     new IHMDefausse(getAventurierActuel(), this);
                 }
+                break;
+            case DONNER:
+                if (msg.aventurier != null && msg.carte != null){
+                    getAventurierActuel().donnerC(msg.aventurier, msg.carte);
+                    
+                }
+                
+                ihmIleInterdite.MAJBoutons(getAventurierActuel(),this);
+                ihmIleInterdite.MAJMain(aventurierActuel);
+                
+                break;
+            case BTNDONNER:
+                System.out.println("Test donnation");
+                new IHMDonner(getAventurierActuel(), this, this);
                 break;
 
         }
 
     }
 
-    public void donnerC() {
-        if (getAventurierActuel().getMain().size() > 0) {
-            int i = 1;
-            System.out.println("====Carte a donner====");
+   
 
-            for (Carte c : getAventurierActuel().getMain()) {
-                System.out.println("Carte n°" + i + " : " + c.getNomCarte());
-                i++;
-            }
-            System.out.println("Saisir la carte a donner: ");
-            Scanner sc = new Scanner(System.in);
-            int choix = sc.nextInt();
-
-            System.out.println("====Donner a qui====");
-            for (Aventurier a : getLesAventuriers()) {
-
-                System.out.println("Nom Rôle :" + a.getNomRole());
-
-            }
-
-            System.out.println("Saisir a qui envoyer: ");
-            String role = sc.next();
-
-            for (Aventurier a : getLesAventuriers()) {
-
-                if ((a.getNomRole().equals(role))) {
-                    System.out.println("Test5");
-                    getAventurierActuel().donnerCarte(a, choix);
-                }
-            }
-        }
+    
+    
+    public int getNbJoueur(Aventurier aventurier){
+        int i = 0;
+        for (Aventurier a : getLesAventuriers() ){
+             if (a.getX() == aventurier.getX() && a.getY()==aventurier.getY() && a != aventurier){
+                 
+                 i++;
+             }
+             
+             
+         }
+       
+        return i;
+        
     }
-
     // Retourne true si c'est gagné
     public boolean isGagne() {
         int i = 0;

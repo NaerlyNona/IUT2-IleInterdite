@@ -11,9 +11,11 @@ package IleInterdite;
  */
 public abstract class Carte {
     private String nomCarte;
-
-    public Carte(String nom){
+    private Utils.TypeCarte type;
+    
+    public Carte(String nom, Utils.TypeCarte type){
         this.nomCarte = nom;
+        this.type = type;
     }
     
     
@@ -31,5 +33,19 @@ public abstract class Carte {
      */
     public void setNomCarte(String nomCarte) {
         this.nomCarte = nomCarte;
+    }
+
+    /**
+     * @return the type
+     */
+    public Utils.TypeCarte getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(Utils.TypeCarte type) {
+        this.type = type;
     }
 }

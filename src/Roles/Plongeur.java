@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package IleInterdite;
+package Roles;
 
+import IleInterdite.Aventurier;
+import IleInterdite.Grille;
+import IleInterdite.Utils;
 import java.util.ArrayList;
 import javax.swing.JTextField;
 

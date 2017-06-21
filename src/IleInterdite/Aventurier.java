@@ -17,7 +17,7 @@ import javax.swing.JTextField;
  */
 public class Aventurier {
 
-    private Controleur controleur;
+    
     private String nomJoueur;
     private String nomRole;
     private int X;
@@ -36,7 +36,15 @@ public class Aventurier {
         setPA(getMaxPA());
 
     }
-
+    
+     public void donnerC(Aventurier aventurier, Carte carte) {
+        
+        System.out.println("La carte "+carte.getNomCarte()+" a été donné a "+aventurier.getNomJoueur());
+        aventurier.ajouterMain(carte);
+        this.removeMain(carte); 
+  
+    }
+    
     public void ajouterMain(Carte carte) {
         getMain().add(carte);
 

@@ -18,5 +18,8 @@ public enum TypesMessage {
     PERDU,
     AUTREACTION,
     DEFAUSSER,
-    AUTREDEFAUSSE
+    AUTREDEFAUSSE,
+    RECUPERER,
+    DONNER,
+    BTNDONNER
 }

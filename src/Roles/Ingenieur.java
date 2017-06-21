@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package IleInterdite;
+package Roles;
+
+import IleInterdite.Aventurier;
+import IleInterdite.Utils;
 
 /**
  *

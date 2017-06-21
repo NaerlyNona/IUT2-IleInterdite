@@ -11,4 +11,5 @@ package IleInterdite;
  */
 public interface Observateur {
     public void traiterMessage(Message msg);
+    
 }

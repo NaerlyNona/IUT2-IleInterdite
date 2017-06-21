@@ -12,8 +12,8 @@ package IleInterdite;
 public class CarteTrésor extends Carte {
     private Tresor tresor ;
     
-    public CarteTrésor(String nom,Tresor type){
-        super(nom);
+    public CarteTrésor(String nom,Tresor type, Utils.TypeCarte typeC){
+        super(nom, typeC);
         this.tresor = type;
     }
 }

@@ -19,20 +19,20 @@ import javax.swing.JPanel;
  *
  * @author chenavje
  */
-public class IhmFin extends JFrame implements ActionListener {
+public class IhmAbandon extends JFrame implements ActionListener {
     private JLabel texteF;
-    private JButton btnQuitter;
-    private JButton btnRestart;
-    private JButton  btnMenu;
+    private JButton btnOui;
+    private JButton btnNon;
+    
     private JPanel panelBouton;
     
     // 0 = perdu
     // 1 = Gagné
-    public IhmFin(int valeur){
+    public IhmAbandon(){
         this.setLayout(new BorderLayout());
-        btnQuitter = new JButton("Abandonner");
-        btnRestart = new JButton("Recommencer");
-        btnMenu = new JButton("Menu");
+        btnOui = new JButton("Oui");
+        btnNon = new JButton("Non");
+       
         
         
         
@@ -41,22 +41,21 @@ public class IhmFin extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
         this.setAlwaysOnTop(true);
  
-        if (valeur == 0) {
-            texteF = new JLabel("Félicitations ! Vous avez perdu.");
-        } else {
-            texteF = new JLabel("Dommage ! Vous avez gagné.");
-        }
+       
+            texteF = new JLabel("Es tu faible a ce point ?");
+        
+          
         
         
         
-        this.setSize(400, 200);
+        this.setSize(200, 200);
         this.add(texteF, BorderLayout.NORTH);
         
-        panelBouton = new JPanel(new GridLayout(1,3));
+        panelBouton = new JPanel(new GridLayout(1,2));
       
-        panelBouton.add(btnRestart);
-        panelBouton.add(btnMenu);
-        panelBouton.add(btnQuitter);
+        panelBouton.add(btnOui);
+        panelBouton.add(btnNon);
+        
         this.add(panelBouton, BorderLayout.SOUTH);
         
         
@@ -68,26 +67,23 @@ public class IhmFin extends JFrame implements ActionListener {
         
         
         
-        btnRestart.addActionListener(this);
-        btnQuitter.addActionListener(this);
-        btnMenu.addActionListener(this);
+        btnOui.addActionListener(this);
+        btnNon.addActionListener(this);
+        
         
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        if (e.getSource() == btnQuitter){
-            //this.setVisible(false);
-            new IhmAbandon();
-        } else if (e.getSource() == btnMenu){
+        if (e.getSource() == btnOui){
             this.setVisible(false);
-            new FenetreDebut();
-        } else if (e.getSource() == btnRestart){
+            System.exit(0);
+        } else if (e.getSource() == btnNon){
             this.setVisible(false);
-            new Controleur();
-        }
+            
+        
     }
     
 }
- 
+}

@@ -167,7 +167,6 @@ public class Controleur implements Observateur {
 
         uneTuile = new TuileSpawn("La Porte De Bronze", Pion.ROUGE);
         getLaGrille().addTuile(0, 3, uneTuile);
-        getLaGrille().getTuile(0, 3).setEtat(Utils.EtatTuile.INONDEE);
         uneCarte = new CarteInondation(uneTuile);
         getPiocheInondation().add(uneCarte);
 
@@ -203,7 +202,6 @@ public class Controleur implements Observateur {
 
         uneTuile = new Tuile("Les Dunes De L'Illusion");
         getLaGrille().addTuile(2, 2, uneTuile);
-        getLaGrille().getTuile(2, 2).setEtat(Utils.EtatTuile.COULEE);
         uneCarte = new CarteInondation(uneTuile);
         getPiocheInondation().add(uneCarte);
 
@@ -229,31 +227,26 @@ public class Controleur implements Observateur {
 
         uneTuile = new Tuile("Le Lagon Perdu");
         getLaGrille().addTuile(3, 1, uneTuile);
-        getLaGrille().getTuile(3, 1).setEtat(Utils.EtatTuile.INONDEE);
         uneCarte = new CarteInondation(uneTuile);
         getPiocheInondation().add(uneCarte);
 
         uneTuile = new Tuile("Le Marais Brumeux");
         getLaGrille().addTuile(3, 2, uneTuile);
-        getLaGrille().getTuile(3, 2).setEtat(Utils.EtatTuile.COULEE);
         uneCarte = new CarteInondation(uneTuile);
         getPiocheInondation().add(uneCarte);
 
         uneTuile = new Tuile("Observatoire");
         getLaGrille().addTuile(3, 3, uneTuile);
-        getLaGrille().getTuile(3, 3).setEtat(Utils.EtatTuile.INONDEE);
         uneCarte = new CarteInondation(uneTuile);
         getPiocheInondation().add(uneCarte);
 
         uneTuile = new Tuile("Le Rocher Fantome");
         getLaGrille().addTuile(3, 4, uneTuile);
-        getLaGrille().getTuile(3, 4).setEtat(Utils.EtatTuile.COULEE);
         uneCarte = new CarteInondation(uneTuile);
         getPiocheInondation().add(uneCarte);
 
         uneTuile = new TuileTresor("La Caverne Du Brasier", cristal);
         getLaGrille().addTuile(3, 5, uneTuile);
-        getLaGrille().getTuile(3, 5).setEtat(Utils.EtatTuile.INONDEE);
         uneCarte = new CarteInondation(uneTuile);
         getPiocheInondation().add(uneCarte);
 
@@ -264,7 +257,6 @@ public class Controleur implements Observateur {
 
         uneTuile = new TuileTresor("Le Temple De La Lune", pierre);
         getLaGrille().addTuile(4, 2, uneTuile);
-        getLaGrille().getTuile(4, 2).setEtat(Utils.EtatTuile.COULEE);
         uneCarte = new CarteInondation(uneTuile);
         getPiocheInondation().add(uneCarte);
 
@@ -285,7 +277,6 @@ public class Controleur implements Observateur {
 
         uneTuile = new TuileTresor("Le Jardin Des Murmures", statue);
         getLaGrille().addTuile(5, 3, uneTuile);
-        getLaGrille().getTuile(5, 3).setEtat(Utils.EtatTuile.INONDEE);
 
         uneCarte = new CarteInondation(uneTuile); // On créer une carte lié a la tuile et on l'ajoute dans la pioche innondation
         getPiocheInondation().add(uneCarte); // A faire pour toute les cases :/ :$
@@ -530,7 +521,6 @@ public class Controleur implements Observateur {
         uneTuile = new TuileTresor("Le Jardin Des Murmures", statue);
         getLaGrille().addTuile(5, 3, uneTuile);
         getLaGrille().getTuile(5, 3).setEtat(Utils.EtatTuile.INONDEE);
-
         uneCarte = new CarteInondation(uneTuile); // On créer une carte lié a la tuile et on l'ajoute dans la pioche innondation
         getPiocheInondation().add(uneCarte); // A faire pour toute les cases :/ :$
 

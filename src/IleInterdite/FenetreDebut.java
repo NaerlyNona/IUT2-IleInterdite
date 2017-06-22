@@ -14,7 +14,9 @@ import Roles.Navigateur;
 import Roles.Pilote;
 import Roles.Plongeur;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -85,9 +87,14 @@ public class FenetreDebut implements ActionListener {
  
         window = new JFrame();
         window.setResizable(false);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = screenSize.height;
+        int width = screenSize.width;
+        window.setSize(width/2, height/2);
+        window.setLocationRelativeTo(null);
  
         // Définit la taille de la fenêtre en pixels
-        window.setSize(600, 400);
+        //window.setSize(600, 400);
  
         // Indique de sortir du programme lorsque la fenêtre est fermée par l'utilisateur
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -211,7 +218,7 @@ public class FenetreDebut implements ActionListener {
         //Pour joueur 1
         panelJoueur1.setBorder(BorderFactory.createTitledBorder("Joueur n°1"));
  
-        champNom = new JTextField();
+        champNom = new JTextField("Joueur 1");
         panelJoueur1.add(new JLabel("Nom:"));
         panelJoueur1.add(champNom);
         panelJoueur1.add(new JLabel("Rôle:"));
@@ -227,7 +234,7 @@ public class FenetreDebut implements ActionListener {
         //Pour joueur 2
         panelJoueur2.setBorder(BorderFactory.createTitledBorder("Joueur n°2"));
  
-        champNom2 = new JTextField();
+        champNom2 = new JTextField("Joueur 2");
         panelJoueur2.add(new JLabel("Nom:"));
         panelJoueur2.add(champNom2);
         panelJoueur2.add(new JLabel("Rôle:"));
@@ -241,7 +248,7 @@ public class FenetreDebut implements ActionListener {
         //POUR JOUEUR 3
         panelJoueur3.setBorder(BorderFactory.createTitledBorder("Joueur n°3"));
  
-        champNom3 = new JTextField();
+        champNom3 = new JTextField("Joueur 3");
         panelJoueur3.add(new JLabel("Nom:"));
         panelJoueur3.add(champNom3);
         panelJoueur3.add(new JLabel("Rôle:"));
@@ -256,7 +263,7 @@ public class FenetreDebut implements ActionListener {
  
         //POUR JOUEUR 4
         panelJoueur4.setBorder(BorderFactory.createTitledBorder("Joueur n°4"));
-        champNom4 = new JTextField();
+        champNom4 = new JTextField("Joueur 4");
         panelJoueur4.add(new JLabel("Nom:"));
         panelJoueur4.add(champNom4);
         panelJoueur4.add(new JLabel("Rôle:"));
@@ -572,6 +579,7 @@ public class FenetreDebut implements ActionListener {
             double difficulté;
             for (int i = 0; i < nbJoueurs-1; i++){
                 if (i == 0){
+                    
                     nom = champNom.getText();
                     role = aventuriersProposes[listeRole.getSelectedIndex()];
                 } else if (i == 1) {

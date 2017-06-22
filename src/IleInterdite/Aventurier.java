@@ -253,7 +253,6 @@ public class Aventurier {
  
             if (unDeplacementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
                 this.setPosition(x, y);
-                setPA(getPA() - 1);
                 break;
             }
         }

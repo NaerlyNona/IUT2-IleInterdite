@@ -26,4 +26,5 @@ public enum TypesMessage {
     BTNDONNER,
     HELICOPTERE,
     SACDESABLE,
+    BTNDEPLACER,
 }

@@ -104,8 +104,22 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Message m = new Message();
-
         if (e.getSource() == btnDeplacer) {
+ 
+            mode = 0;
+            btnDeplacer.setEnabled(false);
+            btnAssecher.setEnabled(true);
+            m.type = TypesMessage.BTNDEPLACER;
+            observateur.traiterMessage(m);
+        } else if (e.getSource() == btnAssecher) {
+            mode = 1;
+            btnDeplacer.setEnabled(true);
+            btnAssecher.setEnabled(false);
+            m.type = TypesMessage.BTNDEPLACER;
+            observateur.traiterMessage(m);
+ 
+
+        } else if (e.getSource() == btnDeplacer) {
             mode = 0;
             btnDeplacer.setEnabled(false);
             btnAssecher.setEnabled(true);
@@ -367,6 +381,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         niveauEau = leControleur.getNiveauEau();
         labelNiveauEau.setText("<html><p align=\"center\">Niveau de l'eau: " + niveauEau);
         sliderNiveauEau.setValue((int) (niveauEau * 2));
+        mode = 5;
+        btnDeplacer.setEnabled(true);
     }
 
     public void MAJTresor(Controleur leControleur) {
@@ -533,6 +549,20 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     tuiles[l][c].setBackground(aventurier.getPion().getCouleur());
                 }
 
+            }
+        }
+        // MAJ TUILE DEPLACEMENT
+        if (mode == 0) {
+            for (int tuile : aventurier.DeplacementPossible(laGrille)) {
+ 
+                tuiles[Utils.getChiffre(tuile, 2)][Utils.getChiffre(tuile, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GREEN));
+            }
+        }
+        // MAJ TUILE ASSECHEMENT
+        if (mode == 1) {
+            for (int tuileAssechable : aventurier.AssechementPossible(laGrille)) {
+ 
+                tuiles[Utils.getChiffre(tuileAssechable, 2)][Utils.getChiffre(tuileAssechable, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.CYAN));
             }
         }
 

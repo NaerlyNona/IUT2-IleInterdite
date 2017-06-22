@@ -510,17 +510,21 @@ public class Controleur implements Observateur {
                     i++;
                 }
             }
-            if (i == 4) {
+            if (i >= 2) {
                 getTresors().add(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
                 tresorsRestant.remove(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
+                tresors.add(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
                 System.out.println("recuperation du trésor en cours... ah c fini laul");
                 for (Carte main : (ArrayList<Carte>) (getAventurierActuel().getMain().clone())) {
                     if (main.getNomCarte() == laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor().getNom()) {
 
                         defausseTresor.add(main);
                         getAventurierActuel().removeMain(main);
+                        
                     }
                 }
+                ihmIleInterdite.MAJBoutons(aventurierActuel, this);
+                ihmIleInterdite.MAJMain(aventurierActuel);
             } else {
                 System.out.println("T'as pas assez de carte enculé");
             }
@@ -669,15 +673,40 @@ public class Controleur implements Observateur {
                 break;
             case SACDESABLE:
                 System.out.println("SAC DE SABLE");
-
-                getAventurierActuel().setPA(getAventurierActuel().getPA() + 1);
-                getAventurierActuel().Assécher(laGrille, "" + msg.posX + msg.posY);
+                getAventurierActuel().UtiliserSacDeSable(laGrille, "" + msg.posX + msg.posY);
+                
+                
+                for (Carte carte : getAventurierActuel().getMain()){
+                    if (carte.getNomCarte() == "Sac de sable"){
+                        getAventurierActuel().removeMain(carte);
+                        break;
+                    }
+                }
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
                 ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
-
+                ihmIleInterdite.MAJMain(aventurierActuel);
+ 
+                break;
+            case HELICOPTERE:
+                System.out.println("HELICOPTERE");
+                getAventurierActuel().SeDeplacerHelicoptère(laGrille, "" + msg.posX + msg.posY);
+                int i = 0;
+                for (Carte carte : getAventurierActuel().getMain()){
+                    if (carte.getNomCarte() == "houloucouptère"){
+                        getAventurierActuel().removeMain(carte);
+                        break;
+                    }
+                }
+                
+                
+                ihmIleInterdite.MAJJoueur(getAventurierActuel());
+                ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
+                ihmIleInterdite.MAJMain(aventurierActuel);
                 break;
 
+                
         }
 
     }

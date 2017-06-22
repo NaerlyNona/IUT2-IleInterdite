@@ -382,9 +382,11 @@ public class Controleur implements Observateur {
             System.out.println("c gagné");
             ihmIleInterdite.fin(1);
         }
-        if (isPerdu()) {
+        else if (isPerdu()) {
             ihmIleInterdite.fin(0);
-        }
+        } else {
+            
+       
 
         ihmIleInterdite.setEnabled(false);
         piocheFinTour();
@@ -403,7 +405,7 @@ public class Controleur implements Observateur {
         ihmIleInterdite.MAJJoueur(getAventurierActuel());
         ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
         ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
-
+        }
     }
 
     public void finDuTourPartie2() {

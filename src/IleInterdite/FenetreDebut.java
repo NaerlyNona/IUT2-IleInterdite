@@ -7,6 +7,12 @@
  */
 package IleInterdite;
  
+import Roles.Explorateur;
+import Roles.Ingenieur;
+import Roles.Messager;
+import Roles.Navigateur;
+import Roles.Pilote;
+import Roles.Plongeur;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -61,6 +67,7 @@ public class FenetreDebut implements ActionListener {
     //Bouton pour quitter/Continuer avec choix et mode aléatoire
     private final JButton btnContinuer;
     private final JButton btnAlea;
+    private final JButton btnTestPartie;
     private final JButton btnQuitter;
  
     //private Controleur controleur;
@@ -77,9 +84,10 @@ public class FenetreDebut implements ActionListener {
     public FenetreDebut() {
  
         window = new JFrame();
+        window.setResizable(false);
  
         // Définit la taille de la fenêtre en pixels
-        window.setSize(750, 400);
+        window.setSize(600, 400);
  
         // Indique de sortir du programme lorsque la fenêtre est fermée par l'utilisateur
         window.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -406,6 +414,31 @@ public class FenetreDebut implements ActionListener {
             }
         });
         
+        listeRole4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (listeRole4.getSelectedItem() == listeRole.getSelectedItem()) {
+ 
+                    System.out.println("Le joueur 4 a le même rôle que le joueur 1");
+                    btnContinuer.setEnabled(false);
+ 
+                } else if (listeRole4.getSelectedItem() == listeRole2.getSelectedItem()) {
+ 
+                    System.out.println("Le joueur 4 a le même rôle que le joueur 2");
+                    btnContinuer.setEnabled(false);
+ 
+                } else if (listeRole4.getSelectedItem() == listeRole3.getSelectedItem()) {
+ 
+                    System.out.println("Le joueur 4 a le même rôle que le joueur 3");
+                    btnContinuer.setEnabled(false);
+ 
+                } else {
+                    btnContinuer.setEnabled(true);
+                }
+ 
+            }
+        });
+        
         
       
         //Liste qui définit le fait que deux joueurs ne peuvent pas avoir le même rôle
@@ -435,6 +468,10 @@ public class FenetreDebut implements ActionListener {
         this.btnAlea = new JButton("Aléatoire");
         panelBas.add(btnAlea, BorderLayout.CENTER);
         btnAlea.addActionListener(this);
+        
+        this.btnTestPartie = new JButton("Partie Test");
+        panelBas.add(btnTestPartie, BorderLayout.NORTH);
+        btnTestPartie.addActionListener(this);
  
         //Rendre la fenêtre visible
         window.setVisible(true);
@@ -512,9 +549,7 @@ public class FenetreDebut implements ActionListener {
             if (listeDeroulante.getSelectedItem() == "3") {
                 System.out.print(champNom3.getText());
                 System.out.println(" qui prend le rôle: " + aventuriersProposes[listeRole3.getSelectedIndex()]);
-            }
- 
-            if (listeDeroulante.getSelectedItem() == "4") {
+            }else if (listeDeroulante.getSelectedItem() == "4") {
  
                 System.out.print(champNom3.getText());
                 System.out.println(" qui prend le rôle: " + aventuriersProposes[listeRole3.getSelectedIndex()]);
@@ -530,7 +565,56 @@ public class FenetreDebut implements ActionListener {
             
             window.setVisible(false);
  
-            Controleur controleur = new Controleur();
+            ArrayList<Aventurier> lesAventuriers = new ArrayList();
+            int nbJoueurs = Integer.parseInt((String) listeDeroulante.getSelectedItem()); 
+            String nom;
+            String role;
+            double difficulté;
+            for (int i = 0; i < nbJoueurs-1; i++){
+                if (i == 0){
+                    nom = champNom.getText();
+                    role = aventuriersProposes[listeRole.getSelectedIndex()];
+                } else if (i == 1) {
+                    nom = champNom2.getText();
+                    role = aventuriersProposes[listeRole2.getSelectedIndex()];
+                } else if (i == 2) {
+                    nom = champNom3.getText();
+                    role = aventuriersProposes[listeRole3.getSelectedIndex()];
+                }else {
+                    nom = champNom4.getText();
+                    role = aventuriersProposes[listeRole4.getSelectedIndex()];
+                }
+                
+                //"Explorateur", "Pilote", "Navigateur", "Plongeur", "Ingénieur", "Messager"
+                if (role == "Ingénieur"){
+                    lesAventuriers.add(new Ingenieur(nom));
+                } else if (role == "Explorateur"){
+                    lesAventuriers.add(new Explorateur(nom));
+                } else if (role == "Pilote"){
+                    lesAventuriers.add(new Pilote(nom));
+                } else if (role == "Navigateur"){
+                    lesAventuriers.add(new Navigateur(nom));
+                } else if (role == "Messager"){
+                    lesAventuriers.add(new Messager(nom));
+                } else {
+                    lesAventuriers.add(new Plongeur(nom));
+                }
+                    
+                    //"Novice", "Normal", "Elite", "Légendaire"
+            }
+            
+            if (niveauxProposes[listeDeroulante2.getSelectedIndex()] == "Novice"){
+                difficulté = 0.0;
+            } else if (niveauxProposes[listeDeroulante2.getSelectedIndex()] == "Normal"){
+                difficulté = 1.0;
+            } else if (niveauxProposes[listeDeroulante2.getSelectedIndex()] == "Elite"){
+                difficulté = 2.0;
+            } else{
+                difficulté = 3.0;
+            } 
+            
+            
+            Controleur controleur = new Controleur(lesAventuriers, difficulté);
             COMBOBOX.add(listeRole);
             COMBOBOX.add(listeRole2);
             COMBOBOX.add(listeRole3);
@@ -545,9 +629,15 @@ public class FenetreDebut implements ActionListener {
         }
  
         if (e.getSource() == btnAlea) {
- 
+
             alea();
             
+        }
+        
+        if (e.getSource() == btnTestPartie){
+        
+            window.setVisible(false);
+            Controleur controleur = new Controleur();
         }
             
        

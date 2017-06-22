@@ -643,8 +643,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
     }
 
-    protected ImageIcon createImageIcon(String path,
-            String description) {
+
+    protected ImageIcon createImageIcon(String path,String description) {
         java.net.URL imgURL = getClass().getResource(path);
         if (imgURL != null) {
             return new ImageIcon(imgURL, description);

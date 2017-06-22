@@ -513,7 +513,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     i++;
                 }
             }
-            if (i == 4) {
+            if (i >= 2) {
                 btnRecuperer.setEnabled(true);
             }
 
@@ -547,6 +547,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
         while ((i <= 4)) {
             main[i].setText("Vide");
+            main[i].setEnabled(false);
             i++;
         }
 

@@ -58,9 +58,27 @@ public class Controleur implements Observateur {
         ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
     }
 
-    public void InitialiserTestPartie() {
+    public Controleur(ArrayList<Aventurier> lesAventuriers, double difficulté) {
+        setAventurierActuel(new Aventurier("init", Pion.VERT));
+        setLesAventuriers(lesAventuriers);
+        setNiveauEau(difficulté);
+        InitialiserPartie();
+        
+        ihmIleInterdite = new IHMIleInterdite(this);
+        ihmIleInterdite.afficher();
+        ihmIleInterdite.MAJInfo(this);
+        ihmIleInterdite.MAJTresor(this);
+        ihmIleInterdite.MAJJoueur(getAventurierActuel());
+        ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
+        ihmIleInterdite.MAJMain(getAventurierActuel());
+        ihmIleInterdite.initialisationTuile(laGrille);
+        ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+    }
+
+    public void InitialiserPartie() {
         setPartieFinie(false);
         setFinDuTour(false);
+
 
         defausseInondation = new ArrayList();
         bannieInondation = new ArrayList();
@@ -105,33 +123,23 @@ public class Controleur implements Observateur {
 
         Collections.shuffle(piocheTresor);
 
-        lesAventuriers = new ArrayList();
-        getLesAventuriers().add(new Ingenieur("Joueur1"));
-        getLesAventuriers().add(new Pilote("Joueur2"));
-        getLesAventuriers().add(new Explorateur("Joueur3"));
-         getLesAventuriers().add(new Plongeur("Joueur4"));
-
         for (Aventurier unAventurier : getLesAventuriers()) {
             System.out.println(unAventurier.getNomJoueur());
             if (unAventurier.getNomRole() == "Plongeur") {
                 unAventurier.setPosition(1, 1);
-                for (int i = 0; i < 5; i++) {
-                    carte = new CarteTrésor("Le Calice de l’onde", calice, Utils.TypeCarte.Trésor);
-                    unAventurier.ajouterMain(carte);
-                }
-            }
-
-            if (unAventurier.getNomRole() == "Pilote") {
+            } else if (unAventurier.getNomRole() == "Pilote") {
                 unAventurier.setPosition(2, 3);
-            }
-
-            if (unAventurier.getNomRole() == "Explorateur") {
+            } else if (unAventurier.getNomRole() == "Explorateur") {
+                unAventurier.setPosition(2, 4);
+            } else if (unAventurier.getNomRole() == "Messager") {
                 unAventurier.setPosition(1, 2);
+            } else if (unAventurier.getNomRole() == "Navigateur") {
+                unAventurier.setPosition(1, 3);
+            } else if (unAventurier.getNomRole() == "Ingenieur") {
+                unAventurier.setPosition(0, 3);
             }
         }
 
-        System.out.println("Nearly la petite pute");
-        System.out.println("Là, là tu fais le ramadan là !");
         //En Haut à Gauche
         getLaGrille().addTuile(0, 0, null);
         getLaGrille().addTuile(0, 1, null);
@@ -283,7 +291,6 @@ public class Controleur implements Observateur {
         getPiocheInondation().add(uneCarte); // A faire pour toute les cases :/ :$
 
         Collections.shuffle(piocheInondation);
-        System.out.println(getLaGrille().getTuile(5, 3).getNom());
 
         setAventurierActuel(lesAventuriers.get(0));
 
@@ -300,9 +307,250 @@ public class Controleur implements Observateur {
                     piocheTresor.remove(cartePioche);
                     i++;
                 }
-                
+
             }
- 
+
+        }
+
+    }
+
+    public void InitialiserTestPartie() {
+        setPartieFinie(false);
+        setFinDuTour(false);
+
+        defausseInondation = new ArrayList();
+        bannieInondation = new ArrayList();
+        piocheInondation = new ArrayList();
+        piocheTresor = new ArrayList();
+        defausseTresor = new ArrayList();
+        setTresors((ArrayList<Tresor>) new ArrayList());
+        tresorsRestant = new ArrayList();
+
+        Tresor calice = new Tresor("Le Calice de l’onde", Utils.TypeTresor.BLEU);
+        tresorsRestant.add(calice);
+        Tresor pierre = new Tresor("La Pierre sacrée", Utils.TypeTresor.GRIS);
+        tresorsRestant.add(pierre);
+        Tresor statue = new Tresor("La Statue du zéphyr", Utils.TypeTresor.JAUNE);
+        tresorsRestant.add(statue);
+        Tresor cristal = new Tresor("Le Cristal ardent", Utils.TypeTresor.ROUGE);
+        tresorsRestant.add(cristal);
+        carte = new CarteMontée("Montée", Utils.TypeCarte.Montée);
+        piocheTresor.add(carte);
+        carte = new CarteMontée("Montée", Utils.TypeCarte.Montée);
+        piocheTresor.add(carte);
+        for (int i = 0; i < 5; i++) {
+            carte = new CarteTrésor("Le Calice de l’onde", calice, Utils.TypeCarte.Trésor);
+            piocheTresor.add(carte);
+            carte = new CarteTrésor("La Pierre sacrée", pierre, Utils.TypeCarte.Trésor);
+            piocheTresor.add(carte);
+            carte = new CarteTrésor("La Statue du zéphyr", statue, Utils.TypeCarte.Trésor);
+            piocheTresor.add(carte);
+            carte = new CarteTrésor("Le Cristal ardent", cristal, Utils.TypeCarte.Trésor);
+            piocheTresor.add(carte);
+        }
+        carte = new CarteSpéciale("Sac de sable", Utils.TypeSpéciale.SacDeSable, Utils.TypeCarte.Spéciale);
+        piocheTresor.add(carte);
+        carte = new CarteSpéciale("Sac de sable", Utils.TypeSpéciale.SacDeSable, Utils.TypeCarte.Spéciale);
+        piocheTresor.add(carte);
+        carte = new CarteSpéciale("houloucouptère", Utils.TypeSpéciale.Helicoptère, Utils.TypeCarte.Spéciale);
+        piocheTresor.add(carte);
+        carte = new CarteSpéciale("houloucouptère", Utils.TypeSpéciale.Helicoptère, Utils.TypeCarte.Spéciale);
+        piocheTresor.add(carte);
+        carte = new CarteSpéciale("houloucouptère", Utils.TypeSpéciale.Helicoptère, Utils.TypeCarte.Spéciale);
+        piocheTresor.add(carte);
+
+        Collections.shuffle(piocheTresor);
+        
+        lesAventuriers = new ArrayList();
+        getLesAventuriers().add(new Ingenieur("Joueur1"));
+        getLesAventuriers().add(new Pilote("Joueur2"));
+        getLesAventuriers().add(new Explorateur("Joueur3"));
+        getLesAventuriers().add(new Plongeur("Joueur4"));
+
+        for (Aventurier unAventurier : getLesAventuriers()) {
+            System.out.println(unAventurier.getNomJoueur());
+            if (unAventurier.getNomRole() == "Plongeur") {
+                unAventurier.setPosition(1, 1);
+            } else if (unAventurier.getNomRole() == "Pilote") {
+                unAventurier.setPosition(2, 3);
+            } else if (unAventurier.getNomRole() == "Explorateur") {
+                unAventurier.setPosition(2, 4);
+            } else if (unAventurier.getNomRole() == "Messager") {
+                unAventurier.setPosition(1, 2);
+            } else if (unAventurier.getNomRole() == "Navigateur") {
+                unAventurier.setPosition(1, 3);
+            } else if (unAventurier.getNomRole() == "Ingenieur") {
+                unAventurier.setPosition(0, 3);
+            }
+        }
+
+        //En Haut à Gauche
+        getLaGrille().addTuile(0, 0, null);
+        getLaGrille().addTuile(0, 1, null);
+        getLaGrille().addTuile(1, 0, null);
+
+        //En Haut à Droite
+        getLaGrille().addTuile(0, 4, null);
+        getLaGrille().addTuile(0, 5, null);
+        getLaGrille().addTuile(1, 5, null);
+
+        //En Bas à Gauche
+        getLaGrille().addTuile(4, 0, null);
+        getLaGrille().addTuile(5, 0, null);
+        getLaGrille().addTuile(5, 1, null);
+
+        //En Haut à Droite
+        getLaGrille().addTuile(5, 4, null);
+        getLaGrille().addTuile(5, 5, null);
+        getLaGrille().addTuile(4, 5, null);
+
+        uneTuile = new Tuile("Le Pont Des Abimes");
+        getLaGrille().addTuile(0, 2, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new TuileSpawn("La Porte De Bronze", Pion.ROUGE);
+        getLaGrille().addTuile(0, 3, uneTuile);
+        getLaGrille().getTuile(0, 3).setEtat(Utils.EtatTuile.INONDEE);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new TuileTresor("La Caverne Des Ombres", cristal);
+        getLaGrille().addTuile(1, 1, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new TuileSpawn("La Porte De Fer", Pion.VIOLET);
+        getLaGrille().addTuile(1, 2, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new TuileSpawn("La Porte d'Or", Pion.JAUNE);
+        getLaGrille().addTuile(1, 3, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new Tuile("Les Falaises de L'Oubli");
+        getLaGrille().addTuile(1, 4, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new TuileTresor("Le Palais de Corail", calice);
+        getLaGrille().addTuile(2, 0, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new Tuile("La Porte d'Argent");
+        getLaGrille().addTuile(2, 1, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new Tuile("Les Dunes De L'Illusion");
+        getLaGrille().addTuile(2, 2, uneTuile);
+        getLaGrille().getTuile(2, 2).setEtat(Utils.EtatTuile.COULEE);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new TuileSpawn("Heliport", Pion.BLEU);
+        getLaGrille().addTuile(2, 3, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new TuileSpawn("La Porte De Cuivre", Pion.VERT);
+        getLaGrille().addTuile(2, 4, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new TuileTresor("Le Jardin Des Hurlements", statue);
+        getLaGrille().addTuile(2, 5, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new Tuile("La Foret Pourpre");
+        getLaGrille().addTuile(3, 0, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new Tuile("Le Lagon Perdu");
+        getLaGrille().addTuile(3, 1, uneTuile);
+        getLaGrille().getTuile(3, 1).setEtat(Utils.EtatTuile.INONDEE);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new Tuile("Le Marais Brumeux");
+        getLaGrille().addTuile(3, 2, uneTuile);
+        getLaGrille().getTuile(3, 2).setEtat(Utils.EtatTuile.COULEE);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new Tuile("Observatoire");
+        getLaGrille().addTuile(3, 3, uneTuile);
+        getLaGrille().getTuile(3, 3).setEtat(Utils.EtatTuile.INONDEE);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new Tuile("Le Rocher Fantome");
+        getLaGrille().addTuile(3, 4, uneTuile);
+        getLaGrille().getTuile(3, 4).setEtat(Utils.EtatTuile.COULEE);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new TuileTresor("La Caverne Du Brasier", cristal);
+        getLaGrille().addTuile(3, 5, uneTuile);
+        getLaGrille().getTuile(3, 5).setEtat(Utils.EtatTuile.INONDEE);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new TuileTresor("Le Temple Du Soleil", pierre);
+        getLaGrille().addTuile(4, 1, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new TuileTresor("Le Temple De La Lune", pierre);
+        getLaGrille().addTuile(4, 2, uneTuile);
+        getLaGrille().getTuile(4, 2).setEtat(Utils.EtatTuile.COULEE);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new TuileTresor("Le Palais Des Marees", calice);
+        getLaGrille().addTuile(4, 3, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new Tuile("Le Val Du Crepuscule");
+        getLaGrille().addTuile(4, 4, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new Tuile("La Tour Du Guet");
+        getLaGrille().addTuile(5, 2, uneTuile);
+        uneCarte = new CarteInondation(uneTuile);
+        getPiocheInondation().add(uneCarte);
+
+        uneTuile = new TuileTresor("Le Jardin Des Murmures", statue);
+        getLaGrille().addTuile(5, 3, uneTuile);
+        getLaGrille().getTuile(5, 3).setEtat(Utils.EtatTuile.INONDEE);
+
+        uneCarte = new CarteInondation(uneTuile); // On créer une carte lié a la tuile et on l'ajoute dans la pioche innondation
+        getPiocheInondation().add(uneCarte); // A faire pour toute les cases :/ :$
+
+        Collections.shuffle(piocheInondation);
+
+        setAventurierActuel(lesAventuriers.get(0));
+
+        for (Aventurier aventurier : lesAventuriers) {
+            int i = 0;
+            while (i != 2) {
+                Carte cartePioche = piocheTresor.get(piocheTresor.size() - 1);
+                if (cartePioche.getType() != Utils.TypeCarte.Montée) {
+                    aventurier.ajouterMain(cartePioche);
+                    defausseTresor.add(cartePioche);
+                    piocheTresor.remove(cartePioche);
+                    i++;
+                }
+
+            }
+
         }
 
     }
@@ -379,32 +627,30 @@ public class Controleur implements Observateur {
 
     public void finDuTourPartie1() {
         if (isGagne()) {
-            System.out.println("c gagné");
+            System.out.println("Partie gagnée");
             ihmIleInterdite.fin(1);
-        }
-        else if (isPerdu()) {
+        } else if (isPerdu()) {
+            System.out.println("Partie perdue");
             ihmIleInterdite.fin(0);
         } else {
-            
-       
 
-        ihmIleInterdite.setEnabled(false);
-        piocheFinTour();
+            ihmIleInterdite.setEnabled(false);
+            piocheFinTour();
 
-        this.getAventurierActuel().reset();
-        if (this.getLesAventuriers().size() - 1 == this.getLesAventuriers().lastIndexOf(getAventurierActuel())) {
-            setAventurierActuel(getLesAventuriers().get(0));
-        } else {
-            setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel()) + 1));
-        }
+            this.getAventurierActuel().reset();
+            if (this.getLesAventuriers().size() - 1 == this.getLesAventuriers().lastIndexOf(getAventurierActuel())) {
+                setAventurierActuel(getLesAventuriers().get(0));
+            } else {
+                setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel()) + 1));
+            }
 
-        InonderFinTour(getNiveauEau(), piocheInondation);
-        ihmIleInterdite.MAJInfo(this);
+            InonderFinTour(getNiveauEau(), piocheInondation);
+            ihmIleInterdite.MAJInfo(this);
 
-        ihmIleInterdite.MAJMain(getAventurierActuel());
-        ihmIleInterdite.MAJJoueur(getAventurierActuel());
-        ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
-        ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
+            ihmIleInterdite.MAJMain(getAventurierActuel());
+            ihmIleInterdite.MAJJoueur(getAventurierActuel());
+            ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+            ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
         }
     }
 
@@ -460,7 +706,7 @@ public class Controleur implements Observateur {
 
             Carte cartePioche = piocheTresor.get(piocheTresor.size() - 1);
             if (cartePioche.getNomCarte() == "Montée") {
-                System.out.println("Montée");
+                System.out.println("Montée des eaux");
                 setNiveauEau(getNiveauEau() + 0.5);
                 defausseTresor.add(cartePioche);
                 piocheTresor.remove(cartePioche);
@@ -477,11 +723,6 @@ public class Controleur implements Observateur {
             }
         }
 
-        /*System.out.println(piocheTresor.size());
-         if (getAventurierActuel().getMain().size() > 5) {
-         ihmIleInterdite.setEnabled(false);
-         new IHMDefausse(getAventurierActuel(), this, true);
-         }*/
     }
 
     public void InonderFinTour(double niveau, ArrayList<CarteInondation> cartes) {
@@ -519,13 +760,11 @@ public class Controleur implements Observateur {
      }*/
     public void recupererTresor() {
         int i = 0;
-        System.out.println("test3");
+
         if (laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor() != null) {
-            System.out.println("Il y a un trésor ici starfoulila");
+            System.out.println("Trésor présent sur la tuile");
             for (Carte carte : getAventurierActuel().getMain()) {
                 if (carte.getNomCarte() == laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor().getNom()) {
-                    System.out.println(carte.getNomCarte());
-                    System.out.println(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor().getNom());
                     i++;
                 }
             }
@@ -533,49 +772,23 @@ public class Controleur implements Observateur {
                 getTresors().add(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
                 tresorsRestant.remove(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
                 tresors.add(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
-                System.out.println("recuperation du trésor en cours... ah c fini laul");
+                System.out.println("Trésor récupéré");
                 for (Carte main : (ArrayList<Carte>) (getAventurierActuel().getMain().clone())) {
                     if (main.getNomCarte() == laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor().getNom()) {
 
                         defausseTresor.add(main);
                         getAventurierActuel().removeMain(main);
-                        
+
                     }
                 }
                 ihmIleInterdite.MAJBoutons(aventurierActuel, this);
                 ihmIleInterdite.MAJMain(aventurierActuel);
             } else {
-                System.out.println("T'as pas assez de carte enculé");
+                System.out.println("Pas assez de carte");
             }
 
         } else {
-            System.out.println("Il n'y a pas de trésor ici starfoulila");
-        }
-    }
-
-    public void donnerCarte(Aventurier aventurier, Carte carte) {
-        if (getAventurierActuel().getMain().size() > 0) {
-            int i = 1;
-            System.out.println("====Carte a donner====");
-            for (Carte c : getAventurierActuel().getMain()) {
-                System.out.println("Carte n°" + i + " : " + c.getNomCarte());
-                i++;
-            }
-            Scanner sc = new Scanner(System.in);
-            int choix = sc.nextInt();
-
-            for (Aventurier a : lesAventuriers) {
-                System.out.println("====Donner a qui====");
-                if (a.getX() == getAventurierActuel().getX() && a.getY() == getAventurierActuel().getY()) {
-
-                }
-            }
-
-            //a.ajouterMain(getAventurierActuel().getMain().get(choix-1));
-            getAventurierActuel().getMain().remove(choix - 1);
-        } else {
-            System.out.println("starfoulila");
-
+            System.out.println("Il n'y a pas de trésor sur cette tuile");
         }
     }
 
@@ -693,10 +906,9 @@ public class Controleur implements Observateur {
             case SACDESABLE:
                 System.out.println("SAC DE SABLE");
                 getAventurierActuel().UtiliserSacDeSable(laGrille, "" + msg.posX + msg.posY);
-                
-                
-                for (Carte carte : getAventurierActuel().getMain()){
-                    if (carte.getNomCarte() == "Sac de sable"){
+
+                for (Carte carte : getAventurierActuel().getMain()) {
+                    if (carte.getNomCarte() == "Sac de sable") {
                         getAventurierActuel().removeMain(carte);
                         break;
                     }
@@ -705,27 +917,25 @@ public class Controleur implements Observateur {
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
                 ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
                 ihmIleInterdite.MAJMain(aventurierActuel);
- 
+
                 break;
             case HELICOPTERE:
                 System.out.println("HELICOPTERE");
                 getAventurierActuel().SeDeplacerHelicoptère(laGrille, "" + msg.posX + msg.posY);
                 int i = 0;
-                for (Carte carte : getAventurierActuel().getMain()){
-                    if (carte.getNomCarte() == "houloucouptère"){
+                for (Carte carte : getAventurierActuel().getMain()) {
+                    if (carte.getNomCarte() == "houloucouptère") {
                         getAventurierActuel().removeMain(carte);
                         break;
                     }
                 }
-                
-                
+
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
                 ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
                 ihmIleInterdite.MAJMain(aventurierActuel);
                 break;
 
-                
         }
 
     }

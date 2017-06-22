@@ -636,7 +636,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     tuiles[Utils.getChiffre(tuileAssechable, 2)][Utils.getChiffre(tuileAssechable, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.CYAN));
                 }
             }
-        }
+        
 
         //MAJ PIONS
         for (Aventurier unAventurier : lesAventuriers) {
@@ -645,8 +645,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
     }
 
-    protected ImageIcon createImageIcon(String path,
-            String description) {
+
+    protected ImageIcon createImageIcon(String path,String description) {
         java.net.URL imgURL = getClass().getResource(path);
         if (imgURL != null) {
             return new ImageIcon(imgURL, description);

@@ -383,6 +383,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         sliderNiveauEau.setValue((int) (niveauEau * 2));
         mode = 5;
         btnDeplacer.setEnabled(true);
+        btnAssecher.setEnabled(true);
     }
 
     public void MAJTresor(Controleur leControleur) {

@@ -404,18 +404,13 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         setVisible(true);
         this.setResizable(false);
 
-        fenetreF = new JFrame();
-
-        texteF = new JLabel("Félicitations ! Vous avez perdu.");
-        fenetreF.setSize(300, 100);
-        fenetreF.add(texteF);
-        fenetreF.setVisible(false);
 
     }
 
     public void fin(int valeur) {
         // 0 = Perdu 1 = Gagné
-        this.setVisible(false);
+        //this.setVisible(false);
+        setEnabled(false);
         System.out.println("test");
         new IhmFin(valeur);
     }
@@ -621,12 +616,14 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             }
         }
         // MAJ TUILE DEPLACEMENT
-       // if (aventurier.getPA() > 0) {
-
+        
+            
             if (mode == 0) {
+                //if (aventurier.getPA() > 0) {
                 for (int tuile : aventurier.DeplacementPossible(laGrille)) {
 
                     tuiles[Utils.getChiffre(tuile, 2)][Utils.getChiffre(tuile, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GREEN));
+               // }
                 }
             }
             // MAJ TUILE ASSECHEMENT
@@ -636,6 +633,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     tuiles[Utils.getChiffre(tuileAssechable, 2)][Utils.getChiffre(tuileAssechable, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.CYAN));
                 }
             }
+           
         
 
         //MAJ PIONS

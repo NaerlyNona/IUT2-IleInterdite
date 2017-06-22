@@ -716,6 +716,7 @@ public class Controleur implements Observateur {
 
                 }
                 defausseInondation.clear();
+              
             } else {
                 getAventurierActuel().ajouterMain(cartePioche);
                 defausseTresor.add(cartePioche);
@@ -983,10 +984,14 @@ public class Controleur implements Observateur {
 
         }
         // Si la liste des déplacements possibles est vide ou que la tuile sur laquelle est présente un joueur est coulée alors un des joueurs ne peut plus se déplacer 
-        if (getAventurierActuel().DeplacementPossible(laGrille).isEmpty() && laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getEtat() == Utils.EtatTuile.COULEE) {
+        if (getAventurierActuel().DeplacementPossible(laGrille).isEmpty() && laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getEtat() == Utils.EtatTuile.COULEE && getAventurierActuel().getNomRole() != "Plongeur") {
             // /!\ CAS PLONGUEUR NON TRAITE /!\  
             return true;
 
+        }
+        //Si le niveau d'eau atteint le seuil maximal
+        if (niveauEau >= 5) {
+            return true;
         }
 
         int j = 0;
@@ -1034,6 +1039,18 @@ public class Controleur implements Observateur {
      */
     public void setTresors(ArrayList<Tresor> tresors) {
         this.tresors = tresors;
+    }
+    
+    public int NearlyNiveauEau(){
+        if (niveauEau < 1){
+            return 2;
+        } else if (niveauEau < 2.5){    
+            return 3;
+        } else if (niveauEau < 4){
+            return 4;
+        } else {
+            return 5;
+        }
     }
 
 }

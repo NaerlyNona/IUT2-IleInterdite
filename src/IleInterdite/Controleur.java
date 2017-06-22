@@ -846,6 +846,7 @@ public class Controleur implements Observateur {
                 break;
 
             case DEPLACER:
+                VerifPA();
                 if (getAventurierActuel().getPA() > 0) {
                     getAventurierActuel().SeDeplacer(laGrille, "" + msg.posX + msg.posY);
                     ihmIleInterdite.MAJJoueur(getAventurierActuel());
@@ -855,6 +856,7 @@ public class Controleur implements Observateur {
                 break;
 
             case ASSECHER:
+                VerifPA();
                 if ((getAventurierActuel().getPA() > 0) || ((getAventurierActuel().getNomRole() == "Ingenieur") && (getAventurierActuel().isPouvoirPossible()))) {
                     getAventurierActuel().Assécher(laGrille, "" + msg.posX + msg.posY);
                     ihmIleInterdite.MAJJoueur(getAventurierActuel());
@@ -893,6 +895,7 @@ public class Controleur implements Observateur {
                 break;
 
             case RECUPERER:
+                VerifPA();
                 recupererTresor();
                 ihmIleInterdite.MAJTresor(this);
                 break;
@@ -902,6 +905,7 @@ public class Controleur implements Observateur {
                 break;
 
             case DONNER:
+                VerifPA();
                 if (msg.aventurier != null && msg.carte != null) {
                     getAventurierActuel().donnerC(msg.aventurier, msg.carte);
 
@@ -916,6 +920,7 @@ public class Controleur implements Observateur {
                 new IHMDonner(getAventurierActuel(), this, this);
                 break;
             case SACDESABLE:
+                VerifPA();
                 System.out.println("SAC DE SABLE");
                 getAventurierActuel().UtiliserSacDeSable(laGrille, "" + msg.posX + msg.posY);
 
@@ -932,6 +937,7 @@ public class Controleur implements Observateur {
 
                 break;
             case HELICOPTERE:
+                VerifPA();
                 System.out.println("HELICOPTERE");
                 getAventurierActuel().SeDeplacerHelicoptère(laGrille, "" + msg.posX + msg.posY);
                 int i = 0;
@@ -1062,6 +1068,14 @@ public class Controleur implements Observateur {
         } else {
             return 5;
         }
+    }
+    
+    public void VerifPA() {
+           if( getAventurierActuel().getPA() == 0){
+               Utils.afficherInformation("FDP tu n'as plus la possibilité d'effectuer une action, passes ton tour s'il te plaît.");
+               
+           }
+ 
     }
 
 }

@@ -298,29 +298,67 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panelBoutons.add(paJoueur, gbc);
 
+        ImageIcon icon;
+        String iconPath;
+        Image img;
+        Image newimg;
+        
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridheight = 1;
         gbc.gridwidth = 2;
         btnDeplacer.setEnabled(false);
+        
+        
+        iconPath = ("/img/resources/icones/iconMove.png");
+        icon = createImageIcon(iconPath, "Déplacer");
+        img = icon.getImage();
+        newimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newimg);
+        btnDeplacer.setIcon(icon);
+        
         panelBoutons.add(btnDeplacer, gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 1;
         gbc.gridheight = 1;
         gbc.gridwidth = 2;
+        
+        iconPath = ("/img/resources/icones/iconDry.png");
+        icon = createImageIcon(iconPath, "Assécher");
+        img = icon.getImage();
+        newimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newimg);
+        btnAssecher.setIcon(icon);
+        
         panelBoutons.add(btnAssecher, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridheight = 1;
         gbc.gridwidth = 2;
+        
+        iconPath = ("/img/resources/icones/iconReceive.png");
+        icon = createImageIcon(iconPath, "Donner");
+        img = icon.getImage();
+        newimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newimg);
+        btnDonner.setIcon(icon);
+        
         panelBoutons.add(btnDonner, gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 2;
         gbc.gridheight = 1;
         gbc.gridwidth = 2;
+        
+        iconPath = ("/img/resources/icones/iconGet.png");
+        icon = createImageIcon(iconPath, "Récupérer");
+        img = icon.getImage();
+        newimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newimg);
+        btnRecuperer.setIcon(icon);
+        
         panelBoutons.add(btnRecuperer, gbc);
 
         gbc.gridx = 0;

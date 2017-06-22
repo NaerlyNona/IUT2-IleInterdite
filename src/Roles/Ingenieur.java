@@ -21,7 +21,7 @@ public class Ingenieur extends Aventurier {
     public Ingenieur(String leNomJoueur) {
         super(leNomJoueur, Utils.Pion.ROUGE);
         setNomRole("Ingenieur");
-        setIconPath("/img/resources/adventurer/Player_Card_Engineer_Icon@2x.png");
+        setIconPath("/img/resources/logo/RoleTable_Icon_Engineer@2x.png");
         super.setLabelIcone(createImageIcon(getIconPath(), getNomRole()));
     }
 

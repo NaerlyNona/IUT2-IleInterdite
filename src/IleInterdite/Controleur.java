@@ -719,6 +719,14 @@ public class Controleur implements Observateur {
     public void InonderFinTour(double niveau, ArrayList<CarteInondation> cartes) {
         melanger(cartes);
         while ((int) niveau != 0) {
+            if (cartes.isEmpty()) {
+                Collections.shuffle(defausseInondation);
+                for (CarteInondation carte : defausseInondation) {
+                    piocheInondation.add(carte);
+
+                }
+                defausseInondation.clear();
+            }
             int indiceAuHasard = (int) (Math.random() * (cartes.size() - 1));
             Tuile tuile = cartes.get(indiceAuHasard).getTuile();
             if (tuile.getEtat() == Utils.EtatTuile.ASSECHEE) {

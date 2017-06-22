@@ -25,15 +25,16 @@ public class IhmFin extends JFrame implements ActionListener {
     private JButton btnRestart;
     private JButton  btnMenu;
     private JPanel panelBouton;
+    private IHMIleInterdite ihmIle;
     
     // 0 = perdu
     // 1 = Gagné
-    public IhmFin(int valeur){
+    public IhmFin(int valeur, IHMIleInterdite ihm){
         this.setLayout(new BorderLayout());
         btnQuitter = new JButton("Abandonner");
         btnRestart = new JButton("Recommencer");
         btnMenu = new JButton("Menu");
-        
+        this.ihmIle = ihm;
         
         
         this.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
@@ -83,9 +84,13 @@ public class IhmFin extends JFrame implements ActionListener {
         } else if (e.getSource() == btnMenu){
             this.setVisible(false);
             new FenetreDebut();
+            //ihmIle.fermer();
+            
         } else if (e.getSource() == btnRestart){
             this.setVisible(false);
             new Controleur();
+            //ihmIle.fermer();
+            
         }
     }
     

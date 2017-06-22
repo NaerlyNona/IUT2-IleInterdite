@@ -415,7 +415,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         //this.setVisible(false);
         setEnabled(false);
         System.out.println("test");
-        new IhmFin(valeur);
+        new IhmFin(valeur,this);
     }
 
     public void MAJJoueur(Aventurier aventurier) {
@@ -434,6 +434,9 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         mode = 5;
         btnDeplacer.setEnabled(true);
         btnAssecher.setEnabled(true);
+
+       nomJoueur.setBackground(leControleur.getAventurierActuel().getPion().getCouleur());
+       
     }
 
     public void MAJTresor(Controleur leControleur) {
@@ -655,6 +658,10 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             System.err.println("Couldn't find file: " + path);
             return null;
         }
+    }
+    
+    public void fermer(){
+        System.exit(0);
     }
 
 }

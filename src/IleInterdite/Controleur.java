@@ -108,16 +108,16 @@ public class Controleur implements Observateur {
         getLesAventuriers().add(new Ingenieur("Joueur1"));
         getLesAventuriers().add(new Pilote("Joueur2"));
         getLesAventuriers().add(new Explorateur("Joueur3"));
-         getLesAventuriers().add(new Messager("Joueur4"));
+        getLesAventuriers().add(new Messager("Joueur4"));
 
         for (Aventurier unAventurier : getLesAventuriers()) {
             System.out.println(unAventurier.getNomJoueur());
             if (unAventurier.getNomRole() == "Messager") {
                 unAventurier.setPosition(1, 1);
-                for (int i = 0; i < 5; i++) {
+                /*for (int i = 0; i < 5; i++) {
                     carte = new CarteTrésor("Le Calice de l’onde", calice, Utils.TypeCarte.Trésor);
                     unAventurier.ajouterMain(carte);
-                }
+                }*/
             }
 
             if (unAventurier.getNomRole() == "Pilote") {
@@ -289,6 +289,19 @@ public class Controleur implements Observateur {
         /*for (CarteInondation test : getPiocheInondation()){
          System.out.println(test.getNom());
          }*/
+        for (Aventurier aventurier : lesAventuriers) {
+            int i = 0;
+            while (i != 2) {
+                Carte cartePioche = piocheTresor.get(piocheTresor.size() - 1);
+                if (cartePioche.getType() != Utils.TypeCarte.Montée) {
+                    aventurier.ajouterMain(cartePioche);
+                    defausseTresor.add(cartePioche);
+                    piocheTresor.remove(cartePioche);
+                }
+                i++;
+            }
+
+        }
     }
 
     /**
@@ -520,7 +533,7 @@ public class Controleur implements Observateur {
 
                         defausseTresor.add(main);
                         getAventurierActuel().removeMain(main);
-                        
+
                     }
                 }
                 ihmIleInterdite.MAJBoutons(aventurierActuel, this);
@@ -531,32 +544,6 @@ public class Controleur implements Observateur {
 
         } else {
             System.out.println("Il n'y a pas de trésor ici starfoulila");
-        }
-    }
-
-    public void donnerCarte(Aventurier aventurier, Carte carte) {
-        if (getAventurierActuel().getMain().size() > 0) {
-            int i = 1;
-            System.out.println("====Carte a donner====");
-            for (Carte c : getAventurierActuel().getMain()) {
-                System.out.println("Carte n°" + i + " : " + c.getNomCarte());
-                i++;
-            }
-            Scanner sc = new Scanner(System.in);
-            int choix = sc.nextInt();
-
-            for (Aventurier a : lesAventuriers) {
-                System.out.println("====Donner a qui====");
-                if (a.getX() == getAventurierActuel().getX() && a.getY() == getAventurierActuel().getY()) {
-
-                }
-            }
-
-            //a.ajouterMain(getAventurierActuel().getMain().get(choix-1));
-            getAventurierActuel().getMain().remove(choix - 1);
-        } else {
-            System.out.println("starfoulila");
-
         }
     }
 
@@ -674,10 +661,9 @@ public class Controleur implements Observateur {
             case SACDESABLE:
                 System.out.println("SAC DE SABLE");
                 getAventurierActuel().UtiliserSacDeSable(laGrille, "" + msg.posX + msg.posY);
-                
-                
-                for (Carte carte : getAventurierActuel().getMain()){
-                    if (carte.getNomCarte() == "Sac de sable"){
+
+                for (Carte carte : getAventurierActuel().getMain()) {
+                    if (carte.getNomCarte() == "Sac de sable") {
                         getAventurierActuel().removeMain(carte);
                         break;
                     }
@@ -686,27 +672,25 @@ public class Controleur implements Observateur {
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
                 ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
                 ihmIleInterdite.MAJMain(aventurierActuel);
- 
+
                 break;
             case HELICOPTERE:
                 System.out.println("HELICOPTERE");
                 getAventurierActuel().SeDeplacerHelicoptère(laGrille, "" + msg.posX + msg.posY);
                 int i = 0;
-                for (Carte carte : getAventurierActuel().getMain()){
-                    if (carte.getNomCarte() == "houloucouptère"){
+                for (Carte carte : getAventurierActuel().getMain()) {
+                    if (carte.getNomCarte() == "houloucouptère") {
                         getAventurierActuel().removeMain(carte);
                         break;
                     }
                 }
-                
-                
+
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
                 ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
                 ihmIleInterdite.MAJMain(aventurierActuel);
                 break;
 
-                
         }
 
     }

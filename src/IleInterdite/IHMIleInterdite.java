@@ -41,8 +41,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     //Joueur dont c'est le tour
     private Aventurier joueurCourant;
 
-    private JLabel texteF;
-    private JFrame fenetreF;
+   
 
     private JPanel panelMain = new JPanel(new BorderLayout());
 
@@ -403,19 +402,13 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         setVisible(true);
         this.setResizable(false);
 
-        fenetreF = new JFrame();
-
-        texteF = new JLabel("Félicitations ! Vous avez perdu.");
-        fenetreF.setSize(300, 100);
-        fenetreF.add(texteF);
-        fenetreF.setVisible(false);
+        
 
     }
 
     public void fin() {
         this.setVisible(false);
-        fenetreF.setVisible(true);
-        fenetreF.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        IhmFin fin = new IhmFin();
     }
 
     public void MAJJoueur(Aventurier aventurier) {

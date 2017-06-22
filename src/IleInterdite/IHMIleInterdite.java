@@ -75,6 +75,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     private JButtonSpecial[] main = new JButtonSpecial[5];
 
     private JButton btnTerminerTour = new JButton("Terminer Tour");
+    
+    private ArrayList<JLabel> labelIconeAventurier = new ArrayList(); 
 
     private int mode = 0;
 
@@ -399,7 +401,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         btnTresor[0].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Calice");
         img = icon.getImage();
-        newimg = img.getScaledInstance( btnTresor[0].getHeight(), btnTresor[0].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
+        newimg = img.getScaledInstance( 50, 50,  java.awt.Image.SCALE_SMOOTH ) ;  
         icon = new ImageIcon( newimg );
         btnTresor[0].setIcon(icon);
         
@@ -407,7 +409,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         btnTresor[1].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Pierre");
         img = icon.getImage();
-        newimg = img.getScaledInstance( btnTresor[1].getHeight(), btnTresor[1].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
+        newimg = img.getScaledInstance( 50, 50,  java.awt.Image.SCALE_SMOOTH ) ;  
         icon = new ImageIcon( newimg );
         btnTresor[1].setIcon(icon);
         
@@ -415,15 +417,15 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         btnTresor[2].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Statue");
         img = icon.getImage();
-        newimg = img.getScaledInstance( btnTresor[2].getHeight(), btnTresor[2].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
+        newimg = img.getScaledInstance( 50, 50,  java.awt.Image.SCALE_SMOOTH ) ;  
         icon = new ImageIcon( newimg );
         btnTresor[2].setIcon(icon);
         
-        iconPath = ("/img/resources/treasures/Statue.png");
+        iconPath = ("/img/resources/treasures/Cristal.png");
         btnTresor[3].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
-        icon = createImageIcon(iconPath, "Statue");
+        icon = createImageIcon(iconPath, "Cristal");
         img = icon.getImage();
-        newimg = img.getScaledInstance( btnTresor[3].getHeight(), btnTresor[3].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
+        newimg = img.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH ) ;  
         icon = new ImageIcon( newimg );
         btnTresor[3].setIcon(icon);
         
@@ -567,12 +569,21 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             }
         }
 
-        for (Aventurier unAventurier : lesAventuriers) {
-            tuiles[unAventurier.getX()][unAventurier.getY()].setText(tuiles[unAventurier.getX()][unAventurier.getY()].getText() + unAventurier.getNomJoueur() + "<br>");
-            tuiles[unAventurier.getX()][unAventurier.getY()].setIcon(unAventurier.getIcone());
+        for (Aventurier unAventurier: lesAventuriers) {
+            tuiles[unAventurier.getX()][unAventurier.getY()].add(unAventurier.getLabelIcone());  
         }
 
     }
+    
+    /*public void creationIcone(ArrayList<Aventurier> lesAventuriers){
+        JLabel uneIcone = new JLabel();
+        for (Aventurier unAventurier : lesAventuriers){
+            uneIcone.setIcon(unAventurier.getIcone());
+            labelIconeAventurier.add(uneIcone);
+        }
+    }*/
+    
+    
     
     protected ImageIcon createImageIcon(String path,
                                            String description) {

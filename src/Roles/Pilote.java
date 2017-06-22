@@ -25,7 +25,7 @@ public class Pilote extends Aventurier {
         setNomRole("Pilote");
         setPouvoirPossible(true);
         setIconPath("/img/resources/adventurer/Player_Card_Pilot_Icon@2x.png");
-        super.setIcone(createImageIcon(getIconPath(), getNomRole()));
+        super.setLabelIcone(createImageIcon(getIconPath(), getNomRole()));
     }
 
     /**

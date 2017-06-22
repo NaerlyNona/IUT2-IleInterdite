@@ -7,6 +7,7 @@ package IleInterdite;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +25,8 @@ public class JButtonTuile extends JButtonSpecial {
         super(0);
         setPosX(posX);
         setPosY(posY);
+        this.setLayout(new GridLayout(2,2));
+        this.setMargin(new Insets(50,0,0,0));
     }
 
     /**

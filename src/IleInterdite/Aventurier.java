@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Image;
+import javax.swing.BorderFactory;
 
 /**
  *
@@ -29,7 +30,7 @@ public class Aventurier {
     private int maxPA;
     private Utils.Pion pion;
     private ArrayList<Carte> main;
-    private Icon icone;
+    private JLabel labelIcone = new JLabel();
     private String iconPath;
 
     private boolean pouvoirPossible;
@@ -42,7 +43,6 @@ public class Aventurier {
         setMaxPA(3);
         setPA(getMaxPA());
         setPouvoirPossible(false);
-        icone = null;
     }
 
     public ArrayList<String> donnerPossible(Controleur controleur) {
@@ -324,19 +324,20 @@ public class Aventurier {
     /**
      * @return the icone
      */
-    public Icon getIcone() {
-        return icone;
+    public JLabel getLabelIcone() {
+        return labelIcone;
     }
 
     /**
      * @param icone the icone to set
      */
-    public void setIcone(ImageIcon icone) {
+    public void setLabelIcone(ImageIcon icone) {
         //this.icone = icone;
         Image img = icone.getImage();
-        Image newimg = img.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+        Image newimg = img.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
         icone = new ImageIcon(newimg);
-        this.icone = icone;
+        labelIcone.setIcon(icone);
+        labelIcone.setBorder(BorderFactory.createEmptyBorder(0, 15, 15, 20));
     }
 
     protected ImageIcon createImageIcon(String path,

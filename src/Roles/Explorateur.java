@@ -23,7 +23,7 @@ public class Explorateur extends Aventurier {
         super(leNomJoueur, Pion.VERT);
         setNomRole("Explorateur");
         setIconPath("/img/resources/adventurer/Player_Card_Explorer_Icon@2x.png");
-        setIcone(createImageIcon(getIconPath(), getNomRole()));
+        setLabelIcone(createImageIcon(getIconPath(), getNomRole()));
     }
 
     /**

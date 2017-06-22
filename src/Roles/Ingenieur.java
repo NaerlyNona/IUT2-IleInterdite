@@ -22,7 +22,7 @@ public class Ingenieur extends Aventurier {
         super(leNomJoueur, Utils.Pion.ROUGE);
         setNomRole("Ingenieur");
         setIconPath("/img/resources/adventurer/Player_Card_Engineer_Icon@2x.png");
-        super.setIcone(createImageIcon(getIconPath(), getNomRole()));
+        super.setLabelIcone(createImageIcon(getIconPath(), getNomRole()));
     }
 
     /**

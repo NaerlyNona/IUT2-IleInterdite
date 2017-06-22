@@ -23,7 +23,7 @@ public class Messager extends Aventurier {
         super(leNomJoueur, Utils.Pion.ORANGE);
         setNomRole("Messager");
         setIconPath("/img/resources/adventurer/Player_Card_Messenger_Icon@2x.png");
-        super.setIcone(createImageIcon(getIconPath(), getNomRole()));
+        super.setLabelIcone(createImageIcon(getIconPath(), getNomRole()));
     }
 
     /**

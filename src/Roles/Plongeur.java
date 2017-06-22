@@ -23,7 +23,7 @@ public class Plongeur extends Aventurier {
         super(leNomJoueur, Utils.Pion.VIOLET);
         setNomRole("Plongeur");
         setIconPath("/img/resources/adventurer/Player_Card_Diver_Icon@2x.png");
-        super.setIcone(createImageIcon(getIconPath(), getNomRole()));
+        super.setLabelIcone(createImageIcon(getIconPath(), getNomRole()));
     }
 
     /**

@@ -12,6 +12,7 @@ import Roles.Navigateur;
 import Roles.Pilote;
 import Roles.Plongeur;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -35,6 +36,7 @@ public class FenetreDebut implements ActionListener {
 
     //Création de la fenêtre principale
     private final JFrame window;
+    
     // Déclaration de la combobox pour la liste du nombre de joueurs
     private final JComboBox listeDeroulante;
     // Déclaration de la combobox pour la liste de niveaux
@@ -100,6 +102,8 @@ public class FenetreDebut implements ActionListener {
 
         //Panel case pour créer le positionnement
         JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBorder(BorderFactory.createRaisedBevelBorder());
+        mainPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 5, true), mainPanel.getBorder()));
         window.add(mainPanel);
 
         //Panel positionné en haut
@@ -179,7 +183,7 @@ public class FenetreDebut implements ActionListener {
         }
 
         // Propriétés de JLabel: Nom du jeu
-        JLabel nomJeu = new JLabel("Île Interdite");
+        JLabel nomJeu = new JLabel("<html><font size=\"7\"><b>Île Interdite");
         //On l'ajoute au panel haut
         panelHaut.add(nomJeu);
 

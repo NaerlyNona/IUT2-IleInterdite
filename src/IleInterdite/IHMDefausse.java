@@ -6,14 +6,18 @@
 package IleInterdite;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -29,6 +33,7 @@ public class IHMDefausse extends JFrame implements ActionListener {
      private JLabel texteDefausse;
      private JComboBox listeCarte;
      private JButton btnConfirmer;
+     private JPanel panelMain;
      
      
      
@@ -40,17 +45,23 @@ public class IHMDefausse extends JFrame implements ActionListener {
          this.nbDefausse = nbDefausse;
          this.partieFinDuTour = partieFinDuTour;
          
+         
+         
          lesCartes = new String[aventurier.getMain().size()];
          
-         this.setSize(new Dimension(300,100));
+         this.setSize(new Dimension(300,125));
          this.setLocationRelativeTo(null);
          this.setAlwaysOnTop(true);
          this.setUndecorated(true);
          //this.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
-         this.setLayout(new BorderLayout());
          
-         texteDefausse = new JLabel("<html><p align=\"center\">"+aventurier.getNomJoueur() +"<br>Choississez une carte à défausser:<br>(Encore " + nbDefausse + ")" );
-         this.add(texteDefausse,BorderLayout.NORTH);
+         panelMain = new JPanel(new BorderLayout());
+         this.add(panelMain);
+         panelMain.setBorder(BorderFactory.createRaisedBevelBorder());
+         panelMain.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 5, true), panelMain.getBorder()));
+         
+         texteDefausse = new JLabel("<html><p align=\"center\">"+aventurier.getNomJoueur() +"<br>Choississez une carte à défausser:<br>(Encore " + nbDefausse + ")" , SwingConstants.CENTER);
+         panelMain.add(texteDefausse,BorderLayout.NORTH);
          
          int i = 0;
          for (Carte uneCarte: aventurier.getMain()){
@@ -58,10 +69,10 @@ public class IHMDefausse extends JFrame implements ActionListener {
              i++;
          }
          listeCarte = new JComboBox(lesCartes);
-         this.add(listeCarte,BorderLayout.CENTER);
+         panelMain.add(listeCarte,BorderLayout.CENTER);
          
          btnConfirmer = new JButton("Confirmer");
-         this.add(btnConfirmer, BorderLayout.SOUTH);
+         panelMain.add(btnConfirmer, BorderLayout.SOUTH);
          btnConfirmer.addActionListener(this);
          this.setVisible(true);
      }

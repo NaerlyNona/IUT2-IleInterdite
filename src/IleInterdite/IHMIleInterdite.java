@@ -79,6 +79,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
     private JButton btnAutresCartes = new JButton("Autres Cartes");
 
+    private JButton btnRegles = new JButton("Règles");
+    
     private JButton btnTerminerTour = new JButton("Terminer Tour");
 
     private ArrayList<JLabel> labelIconeAventurier = new ArrayList();
@@ -110,6 +112,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         btnTerminerTour.addActionListener(this);
         btnDonner.addActionListener(this);
         btnAutresCartes.addActionListener(this);
+        btnRegles.addActionListener(this);
 
         /* for (JButton button : main) {
          button.setEnabled(false);
@@ -147,6 +150,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         } else if (e.getSource() == btnAutresCartes) {
             m.type = TypesMessage.AUTRESCARTES;
             observateur.traiterMessage(m);
+        } else if (e.getSource() == btnRegles) {
+            new IHMRegles();
         } else if (((JButtonSpecial) (e.getSource())).getType() == 0) {
             m.posX = ((JButtonTuile) (e.getSource())).getPosX();
             m.posY = ((JButtonTuile) (e.getSource())).getPosY();
@@ -417,6 +422,13 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         btnAutresCartes.setBackground(new Color(61, 93, 255));
         btnAutresCartes.setForeground(Color.WHITE);
         panelBoutons.add(btnAutresCartes, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 11;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 4;
+        btnRegles.setBackground(Color.WHITE);
+        panelBoutons.add(btnRegles, gbc);
 
         panelInterface.add(panelBoutons, BorderLayout.CENTER);
 
@@ -695,10 +707,10 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             if (getJoueurCourant().isPouvoirPossible() && getJoueurCourant().getNomRole() == "Ingenieur") {
                 labelMode.setText(labelMode.getText() + "<br>(gratuitement)");
             }
-        } else if (mode == 2) {
+        } else if (mode == 4) {
             labelMode.setText("<html><p align=\"center\">Sac de Sable<br><small><font color=#848484> Selectionner une tuile à assecher n'importe où");
         } else if (mode == 3) {
-            labelMode.setText("<html><p align=\"center\">Sac de Sable<br><small><font color=#848484> Selectionner une tuile destination n'importe où");
+            labelMode.setText("<html><p align=\"center\">Hélicoptère<br><small><font color=#848484> Selectionner une tuile destination n'importe où");
         } else {
             labelMode.setText("<html><p align=\"center\"> - - - <br><small><font color=#848484> Selectionner une action");
         }

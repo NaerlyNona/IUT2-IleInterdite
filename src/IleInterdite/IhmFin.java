@@ -6,10 +6,12 @@
 package IleInterdite;
  
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,14 +38,12 @@ public class IhmFin extends JFrame implements ActionListener {
         btnMenu = new JButton("Menu");
         this.ihmIle = ihm;
         
-        
-        this.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        this.setSize(new Dimension(400, 200));
+        this.setSize(new Dimension(400, 150));
         this.setLocationRelativeTo(null);
         this.setAlwaysOnTop(true);
  
         if (valeur == 0) {
-            texteF = new JLabel("<html><b><p align=\"center\">Félicitations ! Vous avez gagné!", SwingConstants.CENTER);
+            texteF = new JLabel("<html><b><p align=\"center\">Félicitations !<br> Vous avez gagné!", SwingConstants.CENTER);
         } else {
             texteF = new JLabel("<html><b><p align=\"center\">Dommage ! Vous avez perdu. <br>", SwingConstants.CENTER);
             if (valeur == 1){
@@ -66,6 +66,8 @@ public class IhmFin extends JFrame implements ActionListener {
         panelBouton = new JPanel(new GridLayout(1,3));
         panelBouton.add(btnMenu);
         panelBouton.add(btnQuitter);
+        panelBouton.setBorder(BorderFactory.createRaisedBevelBorder());
+        panelBouton.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 5, true), panelBouton.getBorder()));
         this.add(panelBouton, BorderLayout.SOUTH);
         
         

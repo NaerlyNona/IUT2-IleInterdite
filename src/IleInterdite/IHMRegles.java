@@ -12,6 +12,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -40,10 +41,10 @@ private JButton btnQuitter;
     public IHMRegles() {
 
         this.setTitle("Règles");
-        this.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        this.setSize(720, 1080);
+        this.setSize(720, 1000);
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.setAlwaysOnTop(true);
+        this.setAlwaysOnTop(false);
 
         ImageIcon icon;
         String iconPath;
@@ -56,7 +57,7 @@ private JButton btnQuitter;
             icon = createImageIcon(iconPath, "Regles" + i);
             img = icon.getImage();
             //newimg = img.getScaledInstance(720, 1080, java.awt.Image.SCALE_SMOOTH);
-            newimg = img.getScaledInstance(720, 850, java.awt.Image.SCALE_SMOOTH);
+            newimg = img.getScaledInstance(this.getWidth(), this.getHeight()-50, java.awt.Image.SCALE_SMOOTH);
             icon = new ImageIcon(newimg);
             JLabel regle = new JLabel(icon);
             System.out.println(i);
@@ -67,6 +68,7 @@ private JButton btnQuitter;
         btnPrecedent = new JButton("Precedent");
         btnQuitter = new JButton("Quitter");
         panelBouton = new JPanel(new GridLayout(1, 3));
+        panelBouton.setBorder(BorderFactory.createEmptyBorder());
         panelBouton.add(btnPrecedent);
         panelBouton.add(btnQuitter);
         panelBouton.add(btnSuivant);

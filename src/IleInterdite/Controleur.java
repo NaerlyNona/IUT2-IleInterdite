@@ -49,11 +49,13 @@ public class Controleur implements Observateur {
 
         ihmIleInterdite = new IHMIleInterdite(this);
         ihmIleInterdite.afficher();
+        ihmIleInterdite.MAJInfo(this);
+        ihmIleInterdite.MAJTresor(this);
         ihmIleInterdite.MAJJoueur(getAventurierActuel());
         ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
-        ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
         ihmIleInterdite.MAJMain(getAventurierActuel());
-        ihmIleInterdite.MAJInfo(this);
+        ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+
 
     }
 
@@ -77,7 +79,6 @@ public class Controleur implements Observateur {
         tresorsRestant.add(statue);
         Tresor cristal = new Tresor("Le Cristal ardent", Utils.TypeTresor.ROUGE);
         tresorsRestant.add(cristal);
-
         carte = new CarteMontée("Montée", Utils.TypeCarte.Montée);
         piocheTresor.add(carte);
         carte = new CarteMontée("Montée", Utils.TypeCarte.Montée);

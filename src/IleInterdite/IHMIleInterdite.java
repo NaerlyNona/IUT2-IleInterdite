@@ -5,6 +5,7 @@
  */
 package IleInterdite;
 
+import IleInterdite.Utils.TypeTresor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,6 +16,7 @@ import static java.awt.GridBagConstraints.CENTER;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -56,10 +58,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     private JLabel roleJoueur = new JLabel("Role", SwingConstants.CENTER);
 
     private JPanel panelTresor = new JPanel();
-    private JButton btnCalice = new JButton("Calice");
-    private JButton btnPierre = new JButton("Pierre");
-    private JButton btnStatue = new JButton("Statue");
-    private JButton btnCristal = new JButton("Cristal");
+    private JButton[] btnTresor = new JButton[4];
 
     private JPanel panelNiveauEau = new JPanel();
     private JLabel labelNiveauEau = new JLabel("", SwingConstants.CENTER);
@@ -193,10 +192,42 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         panelJoueur.add(roleJoueur);
         //panelTresor          
         panelTresor.setLayout(new GridLayout(1, 4));
-        panelTresor.add(btnCalice);
-        panelTresor.add(btnPierre);
+        
+        /*panelTresor.add(btnCalice);
+        btnCalice.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnCalice.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnCalice.setBackground(Color.BLACK);
+        btnCalice.setForeground(Color.BLACK);
+        btnCalice.setEnabled(false);*/
+
+        btnTresor[0] = new JButton("<html><b>Calice");
+        btnTresor[1] = new JButton("<html><b>Pierre");
+        btnTresor[2] = new JButton("<html><b>Statue");
+        btnTresor[3] = new JButton("<html><b>Cristal");
+        for (JButton unBouton: btnTresor){
+            unBouton.setHorizontalTextPosition(SwingConstants.CENTER);
+            unBouton.setVerticalTextPosition(SwingConstants.BOTTOM);
+            unBouton.setBackground(Color.BLACK);
+            unBouton.setForeground(Color.BLACK);
+            unBouton.setEnabled(false);
+            unBouton.setMargin(new Insets(5,5,5,5));
+            panelTresor.add(unBouton);
+        }
+        /*panelTresor.add(btnPierre);
+        btnPierre.setHorizontalTextPosition(SwingConstants.CENTER);
+       //btnPierre.setBackground(Color.DARK_GRAY);
+        //btnCalice.setForeground(Color.LIGHT_GRAY);
+        
         panelTresor.add(btnStatue);
+        btnStatue.setHorizontalTextPosition(SwingConstants.CENTER);
+        //btnCalice.setBackground(Color.DARK_GRAY);
+        //btnCalice.setForeground(Color.LIGHT_GRAY);
+        
         panelTresor.add(btnCristal);
+        btnCristal.setHorizontalTextPosition(SwingConstants.CENTER);
+        //btnCalice.setBackground(Color.DARK_GRAY);
+        //btnCalice.setForeground(Color.LIGHT_GRAY);*/
+        
         //panelNiveauEau
         panelNiveauEau.setLayout(new BorderLayout());
         labelNiveauEau.setText("<html><p align=\"center\">Niveau de l'eau: " + niveauEau);
@@ -304,7 +335,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     public void afficher() {
         setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         //setSize(900, 600);
-        setSize(1080, 720);
+        setSize(1080, 780);
         setVisible(true);
         this.setResizable(false);
 
@@ -339,15 +370,59 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     }
 
     public void MAJTresor(Controleur leControleur) {
+        
+                
+        Tuile uneTuile;
+        ImageIcon icon;
+        String iconPath;
+        Image img;
+        Image newimg;
+        
+        iconPath = ("/img/resources/treasures/Calice.png");
+        btnTresor[0].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
+        icon = createImageIcon(iconPath, "Calice");
+        img = icon.getImage();
+        newimg = img.getScaledInstance( btnTresor[0].getHeight(), btnTresor[0].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
+        icon = new ImageIcon( newimg );
+        btnTresor[0].setIcon(icon);
+        
+        iconPath = ("/img/resources/treasures/Pierre.png");
+        btnTresor[1].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
+        icon = createImageIcon(iconPath, "Pierre");
+        img = icon.getImage();
+        newimg = img.getScaledInstance( btnTresor[1].getHeight(), btnTresor[1].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
+        icon = new ImageIcon( newimg );
+        btnTresor[1].setIcon(icon);
+        
+        iconPath = ("/img/resources/treasures/Statue.png");
+        btnTresor[2].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
+        icon = createImageIcon(iconPath, "Statue");
+        img = icon.getImage();
+        newimg = img.getScaledInstance( btnTresor[2].getHeight(), btnTresor[2].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
+        icon = new ImageIcon( newimg );
+        btnTresor[2].setIcon(icon);
+        
+        iconPath = ("/img/resources/treasures/Statue.png");
+        btnTresor[3].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
+        icon = createImageIcon(iconPath, "Statue");
+        img = icon.getImage();
+        newimg = img.getScaledInstance( btnTresor[3].getHeight(), btnTresor[3].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
+        icon = new ImageIcon( newimg );
+        btnTresor[3].setIcon(icon);
+        
         for (Tresor unTresor : leControleur.getTresors()) {
             if (unTresor.getType() == Utils.TypeTresor.BLEU) {
-                btnCalice.setEnabled(false);
+                btnTresor[0].setBackground(Color.WHITE);
+                btnTresor[0].setEnabled(true);
             } else if (unTresor.getType() == Utils.TypeTresor.GRIS) {
-                btnPierre.setEnabled(false);
+                btnTresor[1].setBackground(Color.WHITE);
+                btnTresor[1].setEnabled(true);
             } else if (unTresor.getType() == Utils.TypeTresor.JAUNE) {
-                btnStatue.setEnabled(false);
+                btnTresor[2].setBackground(Color.WHITE);
+                btnTresor[2].setEnabled(true);
             } else if (unTresor.getType() == Utils.TypeTresor.ROUGE) {
-                btnCristal.setEnabled(false);
+                btnTresor[3].setBackground(Color.WHITE);
+                btnTresor[3].setEnabled(true);
             }
         }
 
@@ -419,6 +494,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         Tuile uneTuile;
         ImageIcon icon;
         String iconPath;
+        ArrayList<JLabel> labelIcon = new ArrayList();
         for (int l = 0; l <= 5; l++) {
             for (int c = 0; c <= 5; c++) {
                 uneTuile = laGrille.getTuile(l, c);
@@ -454,6 +530,16 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
                     if (laGrille.getTuile(l, c).getType() == 1) {
                         tuiles[l][c].setText(tuiles[l][c].getText() + ((TuileTresor) (laGrille.getTuile(l, c))).getTresor().getNom() + "<br>");
+                        /*if (((TuileTresor)(laGrille.getTuile(l,c))).getTresor().getType() == TypeTresor.BLEU){
+                            iconPath = ("/img/resources/treasures/Calice.png");
+                            icon = createImageIcon(iconPath, uneTuile.getNom());
+                            img = icon.getImage();
+                            newimg = img.getScaledInstance( tuiles[l][c].getWidth()/3, tuiles[l][c].getHeight()/3,  java.awt.Image.SCALE_SMOOTH ) ;  
+                            icon = new ImageIcon( newimg );
+                            labelIcon.set(l*10 + c, new JLabel());
+                            labelIcon.get(l*10 + c).setIcon(icon);
+                            tuiles[l][c].add(labelIcon.get(l*10 + c));
+                        }*/
                     }
                 }
 

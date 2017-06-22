@@ -75,6 +75,7 @@ public class Plongeur extends Aventurier {
         ArrayList<Integer> lesTuiles = super.getTuilesAdjacentes(laGrille);
         // On récupère les tuiles adjacentes déjà triés dans le DeplacementPossible de Aventurier
         ArrayList<Integer> lesCoulées = new ArrayList();
+        ArrayList<Integer> lesVraisCoulées = new ArrayList();
         //Parcourt les Tuiles, si la tuile n'est pas coulée, on l'ajoute à la liste des déplacements possibles
         for (int uneTuile : lesTuiles) {
             if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() != Utils.EtatTuile.ASSECHEE && (!lesCoulées.contains(uneTuile))) {
@@ -83,7 +84,20 @@ public class Plongeur extends Aventurier {
             }
         }
 
-        return lesCoulées;
+        for (int uneTuile : (ArrayList<Integer>)lesCoulées.clone()){
+            for (int uneAutreTuile : (ArrayList<Integer>)lesCoulées.clone()){
+                if (uneTuile == uneAutreTuile){
+                    lesVraisCoulées.add(uneTuile);
+                    break;
+                }
+            }
+        }
+        
+        for (int uneTuile : lesVraisCoulées){
+            System.out.println(uneTuile);
+        }
+
+        return lesVraisCoulées;
     }
 
     public ArrayList<Integer> DeplacementPossiblePlongée(Grille laGrille, int x, int y, ArrayList<Integer> coulées) {

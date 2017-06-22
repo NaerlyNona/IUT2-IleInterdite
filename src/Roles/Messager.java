@@ -20,7 +20,7 @@ public class Messager extends Aventurier {
     private String nomRole;
 
     public Messager(String leNomJoueur) {
-        super(leNomJoueur, Utils.Pion.GRISCLAIR);
+        super(leNomJoueur, Utils.Pion.ORANGE);
         setNomRole("Messager");
         setIconPath("/img/resources/logo/RoleTable_Icon_Messenger@2x.png");
         super.setLabelIcone(createImageIcon(getIconPath(), getNomRole()));

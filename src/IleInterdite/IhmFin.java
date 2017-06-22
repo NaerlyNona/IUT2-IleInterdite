@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
  
 /**
  *
@@ -32,7 +33,6 @@ public class IhmFin extends JFrame implements ActionListener {
     public IhmFin(int valeur, IHMIleInterdite ihm){
         this.setLayout(new BorderLayout());
         btnQuitter = new JButton("Abandonner");
-        btnRestart = new JButton("Recommencer");
         btnMenu = new JButton("Menu");
         this.ihmIle = ihm;
         
@@ -43,9 +43,19 @@ public class IhmFin extends JFrame implements ActionListener {
         this.setAlwaysOnTop(true);
  
         if (valeur == 0) {
-            texteF = new JLabel("<html><b><p align=\"center\">Félicitations ! Vous avez perdu.");
+            texteF = new JLabel("<html><b><p align=\"center\">Félicitations ! Vous avez gagné!", SwingConstants.CENTER);
         } else {
-            texteF = new JLabel("<html><b><p align=\"center\">Dommage ! Vous avez gagné.");
+            texteF = new JLabel("<html><b><p align=\"center\">Dommage ! Vous avez perdu. <br>", SwingConstants.CENTER);
+            if (valeur == 1){
+                texteF.setText(texteF.getText() + "Votre hélicoptère a coulé...");
+            } else if (valeur == 2){
+                texteF.setText(texteF.getText() + "Un des aventuriers est bloqué...");
+            } else if (valeur == 3){
+                texteF.setText(texteF.getText() + "Le niveau d'eau est devenu trop elevée...");
+            } else {
+                texteF.setText(texteF.getText() + "Un des trésors a été englouti...");
+            }
+            
         }
         
         
@@ -54,8 +64,6 @@ public class IhmFin extends JFrame implements ActionListener {
         this.add(texteF, BorderLayout.NORTH);
         
         panelBouton = new JPanel(new GridLayout(1,3));
-      
-        panelBouton.add(btnRestart);
         panelBouton.add(btnMenu);
         panelBouton.add(btnQuitter);
         this.add(panelBouton, BorderLayout.SOUTH);
@@ -68,8 +76,7 @@ public class IhmFin extends JFrame implements ActionListener {
         this.setVisible(true);
         
         
-        
-        btnRestart.addActionListener(this);
+       
         btnQuitter.addActionListener(this);
         btnMenu.addActionListener(this);
         
@@ -84,12 +91,7 @@ public class IhmFin extends JFrame implements ActionListener {
         } else if (e.getSource() == btnMenu){
             this.setVisible(false);
             new FenetreDebut();
-            //ihmIle.fermer();
-            
-        } else if (e.getSource() == btnRestart){
-            this.setVisible(false);
-            new Controleur();
-            //ihmIle.fermer();
+            ihmIle.fermer();
             
         }
     }

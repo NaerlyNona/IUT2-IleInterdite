@@ -81,6 +81,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     /*  Mode en cours
      0 = Se Déplacer
      1 = Assécher
+     3 = Helicoptere
+     4 = Sac de sable
     
      */
     public IHMIleInterdite(Observateur o) {
@@ -95,17 +97,17 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         btnTerminerTour.addActionListener(this);
         btnDonner.addActionListener(this);
 
-        for (JButton button : main) {
-            button.setEnabled(false);
-            button.addActionListener(this);
-        }
+        /* for (JButton button : main) {
+         button.setEnabled(false);
+         button.addActionListener(this);
+         }*/
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Message m = new Message();
         if (e.getSource() == btnDeplacer) {
- 
+
             mode = 0;
             btnDeplacer.setEnabled(false);
             btnAssecher.setEnabled(true);
@@ -117,7 +119,6 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             btnAssecher.setEnabled(false);
             m.type = TypesMessage.BTNDEPLACER;
             observateur.traiterMessage(m);
- 
 
         } else if (e.getSource() == btnDeplacer) {
             mode = 0;
@@ -147,28 +148,74 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             } else if (mode == 1) {
                 m.type = TypesMessage.ASSECHER;
                 observateur.traiterMessage(m);
+            } else if (mode == 3) {
+                if (e.getSource() == main[0]) {
+                    m.numCarte = 0;
+                }
+                else if (e.getSource() == main[1]) {
+                    m.numCarte = 1;
+                }
+                else if (e.getSource() == main[2]) {
+                    m.numCarte = 2;
+                }
+                else if (e.getSource() == main[3]) {
+                    m.numCarte = 3;
+                }
+                else if (e.getSource() == main[4]) {
+                    m.numCarte = 4;
+                }
+                m.type = TypesMessage.HELICOPTERE;
+                observateur.traiterMessage(m);
+            } else if (mode == 4) {
+                if (e.getSource() == main[0]) {
+                    m.numCarte = 0;
+                }
+                if (e.getSource() == main[1]) {
+                    m.numCarte = 1;
+                }
+                if (e.getSource() == main[2]) {
+                    m.numCarte = 2;
+                }
+                if (e.getSource() == main[3]) {
+                    m.numCarte = 3;
+                }
+                if (e.getSource() == main[4]) {
+                    m.numCarte = 4;
+                }
+                m.type = TypesMessage.SACDESABLE;
+                observateur.traiterMessage(m);
             } else {
                 System.out.println("Mode non reconnu");
             }
+
         } else if (((JButtonSpecial) (e.getSource())).getType() == 1) {
             System.out.println("Main");
 
         } else if (((JButtonSpecial) (e.getSource())).getType() == 2) {
 
             System.out.println("TEST1");
-            m.type = TypesMessage.HELICOPTERE;
-            observateur.traiterMessage(m);
+            mode = 3;
+            /*m.type = TypesMessage.HELICOPTERE;
+             observateur.traiterMessage(m);*/
 
         } else if (((JButtonSpecial) (e.getSource())).getType() == 3) {
 
             System.out.println("TEST2");
-            m.type = TypesMessage.SACDESABLE;
-            observateur.traiterMessage(m);
+            mode = 4;
 
         }
     }
 
     /*public JButton getSpeciale(){
+     for(JButton button : main){
+     if (button.getName() == "houloucouptère" || button.getName()=="SacDeSable"){
+     return button;
+     } else {return null; }
+     }
+     }
+     }
+
+     /*public JButton getSpeciale(){
      for(JButton button : main){
      if (button.getName() == "houloucouptère" || button.getName()=="SacDeSable"){
      return button;
@@ -206,42 +253,41 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         panelJoueur.add(roleJoueur);
         //panelTresor          
         panelTresor.setLayout(new GridLayout(1, 4));
-        
-        /*panelTresor.add(btnCalice);
-        btnCalice.setHorizontalTextPosition(SwingConstants.CENTER);
-        btnCalice.setVerticalTextPosition(SwingConstants.BOTTOM);
-        btnCalice.setBackground(Color.BLACK);
-        btnCalice.setForeground(Color.BLACK);
-        btnCalice.setEnabled(false);*/
 
+        /*panelTresor.add(btnCalice);
+         btnCalice.setHorizontalTextPosition(SwingConstants.CENTER);
+         btnCalice.setVerticalTextPosition(SwingConstants.BOTTOM);
+         btnCalice.setBackground(Color.BLACK);
+         btnCalice.setForeground(Color.BLACK);
+         btnCalice.setEnabled(false);*/
         btnTresor[0] = new JButton("<html><b>Calice");
         btnTresor[1] = new JButton("<html><b>Pierre");
         btnTresor[2] = new JButton("<html><b>Statue");
         btnTresor[3] = new JButton("<html><b>Cristal");
-        for (JButton unBouton: btnTresor){
+        for (JButton unBouton : btnTresor) {
             unBouton.setHorizontalTextPosition(SwingConstants.CENTER);
             unBouton.setVerticalTextPosition(SwingConstants.BOTTOM);
             unBouton.setBackground(Color.BLACK);
             unBouton.setForeground(Color.BLACK);
             unBouton.setEnabled(false);
-            unBouton.setMargin(new Insets(5,5,5,5));
+            unBouton.setMargin(new Insets(5, 5, 5, 5));
             panelTresor.add(unBouton);
         }
         /*panelTresor.add(btnPierre);
-        btnPierre.setHorizontalTextPosition(SwingConstants.CENTER);
-       //btnPierre.setBackground(Color.DARK_GRAY);
-        //btnCalice.setForeground(Color.LIGHT_GRAY);
+         btnPierre.setHorizontalTextPosition(SwingConstants.CENTER);
+         //btnPierre.setBackground(Color.DARK_GRAY);
+         //btnCalice.setForeground(Color.LIGHT_GRAY);
         
-        panelTresor.add(btnStatue);
-        btnStatue.setHorizontalTextPosition(SwingConstants.CENTER);
-        //btnCalice.setBackground(Color.DARK_GRAY);
-        //btnCalice.setForeground(Color.LIGHT_GRAY);
+         panelTresor.add(btnStatue);
+         btnStatue.setHorizontalTextPosition(SwingConstants.CENTER);
+         //btnCalice.setBackground(Color.DARK_GRAY);
+         //btnCalice.setForeground(Color.LIGHT_GRAY);
         
-        panelTresor.add(btnCristal);
-        btnCristal.setHorizontalTextPosition(SwingConstants.CENTER);
-        //btnCalice.setBackground(Color.DARK_GRAY);
-        //btnCalice.setForeground(Color.LIGHT_GRAY);*/
-        
+         panelTresor.add(btnCristal);
+         btnCristal.setHorizontalTextPosition(SwingConstants.CENTER);
+         //btnCalice.setBackground(Color.DARK_GRAY);
+         //btnCalice.setForeground(Color.LIGHT_GRAY);*/
+
         //panelNiveauEau
         panelNiveauEau.setLayout(new BorderLayout());
         labelNiveauEau.setText("<html><p align=\"center\">Niveau de l'eau: " + niveauEau);
@@ -305,7 +351,9 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             main[i] = new JButtonSpecial(1);
             main[i].setHorizontalTextPosition(SwingConstants.CENTER);
             main[i].setText("Vide");
-            this.main[i].addActionListener(this);
+            main[i].addActionListener(this);
+            main[i].setEnabled(false);
+
         }
 
         gbc.gridx = 0;
@@ -387,46 +435,45 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     }
 
     public void MAJTresor(Controleur leControleur) {
-        
-                
+
         Tuile uneTuile;
         ImageIcon icon;
         String iconPath;
         Image img;
         Image newimg;
-        
+
         iconPath = ("/img/resources/treasures/Calice.png");
         btnTresor[0].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Calice");
         img = icon.getImage();
-        newimg = img.getScaledInstance( btnTresor[0].getHeight(), btnTresor[0].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
-        icon = new ImageIcon( newimg );
+        newimg = img.getScaledInstance(btnTresor[0].getHeight(), btnTresor[0].getHeight(), java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newimg);
         btnTresor[0].setIcon(icon);
-        
+
         iconPath = ("/img/resources/treasures/Pierre.png");
         btnTresor[1].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Pierre");
         img = icon.getImage();
-        newimg = img.getScaledInstance( btnTresor[1].getHeight(), btnTresor[1].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
-        icon = new ImageIcon( newimg );
+        newimg = img.getScaledInstance(btnTresor[1].getHeight(), btnTresor[1].getHeight(), java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newimg);
         btnTresor[1].setIcon(icon);
-        
+
         iconPath = ("/img/resources/treasures/Statue.png");
         btnTresor[2].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Statue");
         img = icon.getImage();
-        newimg = img.getScaledInstance( btnTresor[2].getHeight(), btnTresor[2].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
-        icon = new ImageIcon( newimg );
+        newimg = img.getScaledInstance(btnTresor[2].getHeight(), btnTresor[2].getHeight(), java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newimg);
         btnTresor[2].setIcon(icon);
-        
+
         iconPath = ("/img/resources/treasures/Statue.png");
         btnTresor[3].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Statue");
         img = icon.getImage();
-        newimg = img.getScaledInstance( btnTresor[3].getHeight(), btnTresor[3].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
-        icon = new ImageIcon( newimg );
+        newimg = img.getScaledInstance(btnTresor[3].getHeight(), btnTresor[3].getHeight(), java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newimg);
         btnTresor[3].setIcon(icon);
-        
+
         for (Tresor unTresor : leControleur.getTresors()) {
             if (unTresor.getType() == Utils.TypeTresor.BLEU) {
                 btnTresor[0].setBackground(Color.WHITE);
@@ -477,9 +524,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     }
 
     public void MAJMain(Aventurier aventurier) {
-        for (JButton button : main) {
-            button.addActionListener(this);
-        }
+
         ArrayList<Carte> laMain = aventurier.getMain();
         int i = 0;
 
@@ -521,8 +566,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     tuiles[l][c].setEnabled(false);
                 } else {
                     //tuiles[l][c].setText(laGrille.getTuile(l, c).getNom()+"<html><br>");
-                    tuiles[l][c].setText("<html><p align=\"center\">");  
-   
+                    tuiles[l][c].setText("<html><p align=\"center\">");
+
                     iconPath = ("/images/tuiles/" + uneTuile.getNom() + ".png");
                     tuiles[l][c].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
                     if (laGrille.getTuile(l, c).getEtat() == Utils.EtatTuile.ASSECHEE) {
@@ -541,8 +586,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     }
                     icon = createImageIcon(iconPath, uneTuile.getNom());
                     Image img = icon.getImage();
-                    Image newimg = img.getScaledInstance( tuiles[l][c].getWidth(), tuiles[l][c].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
-                    icon = new ImageIcon( newimg );
+                    Image newimg = img.getScaledInstance(tuiles[l][c].getWidth(), tuiles[l][c].getHeight(), java.awt.Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(newimg);
                     tuiles[l][c].setIcon(icon);
                 }
 
@@ -555,14 +600,14 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         // MAJ TUILE DEPLACEMENT
         if (mode == 0) {
             for (int tuile : aventurier.DeplacementPossible(laGrille)) {
- 
+
                 tuiles[Utils.getChiffre(tuile, 2)][Utils.getChiffre(tuile, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GREEN));
             }
         }
         // MAJ TUILE ASSECHEMENT
         if (mode == 1) {
             for (int tuileAssechable : aventurier.AssechementPossible(laGrille)) {
- 
+
                 tuiles[Utils.getChiffre(tuileAssechable, 2)][Utils.getChiffre(tuileAssechable, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.CYAN));
             }
         }
@@ -572,16 +617,16 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         }
 
     }
-    
+
     protected ImageIcon createImageIcon(String path,
-                                           String description) {
-    java.net.URL imgURL = getClass().getResource(path);
-    if (imgURL != null) {
-        return new ImageIcon(imgURL, description);
-    } else {
-        System.err.println("Couldn't find file: " + path);
-        return null;
+            String description) {
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL, description);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
     }
-}
 
 }

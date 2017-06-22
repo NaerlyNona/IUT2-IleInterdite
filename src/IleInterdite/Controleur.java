@@ -669,15 +669,25 @@ public class Controleur implements Observateur {
                 break;
             case SACDESABLE:
                 System.out.println("SAC DE SABLE");
-
-                getAventurierActuel().setPA(getAventurierActuel().getPA() + 1);
-                getAventurierActuel().Assécher(laGrille, "" + msg.posX + msg.posY);
+                getAventurierActuel().UtiliserSacDeSable(laGrille, "" + msg.posX + msg.posY);
+                getAventurierActuel().removeMain(getAventurierActuel().getMain().get(msg.numCarte));
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
                 ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
-
+                ihmIleInterdite.MAJMain(aventurierActuel);
+ 
+                break;
+            case HELICOPTERE:
+                System.out.println("HELICOPTERE");
+                getAventurierActuel().SeDeplacerHelicoptère(laGrille, "" + msg.posX + msg.posY);
+                getAventurierActuel().removeMain(getAventurierActuel().getMain().get(msg.numCarte));
+                ihmIleInterdite.MAJJoueur(getAventurierActuel());
+                ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
+                ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
+                ihmIleInterdite.MAJMain(aventurierActuel);
                 break;
 
+                
         }
 
     }

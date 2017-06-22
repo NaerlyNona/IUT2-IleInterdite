@@ -183,6 +183,85 @@ public class Aventurier {
         setPA(maxPA);
     }
 
+    public ArrayList<Integer> Helicoptère (Grille laGrille){
+        ArrayList<Integer> lesDeplacements = new ArrayList();
+        lesDeplacements.clear();
+ 
+        for (int x = 0; x <= 5; x++) {
+            for (int y = 0; y <= 5; y++) {
+                if (laGrille.getTuile(x, y) != null) {
+                    if (laGrille.getTuile(x, y).getEtat() != Utils.EtatTuile.COULEE) {
+                        lesDeplacements.add(Integer.valueOf(String.valueOf(x) + String.valueOf(y)));
+                    }
+                }
+            }
+        }
+        
+        for (int uneTuile : (ArrayList<Integer>)lesDeplacements.clone()) {
+            if ((Utils.getChiffre(uneTuile, 2) == getX()) && (Utils.getChiffre(uneTuile, 1) == getY())) {
+                lesDeplacements.remove( ((Object)(uneTuile)) );
+            }
+        }
+        return lesDeplacements;
+     
+    }
+    
+    public ArrayList<Integer> SacDeSable (Grille laGrille){
+        ArrayList<Integer> lesDeplacements = new ArrayList();
+        lesDeplacements.clear();
+ 
+        for (int x = 0; x <= 5; x++) {
+            for (int y = 0; y <= 5; y++) {
+                if (laGrille.getTuile(x, y) != null) {
+                    if (laGrille.getTuile(x, y).getEtat() != Utils.EtatTuile.COULEE && laGrille.getTuile(x, y).getEtat() != Utils.EtatTuile.ASSECHEE ) {
+                        lesDeplacements.add(Integer.valueOf(String.valueOf(x) + String.valueOf(y)));
+                    }
+                }
+            }
+        }
+        
+        
+        return lesDeplacements;
+     
+    }
+    
+    public void UtiliserSacDeSable(Grille laGrille, String laPosition) {
+ 
+        ArrayList<Integer> DeplacementPossible = SacDeSable(laGrille);
+ 
+        int x = Character.getNumericValue(laPosition.charAt(0));
+        int y = Character.getNumericValue(laPosition.charAt(1));
+ 
+        for (int unDeplacementPossible : DeplacementPossible) {
+ 
+            if (unDeplacementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
+                laGrille.getTuile(x, y).setEtat(Utils.EtatTuile.ASSECHEE);
+                break;
+            }
+        }
+    }
+    
+    
+    public void SeDeplacerHelicoptère(Grille laGrille, String laPosition) {
+ 
+        ArrayList<Integer> DeplacementPossible = Helicoptère(laGrille);
+ 
+        int x = Character.getNumericValue(laPosition.charAt(0));
+        int y = Character.getNumericValue(laPosition.charAt(1));
+ 
+        for (int unDeplacementPossible : DeplacementPossible) {
+ 
+            if (unDeplacementPossible == (Integer.valueOf(String.valueOf(x) + String.valueOf(y)))) {
+                this.setPosition(x, y);
+                setPA(getPA() - 1);
+                break;
+            }
+        }
+    }
+    
+ 
+
+        
     public ArrayList<Integer> DeplacementPossible(Grille laGrille) {
         ArrayList<Integer> lesTuiles = getTuilesAdjacentes(laGrille);
         ArrayList<Integer> lesDeplacements = new ArrayList();

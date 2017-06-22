@@ -636,7 +636,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     tuiles[Utils.getChiffre(tuileAssechable, 2)][Utils.getChiffre(tuileAssechable, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.CYAN));
                 }
             }
-        }
+        
 
         //MAJ PIONS
         for (Aventurier unAventurier : lesAventuriers) {

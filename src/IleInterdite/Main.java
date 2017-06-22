@@ -12,6 +12,6 @@ package IleInterdite;
 public class Main {
     public static void main(String [] args) {     
         
-        new IHMRegles();
+        new FenetreDebut();
    }  
 }

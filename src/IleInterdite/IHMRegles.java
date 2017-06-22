@@ -32,41 +32,40 @@ public class IHMRegles extends JFrame implements ActionListener {
     private JPanel panelBouton;
     private IhmFin finIhm;
     CardLayout c1 = new CardLayout();
-        JPanel content = new JPanel();
+    JPanel content = new JPanel();
+    private JPanel[] pages = new JPanel[8];
+    private JPanel page1 = new JPanel();
         
-        
-        String [] listContent = {"Regle1", "Regle2", "Regle3"};
-        int indice = 0;
+    String [] listContent = {"Regle1", "Regle2", "Regle3", "Regle4", "Regle5", "Regle6","Regle7", "Regle8"};
+    int indice = 0;
     
     public IHMRegles(){
         
         
         this.setTitle("Règles");
         this.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        this.setSize(200, 400);
+        this.setSize(600, 1000);
         this.setLocationRelativeTo(null);
         this.setAlwaysOnTop(true);
         
-        JPanel card1 = new JPanel();
-        
-        JPanel card2 = new JPanel();
-        card2.setBackground(Color.red);
-        JPanel card3 = new JPanel();
-        card3.setBackground(Color.blue);
+
         ImageIcon icon;
         String iconPath;
         Image img;
         Image newimg;
         
-        iconPath = ("/img/resources/regles/ReglesPage1.png");
-        //btnTresor[1].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
-        icon = createImageIcon(iconPath, "Regles1");
+        
+        for ( int i = 1; i < 8; i++){
+        pages[i] = new JPanel();
+        iconPath = ("/img/resources/regles/ReglesPage"+i+".png");
+        icon = createImageIcon(iconPath, "Regles"+i);
         img = icon.getImage();
-        newimg = img.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+        newimg = img.getScaledInstance(600, 1000, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(newimg);
-  
-        JLabel regle1 = new JLabel(icon);
-        card1.add(regle1);
+        JLabel regle = new JLabel(icon);
+        System.out.println(i);
+        pages[i].add(regle);
+        }
         
         
         
@@ -80,12 +79,10 @@ public class IHMRegles extends JFrame implements ActionListener {
  
      
         panelBouton = new JPanel(new GridLayout(1,2));
-      
-        panelBouton.add(btnSuivant);
         panelBouton.add(btnPrecedent);
-        this.add(content);
+        panelBouton.add(btnSuivant);
         this.add(panelBouton, BorderLayout.NORTH);
-        
+        this.add(content);
         
         
         
@@ -97,9 +94,13 @@ public class IHMRegles extends JFrame implements ActionListener {
         content.setLayout(c1);
         btnSuivant.addActionListener(this);
         btnPrecedent.addActionListener(this);
-        content.add(card1, listContent[0]);
-         content.add(card2, listContent[1]);
-            content.add(card3, listContent[2]);
+        for( int i = 0; i < 8; i++){
+           //content.add(pages[i], listContent[i]);
+          pages[1].setBackground(Color.yellow);
+          
+        }
+        
+         
         
     }
     
@@ -107,6 +108,7 @@ public class IHMRegles extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==btnSuivant){
             c1.next(content);
+           
         }
         
     }

@@ -64,7 +64,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     private JPanel panelNiveauEau = new JPanel();
     private JLabel labelNiveauEau = new JLabel("", SwingConstants.CENTER);
     private double niveauEau = 0;
-    private JSlider sliderNiveauEau = new JSlider(0, 20, 0);
+    private JSlider sliderNiveauEau = new JSlider(0, 10, 0);
 
     private JPanel panelBoutons = new JPanel(); // le panel du bas-droite où les boutons sont présents
     private JLabel paJoueur = new JLabel("PA : X", SwingConstants.CENTER);
@@ -116,26 +116,18 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         if (e.getSource() == btnDeplacer) {
 
             mode = 0;
+            this.MAJMain(getJoueurCourant());
             btnDeplacer.setEnabled(false);
             btnAssecher.setEnabled(true);
             m.type = TypesMessage.BTNDEPLACER;
             observateur.traiterMessage(m);
         } else if (e.getSource() == btnAssecher) {
             mode = 1;
+            this.MAJMain(getJoueurCourant());
             btnDeplacer.setEnabled(true);
             btnAssecher.setEnabled(false);
             m.type = TypesMessage.BTNDEPLACER;
             observateur.traiterMessage(m);
-
-        } else if (e.getSource() == btnDeplacer) {
-            mode = 0;
-            btnDeplacer.setEnabled(false);
-            btnAssecher.setEnabled(true);
-        } else if (e.getSource() == btnAssecher) {
-
-            mode = 1;
-            btnDeplacer.setEnabled(true);
-            btnAssecher.setEnabled(false);
         } else if (e.getSource() == btnTerminerTour) {
             m.type = TypesMessage.TERMINER_TOUR_INITIALISATION;
             observateur.traiterMessage(m);
@@ -143,7 +135,6 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             m.type = TypesMessage.BTNDONNER;
             observateur.traiterMessage(m);
         } else if (e.getSource() == btnRecuperer) {
-            System.out.println("test");
             m.type = TypesMessage.RECUPERER;
             observateur.traiterMessage(m);
         } else if (((JButtonSpecial) (e.getSource())).getType() == 0) {
@@ -196,15 +187,21 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
         } else if (((JButtonSpecial) (e.getSource())).getType() == 2) {
 
-            System.out.println("TEST1");
+            System.out.println("Mode Helicoptère");
             mode = 3;
+            btnDeplacer.setEnabled(true);
+            btnAssecher.setEnabled(true);
+            ((JButton)(e.getSource())).setEnabled(false);
             /*m.type = TypesMessage.HELICOPTERE;
              observateur.traiterMessage(m);*/
 
         } else if (((JButtonSpecial) (e.getSource())).getType() == 3) {
 
-            System.out.println("TEST2");
+            System.out.println("Mode Sac de Sable");
             mode = 4;
+            btnDeplacer.setEnabled(true);
+            btnAssecher.setEnabled(true);
+            ((JButton)(e.getSource())).setEnabled(false);
 
         }
     }
@@ -516,7 +513,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     i++;
                 }
             }
-            if (i >= 2 && !controleur.getTresors().contains(controleur.getLaGrille().getTuile(controleur.getAventurierActuel().getX(), controleur.getAventurierActuel().getY()).getTresor())) {
+            if (i >= 4 && !controleur.getTresors().contains(controleur.getLaGrille().getTuile(controleur.getAventurierActuel().getX(), controleur.getAventurierActuel().getY()).getTresor())) {
                 btnRecuperer.setEnabled(true);
             }
 
@@ -588,6 +585,15 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         Tuile uneTuile;
         ImageIcon icon;
         String iconPath;
+        Border raisedbevel = BorderFactory.createRaisedBevelBorder();
+        Border loweredbevel = BorderFactory.createLoweredBevelBorder();
+        Border compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
+        Border greenline = BorderFactory.createMatteBorder(3, 3, 3, 3, Color.GREEN);
+        Border compoundGreen = BorderFactory.createCompoundBorder(compound, greenline);
+        
+        Border cyanline = BorderFactory.createMatteBorder(3, 3, 3, 3, Color.CYAN);
+        Border compoundCyan = BorderFactory.createCompoundBorder(compound, cyanline);
+        
         for (int l = 0; l <= 5; l++) {
             for (int c = 0; c <= 5; c++) {
                 uneTuile = laGrille.getTuile(l, c);
@@ -625,7 +631,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                 //if (aventurier.getPA() > 0) {
                 for (int tuile : aventurier.DeplacementPossible(laGrille)) {
 
-                    tuiles[Utils.getChiffre(tuile, 2)][Utils.getChiffre(tuile, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GREEN));
+                    tuiles[Utils.getChiffre(tuile, 2)][Utils.getChiffre(tuile, 1)].setBorder(compoundGreen);
                // }
                 }
             }
@@ -633,7 +639,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             if (mode == 1) {
                 for (int tuileAssechable : aventurier.AssechementPossible(laGrille)) {
 
-                    tuiles[Utils.getChiffre(tuileAssechable, 2)][Utils.getChiffre(tuileAssechable, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.CYAN));
+                    tuiles[Utils.getChiffre(tuileAssechable, 2)][Utils.getChiffre(tuileAssechable, 1)].setBorder(compoundCyan);
                 }
             }
            
@@ -655,6 +661,20 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             System.err.println("Couldn't find file: " + path);
             return null;
         }
+    }
+
+    /**
+     * @return the joueurCourant
+     */
+    public Aventurier getJoueurCourant() {
+        return joueurCourant;
+    }
+
+    /**
+     * @param joueurCourant the joueurCourant to set
+     */
+    public void setJoueurCourant(Aventurier joueurCourant) {
+        this.joueurCourant = joueurCourant;
     }
 
 }

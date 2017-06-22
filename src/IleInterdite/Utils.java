@@ -62,8 +62,8 @@ public class Utils {
         ROUGE("Rouge", new Color(255, 0, 0)), // Ingénieur 
         VERT("Vert", new Color(0, 195, 0)), // Explorateur
         BLEU("Bleu", new Color(55, 194, 198)), // Pilote
-        GRISCLAIR("Orange", Color.LIGHT_GRAY), // Messager
-        GRISFONCE("Violet", Color.DARK_GRAY), // Plongeur
+        ORANGE("Orange", new Color(247,148,29)), // Messager
+        GRISFONCE("Gris Foncé", new Color(99,100,102)), // Plongeur
         JAUNE("Jaune", new Color(255, 255, 0)); // Navigateur
 
         private final String libelle;
@@ -93,8 +93,8 @@ public class Utils {
             if (BLEU.name().equals(name)) {
                 return BLEU;
             }
-            if (GRISCLAIR.name().equals(name)) {
-                return GRISCLAIR;
+            if (ORANGE.name().equals(name)) {
+                return ORANGE;
             }
             if (GRISFONCE.name().equals(name)) {
                 return GRISFONCE;

@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
  
 /**
  *
@@ -43,7 +44,7 @@ public class IhmAbandon extends JFrame implements ActionListener {
         this.setAlwaysOnTop(true);
  
        
-        texteF = new JLabel("<html><b><p align=\"center\">Êtes vous faible a ce point ?");
+        texteF = new JLabel("<html><b><p align=\"center\">Êtes vous faible a ce point ?", SwingConstants.CENTER);
         
           
         

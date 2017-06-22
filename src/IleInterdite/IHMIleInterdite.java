@@ -75,6 +75,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
     private JButtonSpecial[] main = new JButtonSpecial[5];
 
+    private JButton btnAutresCartes = new JButton("Autres Cartes");
+
     private JButton btnTerminerTour = new JButton("Terminer Tour");
 
     private ArrayList<JLabel> labelIconeAventurier = new ArrayList();
@@ -94,6 +96,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
      */
     public IHMIleInterdite(Observateur o) {
         super("Ile Interdite");
+        System.out.println("Oui");
+        this.setVisible(true);
         setObservateur(o);
 
         initialisationFenetre();
@@ -103,6 +107,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         btnRecuperer.addActionListener(this);
         btnTerminerTour.addActionListener(this);
         btnDonner.addActionListener(this);
+        btnAutresCartes.addActionListener(this);
 
         /* for (JButton button : main) {
          button.setEnabled(false);
@@ -136,6 +141,9 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             observateur.traiterMessage(m);
         } else if (e.getSource() == btnRecuperer) {
             m.type = TypesMessage.RECUPERER;
+            observateur.traiterMessage(m);
+        } else if (e.getSource() == btnAutresCartes) {
+            m.type = TypesMessage.AUTRESCARTES;
             observateur.traiterMessage(m);
         } else if (((JButtonSpecial) (e.getSource())).getType() == 0) {
             m.posX = ((JButtonTuile) (e.getSource())).getPosX();
@@ -246,7 +254,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         for (JButton unBouton : btnTresor) {
             unBouton.setHorizontalTextPosition(SwingConstants.CENTER);
             unBouton.setVerticalTextPosition(SwingConstants.BOTTOM);
-            unBouton.setBackground(Color.BLACK);
+            unBouton.setBackground(Color.DARK_GRAY);
             unBouton.setForeground(Color.BLACK);
             unBouton.setEnabled(false);
             unBouton.setMargin(new Insets(5, 5, 5, 5));
@@ -348,6 +356,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         gbc.gridwidth = 4;
         panelBoutons.add(new JLabel("Cartes", SwingConstants.CENTER), gbc);
 
+        //Creation des boutons des cartes
         for (int i = 0; i <= 4; i++) {
             main[i] = new JButtonSpecial(1);
             main[i].setHorizontalTextPosition(SwingConstants.CENTER);
@@ -357,6 +366,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
         }
 
+        //Placement des boutons des cartes
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridheight = 1;
@@ -388,6 +398,14 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         gbc.gridwidth = 4;
         panelBoutons.add(main[4], gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 4;
+        btnAutresCartes.setBackground(new Color(61, 93, 255));
+        btnAutresCartes.setForeground(Color.WHITE);
+        panelBoutons.add(btnAutresCartes, gbc);
+
         panelInterface.add(panelBoutons, BorderLayout.CENTER);
 
         panelInterface.add(btnTerminerTour, BorderLayout.SOUTH);
@@ -398,9 +416,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     public void afficher() {
         this.setLocationRelativeTo(null);
         setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        //setSize(900, 600);
         setSize(1080, 780);
-        this.setLocationRelativeTo(null);
         setVisible(true);
         this.setResizable(false);
 
@@ -409,14 +425,14 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     public void fin(int valeur) {
         // 0 = Perdu 1 = Gagné
         //this.setVisible(false);
-        setEnabled(false);
+        this.setEnabled(false);
         System.out.println("test");
         new IhmFin(valeur, this);
     }
 
     public void MAJJoueur(Aventurier aventurier) {
         nomJoueur.setText(aventurier.getNomJoueur());
-        paJoueur.setText("<html><p align=\"center\"> PA: " + aventurier.getPA());
+        paJoueur.setText("<html><p align=\"center\"> Points d'Action: " + aventurier.getPA());
         roleJoueur.setText(aventurier.getNomRole());
         panelJoueur.setBackground(aventurier.getPion().getCouleur());
         if (aventurier.getPion().getCouleur() == Color.DARK_GRAY) {
@@ -634,7 +650,6 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         if (aventurier.getPA() > 0) {
             if (mode == 0) {
                 for (int tuile : aventurier.DeplacementPossible(laGrille)) {
-
                     tuiles[Utils.getChiffre(tuile, 2)][Utils.getChiffre(tuile, 1)].setBorder(compoundGreen);
                 }
             }
@@ -647,7 +662,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             }
         }
 
-        //MAJ PIONS
+        //MAJ PION
         for (Aventurier unAventurier : lesAventuriers) {
             tuiles[unAventurier.getX()][unAventurier.getY()].add(unAventurier.getLabelIcone());
         }
@@ -665,7 +680,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     }
 
     public void fermer() {
-        System.exit(0);
+        this.dispose();
     }
 
     /**

@@ -27,4 +27,6 @@ public enum TypesMessage {
     HELICOPTERE,
     SACDESABLE,
     BTNDEPLACER,
+    AUTRESCARTES,
+    AUTRESCARTESFIN,
 }

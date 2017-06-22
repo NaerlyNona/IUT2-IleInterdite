@@ -25,12 +25,12 @@ import javax.swing.JPanel;
  * @author chenavje
  */
 public class IHMRegles extends JFrame implements ActionListener {
-    private JLabel texteF;
+   
     private JButton btnSuivant;
     private JButton btnPrecedent;
     
     private JPanel panelBouton;
-    private IhmFin finIhm;
+    
     CardLayout c1 = new CardLayout();
     JPanel content = new JPanel();
     private JPanel[] pages = new JPanel[8];
@@ -88,7 +88,7 @@ public class IHMRegles extends JFrame implements ActionListener {
         
         
         
-        this.setVisible(true);
+        
         
         
         content.setLayout(c1);
@@ -100,7 +100,7 @@ public class IHMRegles extends JFrame implements ActionListener {
           
         }
         
-         
+         this.setVisible(true);
         
     }
     
@@ -109,6 +109,8 @@ public class IHMRegles extends JFrame implements ActionListener {
         if (e.getSource()==btnSuivant){
             c1.next(content);
            
+        } else {
+            c1.previous(content);
         }
         
     }

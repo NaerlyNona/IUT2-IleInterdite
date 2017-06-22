@@ -109,11 +109,11 @@ public class Controleur implements Observateur {
         getLesAventuriers().add(new Ingenieur("Joueur1"));
         getLesAventuriers().add(new Pilote("Joueur2"));
         getLesAventuriers().add(new Explorateur("Joueur3"));
-         getLesAventuriers().add(new Messager("Joueur4"));
+         getLesAventuriers().add(new Plongeur("Joueur4"));
 
         for (Aventurier unAventurier : getLesAventuriers()) {
             System.out.println(unAventurier.getNomJoueur());
-            if (unAventurier.getNomRole() == "Messager") {
+            if (unAventurier.getNomRole() == "Plongeur") {
                 unAventurier.setPosition(1, 1);
                 for (int i = 0; i < 5; i++) {
                     carte = new CarteTrésor("Le Calice de l’onde", calice, Utils.TypeCarte.Trésor);

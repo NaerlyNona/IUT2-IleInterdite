@@ -207,23 +207,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
         }
     }
-
-    /*public JButton getSpeciale(){
-     for(JButton button : main){
-     if (button.getName() == "houloucouptère" || button.getName()=="SacDeSable"){
-     return button;
-     } else {return null; }
-     }
-     }
-     }
-
-     /*public JButton getSpeciale(){
-     for(JButton button : main){
-     if (button.getName() == "houloucouptère" || button.getName()=="SacDeSable"){
-     return button;
-     } else {return null; }
-     }
-     }*/
+    
     public void setObservateur(Observateur o) {
         observateur = o;
     }
@@ -237,7 +221,6 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             for (int c = 0; c <= 5; c++) {
                 tuiles[l][c] = new JButtonTuile(l, c);
                 tuiles[l][c].setHorizontalTextPosition(SwingConstants.CENTER);
-                //tuiles[l][c].setFont(new Font("Serif",Font.PLAIN, 10));
                 panelPlateau.add(tuiles[l][c]);
                 this.tuiles[l][c].addActionListener(this);
             }
@@ -250,11 +233,12 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         //panelInfo
         panelInfo.setLayout(new BorderLayout());
         //panelJoueur
-        panelJoueur.setLayout(new GridLayout(1, 2));
+        panelJoueur.setLayout(new GridLayout(1, 3));
         panelJoueur.setBorder(BorderFactory.createRaisedBevelBorder());
         panelJoueur.add(nomJoueur);
         panelJoueur.add(roleJoueur);
-
+        panelJoueur.setBackground(Color.LIGHT_GRAY);
+        
         //panelTresor          
         panelTresor.setLayout(new GridLayout(1, 4));
         btnTresor[0] = new JButton("<html><b>Calice");
@@ -462,7 +446,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         Image img;
         Image newimg;
 
-        iconPath = ("/img/resources/treasures/Calice.png");
+        iconPath = ("/img/resources/logo/Treasure_Icon_Calice.png");
         btnTresor[0].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Calice");
         img = icon.getImage();
@@ -470,7 +454,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         icon = new ImageIcon(newimg);
         btnTresor[0].setIcon(icon);
 
-        iconPath = ("/img/resources/treasures/Pierre.png");
+        iconPath = ("/img/resources/logo/Treasure_Icon_Pierre.png");
         btnTresor[1].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Pierre");
         img = icon.getImage();
@@ -478,7 +462,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         icon = new ImageIcon(newimg);
         btnTresor[1].setIcon(icon);
 
-        iconPath = ("/img/resources/treasures/Statue.png");
+        iconPath = ("/img/resources/logo/Treasure_Icon_Statue.png");
         btnTresor[2].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Statue");
         img = icon.getImage();
@@ -486,7 +470,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         icon = new ImageIcon(newimg);
         btnTresor[2].setIcon(icon);
 
-        iconPath = ("/img/resources/treasures/Cristal.png");
+        iconPath = ("/img/resources/logo/Treasure_Icon_Cristal.png");
         btnTresor[3].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Cristal");
         img = icon.getImage();
@@ -652,7 +636,9 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     tuiles[Utils.getChiffre(tuileAssechable, 2)][Utils.getChiffre(tuileAssechable, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.CYAN));
                 }
             }
-      //  }
+        }
+
+        //MAJ PIONS
         for (Aventurier unAventurier : lesAventuriers) {
             tuiles[unAventurier.getX()][unAventurier.getY()].add(unAventurier.getLabelIcone());
         }

@@ -506,7 +506,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     //tuiles[l][c].setText(laGrille.getTuile(l, c).getNom()+"<html><br>");
                     tuiles[l][c].setText("<html><p align=\"center\">");  
    
-                    iconPath = ("/img/resources/tiles/" + uneTuile.getNom() + ".png");
+                    iconPath = ("/images/tuiles/" + uneTuile.getNom() + ".png");
                     tuiles[l][c].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
                     if (laGrille.getTuile(l, c).getEtat() == Utils.EtatTuile.ASSECHEE) {
                         //tuiles[l][c].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.ORANGE));
@@ -516,7 +516,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                         //tuiles[l][c].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.CYAN));
                         tuiles[l][c].setBackground(Color.WHITE);
                         tuiles[l][c].setEnabled(true);
-                        iconPath = ("/img/resources/tiles/" + uneTuile.getNom() + "_flood.png");
+                        iconPath = ("/images/tuiles/" + uneTuile.getNom() + "_Inonde.png");
                     } else if (laGrille.getTuile(l, c).getEtat() == Utils.EtatTuile.COULEE) {
                         tuiles[l][c].setBorder(null);
                         tuiles[l][c].setBackground(Color.GRAY);
@@ -527,20 +527,6 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     Image newimg = img.getScaledInstance( tuiles[l][c].getWidth(), tuiles[l][c].getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
                     icon = new ImageIcon( newimg );
                     tuiles[l][c].setIcon(icon);
-
-                    if (laGrille.getTuile(l, c).getType() == 1) {
-                        tuiles[l][c].setText(tuiles[l][c].getText() + ((TuileTresor) (laGrille.getTuile(l, c))).getTresor().getNom() + "<br>");
-                        /*if (((TuileTresor)(laGrille.getTuile(l,c))).getTresor().getType() == TypeTresor.BLEU){
-                            iconPath = ("/img/resources/treasures/Calice.png");
-                            icon = createImageIcon(iconPath, uneTuile.getNom());
-                            img = icon.getImage();
-                            newimg = img.getScaledInstance( tuiles[l][c].getWidth()/3, tuiles[l][c].getHeight()/3,  java.awt.Image.SCALE_SMOOTH ) ;  
-                            icon = new ImageIcon( newimg );
-                            labelIcon.set(l*10 + c, new JLabel());
-                            labelIcon.get(l*10 + c).setIcon(icon);
-                            tuiles[l][c].add(labelIcon.get(l*10 + c));
-                        }*/
-                    }
                 }
 
                 if ((aventurier.getX() == l) && (aventurier.getY() == c)) {

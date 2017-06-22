@@ -55,8 +55,6 @@ public class Controleur implements Observateur {
         ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
         ihmIleInterdite.MAJMain(getAventurierActuel());
         ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
-
-
     }
 
     public void InitialiserTestPartie() {

@@ -7,6 +7,7 @@ package Roles;
 
 import IleInterdite.Aventurier;
 import IleInterdite.Grille;
+import IleInterdite.Tuile;
 import IleInterdite.Utils;
 import java.util.ArrayList;
 import javax.swing.JTextField;
@@ -42,62 +43,52 @@ public class Plongeur extends Aventurier {
 
     @Override
     public ArrayList<Integer> DeplacementPossible(Grille laGrille) {
-        ArrayList<Integer> lesTuiles = super.getTuilesAdjacentes(laGrille);
         // On récupère les tuiles adjacentes déjà triés dans le DeplacementPossible de Aventurier
-        ArrayList<Integer> lesDeplacements = super.DeplacementPossible(laGrille);
 
-        ArrayList<Integer> lesCoulées = DeplacementPossiblePlongée(laGrille);
-        //Parcourt les Tuiles, si la tuile n'est pas coulée, on l'ajoute à la liste des déplacements possibles
-        for (int uneTuile : lesTuiles) {
-            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() != Utils.EtatTuile.COULEE) {
-                lesDeplacements.add(uneTuile);
-            }
-        }
+        //La liste des tuiles Accessibles
+        ArrayList<Integer> lesAccessibles = new ArrayList();
+        //La liste des tuiles qui ont été traités
+        ArrayList<Integer> déjàTraité = new ArrayList();
+        //La liste des tuiles qui doivent être traités
+        ArrayList<Integer> aTraité = new ArrayList();
 
-        for (int uneTuile : lesCoulées) {
-            for (int uneAutreTuile : getTuilesAdjacentes(laGrille, Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1))) {
-                if (laGrille.getTuile(Utils.getChiffre(uneAutreTuile, 2), Utils.getChiffre(uneAutreTuile, 1)).getEtat() != Utils.EtatTuile.COULEE) {
-                    lesDeplacements.add(uneAutreTuile);
+        //On commence par la tuile où se situe le plongeur
+        aTraité.add(Integer.valueOf(String.valueOf(getX() + "" + getY())));
+        //Tant qu'il y a des tuiles à traités, on continue
+        while (!aTraité.isEmpty()) {
+            for (int uneTuile : aTraité) {
+
+                ArrayList<Integer> sauvegardeATraité = new ArrayList<Integer>(aTraité);
+
+                //Ssi elle est asseché, on l'ajoute à la liste des tuiles accessibles (si ce n'est pas déjà le cas)
+                if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() == Utils.EtatTuile.ASSECHEE && (!lesAccessibles.contains(uneTuile))) {
+                    lesAccessibles.add(uneTuile);
+                    //Si elle est inondé, on l'ajoute à la liste des tuiles accessibles ET a traité (si ce n'est pas déjà le cas)
+                } else if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() == Utils.EtatTuile.INONDEE && (!lesAccessibles.contains(uneTuile)) ) {
+                    lesAccessibles.add(uneTuile);
+                } else if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() == Utils.EtatTuile.INONDEE && (!déjàTraité.contains(uneTuile)) ) {
+                    sauvegardeATraité.add(uneTuile);
+                    //Si elle est coulée, on l'ajoute à la liste des tuiles a traité
+                } else if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() == Utils.EtatTuile.COULEE && (!déjàTraité.contains(uneTuile)) ) {
+                    sauvegardeATraité.add(uneTuile);
                 }
-            }
-        }
+                
+                déjàTraité.add(uneTuile);
 
-        for (int uneTuile : (ArrayList<Integer>)lesDeplacements.clone()) {
-            if ((Utils.getChiffre(uneTuile, 2) == getX()) && (Utils.getChiffre(uneTuile, 1) == getY())) {
-                lesDeplacements.remove( ((Object)(uneTuile)) );
-            }
-        }
-
-        return lesDeplacements;
-    }
-
-    public ArrayList<Integer> DeplacementPossiblePlongée(Grille laGrille) {
-        ArrayList<Integer> lesTuiles = super.getTuilesAdjacentes(laGrille);
-        // On récupère les tuiles adjacentes déjà triés dans le DeplacementPossible de Aventurier
-        ArrayList<Integer> lesCoulées = new ArrayList();
-        ArrayList<Integer> lesVraisCoulées = new ArrayList();
-        //Parcourt les Tuiles, si la tuile n'est pas coulée, on l'ajoute à la liste des déplacements possibles
-        for (int uneTuile : lesTuiles) {
-            if (laGrille.getTuile(Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1)).getEtat() != Utils.EtatTuile.ASSECHEE && (!lesCoulées.contains(uneTuile))) {
-                lesCoulées.add(uneTuile);
-                lesCoulées.addAll(DeplacementPossiblePlongée(laGrille, Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1), lesCoulées));
-            }
-        }
-
-        for (int uneTuile : (ArrayList<Integer>)lesCoulées.clone()){
-            for (int uneAutreTuile : (ArrayList<Integer>)lesCoulées.clone()){
-                if (uneTuile == uneAutreTuile){
-                    lesVraisCoulées.add(uneTuile);
-                    break;
+                //On récupère les tuiles adjacentes à une tuile à traité. Si elle n'appartient ni aux tuiles Accessibles ou Plongées, c'est qu'elle n'a pas été traité et on l'ajoute à la liste
+                for (int uneAutreTuile : this.getTuilesAdjacentes(laGrille, Utils.getChiffre(uneTuile, 2), Utils.getChiffre(uneTuile, 1))) {
+                    if (!déjàTraité.contains(uneAutreTuile) && !lesAccessibles.contains(uneAutreTuile) && !sauvegardeATraité.contains(uneAutreTuile)) {
+                        sauvegardeATraité.add(uneAutreTuile);
+                    }
                 }
+                
+                sauvegardeATraité.remove((Object) uneTuile);
+                aTraité = sauvegardeATraité;
             }
         }
-        
-        for (int uneTuile : lesVraisCoulées){
-            System.out.println(uneTuile);
-        }
 
-        return lesVraisCoulées;
+        //On retourne les tuiles qui sont accessibles (Asséché + Inondée)
+        return lesAccessibles;
     }
 
     public ArrayList<Integer> DeplacementPossiblePlongée(Grille laGrille, int x, int y, ArrayList<Integer> coulées) {

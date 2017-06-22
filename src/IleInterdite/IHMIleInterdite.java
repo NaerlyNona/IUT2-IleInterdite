@@ -73,6 +73,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     private JButton btnDonner = new JButton("Donner");
     private JButton btnRecuperer = new JButton("Récupérer");
 
+    private JLabel labelMode = new JLabel("", SwingConstants.CENTER);
+
     private JButtonSpecial[] main = new JButtonSpecial[5];
 
     private JButton btnAutresCartes = new JButton("Autres Cartes");
@@ -155,6 +157,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                 m.type = TypesMessage.ASSECHER;
                 observateur.traiterMessage(m);
             } else if (mode == 3) {
+                //A OPTIMISER AVEC FOR
                 if (e.getSource() == main[0]) {
                     m.numCarte = 0;
                 } else if (e.getSource() == main[1]) {
@@ -169,6 +172,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                 m.type = TypesMessage.HELICOPTERE;
                 observateur.traiterMessage(m);
             } else if (mode == 4) {
+                //A OPTIMISER AVEC FOR
                 if (e.getSource() == main[0]) {
                     m.numCarte = 0;
                 }
@@ -212,6 +216,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             ((JButton) (e.getSource())).setEnabled(false);
 
         }
+        
+        MAJMode();
     }
 
     public void setObservateur(Observateur o) {
@@ -354,6 +360,12 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         gbc.gridy = 3;
         gbc.gridheight = 1;
         gbc.gridwidth = 4;
+        panelBoutons.add(labelMode, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridheight = 1;
+        gbc.gridwidth = 4;
         panelBoutons.add(new JLabel("Cartes", SwingConstants.CENTER), gbc);
 
         //Creation des boutons des cartes
@@ -368,38 +380,38 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
         //Placement des boutons des cartes
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.gridheight = 1;
         gbc.gridwidth = 4;
         gbc.anchor = GridBagConstraints.CENTER;
         panelBoutons.add(main[0], gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.gridheight = 1;
         gbc.gridwidth = 4;
         panelBoutons.add(main[1], gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
         gbc.gridheight = 1;
         gbc.gridwidth = 4;
         panelBoutons.add(main[2], gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 7;
+        gbc.gridy = 8;
         gbc.gridheight = 1;
         gbc.gridwidth = 4;
         panelBoutons.add(main[3], gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 8;
+        gbc.gridy = 9;
         gbc.gridheight = 1;
         gbc.gridwidth = 4;
         panelBoutons.add(main[4], gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 9;
+        gbc.gridy = 10;
         gbc.gridheight = 1;
         gbc.gridwidth = 4;
         btnAutresCartes.setBackground(new Color(61, 93, 255));
@@ -441,7 +453,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             panelJoueur.setForeground(Color.BLACK);
         }
         if (aventurier.isPouvoirPossible()) {
-            paJoueur.setText(paJoueur.getText() + "<br> Pouvoir Disponible");
+            paJoueur.setText(paJoueur.getText() + "<br><font color=#DF013A> Pouvoir Disponible");
         }
     }
 
@@ -519,7 +531,6 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         boolean pouvoirDonner = false;
         if (aventurier.getMain().size() > 0 && aventurier.getPA() > 0) {
             if (controleur.getNbJoueurSurCase() > 0) {
-                System.out.println("CEST BON FILS DE PUITE" + controleur.getNbJoueurSurCase());
                 pouvoirDonner = true;
             } else if ((aventurier.getNomRole() == "Messager") && (aventurier.isPouvoirPossible())) {
                 pouvoirDonner = true;
@@ -553,12 +564,15 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         while ((i < laMain.size()) && (i <= 4)) {
 
             main[i].setText(laMain.get(i).getNomCarte());
-            if (laMain.get(i).getNomCarte() == "houloucouptère") {
-                main[i].setType(2);
+            if (laMain.get(i).getType() == Utils.TypeCarte.Spéciale) {
+                if (((CarteSpéciale) (laMain.get(i))).getTypeS() == Utils.TypeSpéciale.Helicoptère) {
+                    main[i].setType(2);
+                }
+                if (((CarteSpéciale) (laMain.get(i))).getTypeS() == Utils.TypeSpéciale.SacDeSable) {
+                    main[i].setType(3);
+                }
             }
-            if (laMain.get(i).getNomCarte() == "Sac de sable") {
-                main[i].setType(3);
-            }
+
             if (aventurier.getMain().get(i).getType() == Utils.TypeCarte.Spéciale) {
                 main[i].setEnabled(true);
             } else {
@@ -646,6 +660,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
             }
         }
+
         // MAJ TUILE DEPLACEMENT
         if (aventurier.getPA() > 0) {
             if (mode == 0) {
@@ -667,6 +682,26 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             tuiles[unAventurier.getX()][unAventurier.getY()].add(unAventurier.getLabelIcone());
         }
 
+    }
+
+    public void MAJMode() {
+        if (mode == 0) {
+            labelMode.setText("<html><p align=\"center\">Déplacement<br><small><font color=#848484> Selectionner une tuile destination");
+            if (getJoueurCourant().isPouvoirPossible() && getJoueurCourant().getNomRole() == "Pilote") {
+                labelMode.setText(labelMode.getText() + "<br>(n'importe où pour utiliser votre pouvoir)");
+            }
+        } else if (mode == 1) {
+            labelMode.setText("<html><p align=\"center\">Assèchement<br><small><font color=#848484> Selectionner une tuile à assecher");
+            if (getJoueurCourant().isPouvoirPossible() && getJoueurCourant().getNomRole() == "Ingenieur") {
+                labelMode.setText(labelMode.getText() + "<br>(gratuitement)");
+            }
+        } else if (mode == 2) {
+            labelMode.setText("<html><p align=\"center\">Sac de Sable<br><small><font color=#848484> Selectionner une tuile à assecher n'importe où");
+        } else if (mode == 3) {
+            labelMode.setText("<html><p align=\"center\">Sac de Sable<br><small><font color=#848484> Selectionner une tuile destination n'importe où");
+        } else {
+            labelMode.setText("<html><p align=\"center\"> - - - <br><small><font color=#848484> Selectionner une action");
+        }
     }
 
     protected ImageIcon createImageIcon(String path, String description) {

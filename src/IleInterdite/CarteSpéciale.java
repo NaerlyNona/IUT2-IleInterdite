@@ -31,4 +31,12 @@ public class CarteSpéciale extends Carte {
     public void setEffet(String effet) {
         this.effet = effet;
     }
+
+    /**
+     * @return the type
+     */
+    public Utils.TypeSpéciale getTypeS() {
+        return type;
+    }
+
 }

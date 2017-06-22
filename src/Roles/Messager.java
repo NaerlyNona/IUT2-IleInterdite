@@ -21,6 +21,7 @@ public class Messager extends Aventurier {
 
     public Messager(String leNomJoueur) {
         super(leNomJoueur, Utils.Pion.ORANGE);
+        setPouvoirPossible(true);
         setNomRole("Messager");
         setIconPath("/img/resources/logo/RoleTable_Icon_Messenger@2x.png");
         super.setLabelIcone(createImageIcon(getIconPath(), getNomRole()));
@@ -38,6 +39,12 @@ public class Messager extends Aventurier {
      */
     public void setNomRole(String nomRole) {
         this.nomRole = nomRole;
+    }
+    
+    @Override
+    public void reset() {
+        super.reset();
+        setPouvoirPossible(true);
     }
 
     @Override
@@ -73,8 +80,6 @@ public class Messager extends Aventurier {
         System.out.println("La carte " + carte.getNomCarte() + " a été donné a " + aventurier.getNomJoueur());
         aventurier.ajouterMain(carte);
         this.removeMain(carte);
-        System.out.println(aventurier.getX());
-        System.out.println("TEST OUI: "+((aventurier.getX()!=getX()) || (aventurier.getY()!=getY())));
         if ((aventurier.getX()!=getX()) || (aventurier.getY()!=getY())){
             setPouvoirPossible(false);
         }

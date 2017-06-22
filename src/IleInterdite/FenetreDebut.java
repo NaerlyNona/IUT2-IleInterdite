@@ -467,7 +467,7 @@ public class FenetreDebut implements ActionListener {
         panelBas.add(btnAlea, BorderLayout.CENTER);
         btnAlea.addActionListener(this);
 
-        this.btnTestPartie = new JButton("Partie Test");
+        this.btnTestPartie = new JButton("Démonstration");
         panelBas.add(btnTestPartie, BorderLayout.NORTH);
         btnTestPartie.addActionListener(this);
 

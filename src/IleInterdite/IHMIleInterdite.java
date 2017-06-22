@@ -538,6 +538,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
         for (Aventurier unAventurier : lesAventuriers) {
             tuiles[unAventurier.getX()][unAventurier.getY()].setText(tuiles[unAventurier.getX()][unAventurier.getY()].getText() + unAventurier.getNomJoueur() + "<br>");
+            tuiles[unAventurier.getX()][unAventurier.getY()].setIcon(unAventurier.getIcone());
         }
 
     }

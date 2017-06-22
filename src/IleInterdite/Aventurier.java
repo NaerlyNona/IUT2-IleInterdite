@@ -6,10 +6,14 @@
 package IleInterdite;
 
 import IleInterdite.Utils.Pion;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.Image;
 
 /**
  *
@@ -25,7 +29,9 @@ public class Aventurier {
     private int maxPA;
     private Utils.Pion pion;
     private ArrayList<Carte> main;
-    
+    private Icon icone;
+    private String iconPath;
+
     private boolean pouvoirPossible;
 
     public Aventurier(String leNomJoueur, Pion lePion) {
@@ -36,26 +42,23 @@ public class Aventurier {
         setMaxPA(3);
         setPA(getMaxPA());
         setPouvoirPossible(false);
+        icone = null;
     }
 
     public ArrayList<String> donnerPossible(Controleur controleur) {
         ArrayList<String> test = new ArrayList();
-        
-            for (Aventurier a : controleur.getLesAventuriers()) {
+
+        for (Aventurier a : controleur.getLesAventuriers()) {
 
             if ((a.getX() == getX() && a.getY() == getY()) && (a != this)) {
                 test.add(a.getNomJoueur());
-                
+
             }
-          
-        
-        
-            
 
         }
         return test;
     }
-    
+
     public void donnerC(Aventurier aventurier, Carte carte) {
         System.out.println("La carte " + carte.getNomCarte() + " a été donné a " + aventurier.getNomJoueur());
         aventurier.ajouterMain(carte);
@@ -225,7 +228,7 @@ public class Aventurier {
                 lesAssechements.add(uneTuile);
             }
         }
- 
+
         return lesAssechements;
     }
 
@@ -316,6 +319,49 @@ public class Aventurier {
      */
     public void setPouvoirPossible(boolean pouvoirPossible) {
         this.pouvoirPossible = pouvoirPossible;
+    }
+
+    /**
+     * @return the icone
+     */
+    public Icon getIcone() {
+        return icone;
+    }
+
+    /**
+     * @param icone the icone to set
+     */
+    public void setIcone(ImageIcon icone) {
+        //this.icone = icone;
+        Image img = icone.getImage();
+        Image newimg = img.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+        icone = new ImageIcon(newimg);
+        this.icone = icone;
+    }
+
+    protected ImageIcon createImageIcon(String path,
+            String description) {
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL, description);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+    }
+
+    /**
+     * @return the iconPath
+     */
+    public String getIconPath() {
+        return iconPath;
+    }
+
+    /**
+     * @param iconPath the iconPath to set
+     */
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
     }
 
 }

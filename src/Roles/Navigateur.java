@@ -20,6 +20,8 @@ public class Navigateur extends Aventurier{
         setNomRole("Navigateur");
         setMaxPA(4);
         setPA(getMaxPA());
+        setIconPath("/img/resources/adventurer/Player_Card_Navigator_Icon@2x.png");
+        super.setIcone(createImageIcon(getIconPath(), getNomRole()));
     }
 
     /**

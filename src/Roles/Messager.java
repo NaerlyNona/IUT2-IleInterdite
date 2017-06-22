@@ -22,6 +22,8 @@ public class Messager extends Aventurier {
     public Messager(String leNomJoueur) {
         super(leNomJoueur, Utils.Pion.ORANGE);
         setNomRole("Messager");
+        setIconPath("/img/resources/adventurer/Player_Card_Messenger_Icon@2x.png");
+        super.setIcone(createImageIcon(getIconPath(), getNomRole()));
     }
 
     /**

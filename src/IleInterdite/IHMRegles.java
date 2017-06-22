@@ -28,7 +28,7 @@ public class IHMRegles extends JFrame implements ActionListener {
 
     private JButton btnSuivant;
     private JButton btnPrecedent;
-
+private JButton btnQuitter;
     private JPanel panelBouton;
 
     CardLayout c1 = new CardLayout();
@@ -43,7 +43,7 @@ public class IHMRegles extends JFrame implements ActionListener {
 
         this.setTitle("Règles");
         this.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        this.setSize(600, 1000);
+        this.setSize(720, 1080);
         this.setLocationRelativeTo(null);
         this.setAlwaysOnTop(true);
 
@@ -57,7 +57,8 @@ public class IHMRegles extends JFrame implements ActionListener {
             iconPath = ("/img/resources/regles/ReglesPage" + i + ".png");
             icon = createImageIcon(iconPath, "Regles" + i);
             img = icon.getImage();
-            newimg = img.getScaledInstance(600, 1000, java.awt.Image.SCALE_SMOOTH);
+            //newimg = img.getScaledInstance(720, 1080, java.awt.Image.SCALE_SMOOTH);
+            newimg = img.getScaledInstance(720, 850, java.awt.Image.SCALE_SMOOTH);
             icon = new ImageIcon(newimg);
             JLabel regle = new JLabel(icon);
             System.out.println(i);
@@ -66,9 +67,10 @@ public class IHMRegles extends JFrame implements ActionListener {
 
         btnSuivant = new JButton("Suivant");
         btnPrecedent = new JButton("Precedent");
-
-        panelBouton = new JPanel(new GridLayout(1, 2));
+        btnQuitter = new JButton("Quitter");
+        panelBouton = new JPanel(new GridLayout(1, 3));
         panelBouton.add(btnPrecedent);
+        panelBouton.add(btnQuitter);
         panelBouton.add(btnSuivant);
         this.add(panelBouton, BorderLayout.NORTH);
         this.add(content);
@@ -76,9 +78,10 @@ public class IHMRegles extends JFrame implements ActionListener {
         content.setLayout(c1);
         btnSuivant.addActionListener(this);
         btnPrecedent.addActionListener(this);
+        btnQuitter.addActionListener(this);
         for (int i = 1; i < 8; i++) {
             content.add(pages[i], listContent[i]);
-            pages[1].setBackground(Color.yellow);
+            pages[i].setBackground(Color.MAGENTA);
 
         }
 
@@ -91,8 +94,10 @@ public class IHMRegles extends JFrame implements ActionListener {
         if (e.getSource() == btnSuivant) {
             c1.next(content);
 
-        } else {
+        } else if (e.getSource() == btnPrecedent) {
             c1.previous(content);
+        } else {
+            this.dispose();
         }
 
     }

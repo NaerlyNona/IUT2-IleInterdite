@@ -408,7 +408,9 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
     public void fin() {
         this.setVisible(false);
-        IhmFin fin = new IhmFin();
+        System.out.println("test");
+        new IhmFin();
+       
     }
 
     public void MAJJoueur(Aventurier aventurier) {

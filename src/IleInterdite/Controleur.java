@@ -297,8 +297,9 @@ public class Controleur implements Observateur {
                     aventurier.ajouterMain(cartePioche);
                     defausseTresor.add(cartePioche);
                     piocheTresor.remove(cartePioche);
+                    i++;
                 }
-                i++;
+                
             }
 
         }
@@ -377,12 +378,10 @@ public class Controleur implements Observateur {
     public void finDuTourPartie1() {
         if (isGagne()) {
             System.out.println("c gagné");
-        }
-        if (isPerdu()) {
+        } else if (isPerdu()){
             ihmIleInterdite.fin();
-        }
-
-        ihmIleInterdite.setEnabled(false);
+        } else {
+            ihmIleInterdite.setEnabled(false);
         piocheFinTour();
 
         this.getAventurierActuel().reset();
@@ -399,6 +398,12 @@ public class Controleur implements Observateur {
         ihmIleInterdite.MAJJoueur(getAventurierActuel());
         ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
         ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
+        }
+       
+            
+        
+
+        
 
     }
 

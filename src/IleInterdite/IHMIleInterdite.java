@@ -254,7 +254,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         panelJoueur.setBorder(BorderFactory.createRaisedBevelBorder());
         panelJoueur.add(nomJoueur);
         panelJoueur.add(roleJoueur);
-        
+
         //panelTresor          
         panelTresor.setLayout(new GridLayout(1, 4));
         btnTresor[0] = new JButton("<html><b>Calice");
@@ -302,63 +302,62 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         String iconPath;
         Image img;
         Image newimg;
-        
+
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridheight = 1;
         gbc.gridwidth = 2;
         btnDeplacer.setEnabled(false);
-        
-        
+
         iconPath = ("/img/resources/icones/iconMove.png");
         icon = createImageIcon(iconPath, "Déplacer");
         img = icon.getImage();
         newimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(newimg);
         btnDeplacer.setIcon(icon);
-        
+
         panelBoutons.add(btnDeplacer, gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 1;
         gbc.gridheight = 1;
         gbc.gridwidth = 2;
-        
+
         iconPath = ("/img/resources/icones/iconDry.png");
         icon = createImageIcon(iconPath, "Assécher");
         img = icon.getImage();
         newimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(newimg);
         btnAssecher.setIcon(icon);
-        
+
         panelBoutons.add(btnAssecher, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridheight = 1;
         gbc.gridwidth = 2;
-        
+
         iconPath = ("/img/resources/icones/iconReceive.png");
         icon = createImageIcon(iconPath, "Donner");
         img = icon.getImage();
         newimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(newimg);
         btnDonner.setIcon(icon);
-        
+
         panelBoutons.add(btnDonner, gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 2;
         gbc.gridheight = 1;
         gbc.gridwidth = 2;
-        
+
         iconPath = ("/img/resources/icones/iconGet.png");
         icon = createImageIcon(iconPath, "Récupérer");
         img = icon.getImage();
         newimg = img.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(newimg);
         btnRecuperer.setIcon(icon);
-        
+
         panelBoutons.add(btnRecuperer, gbc);
 
         gbc.gridx = 0;
@@ -430,10 +429,11 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
     }
 
-    public void fin() {
+    public void fin(int valeur) {
+        // 0 = Perdu 1 = Gagné
         this.setVisible(false);
-        fenetreF.setVisible(true);
-        fenetreF.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        System.out.println("test");
+        new IhmFin(valeur);
     }
 
     public void MAJJoueur(Aventurier aventurier) {
@@ -526,6 +526,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         btnDonner.setEnabled(pouvoirDonner);
 
         int i = 0;
+        btnRecuperer.setEnabled(false);
         if (controleur.getLaGrille().getTuile(controleur.getAventurierActuel().getX(), controleur.getAventurierActuel().getY()).getTresor() != null) {
             for (Carte carte : controleur.getAventurierActuel().getMain()) {
                 if (carte.getNomCarte() == controleur.getLaGrille().getTuile(controleur.getAventurierActuel().getX(), controleur.getAventurierActuel().getY()).getTresor().getNom()) {
@@ -533,12 +534,12 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     i++;
                 }
             }
-            if (i >= 2) {
+            if (i >= 2 && !controleur.getTresors().contains(controleur.getLaGrille().getTuile(controleur.getAventurierActuel().getX(), controleur.getAventurierActuel().getY()).getTresor())) {
                 btnRecuperer.setEnabled(true);
             }
 
-        } else {
-            btnRecuperer.setEnabled(false);
+       
+            
         }
 
     }
@@ -636,20 +637,22 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             }
         }
         // MAJ TUILE DEPLACEMENT
-        if (mode == 0) {
-            for (int tuile : aventurier.DeplacementPossible(laGrille)) {
+       // if (aventurier.getPA() > 0) {
 
-                tuiles[Utils.getChiffre(tuile, 2)][Utils.getChiffre(tuile, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GREEN));
+            if (mode == 0) {
+                for (int tuile : aventurier.DeplacementPossible(laGrille)) {
+
+                    tuiles[Utils.getChiffre(tuile, 2)][Utils.getChiffre(tuile, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GREEN));
+                }
             }
-        }
-        // MAJ TUILE ASSECHEMENT
-        if (mode == 1) {
-            for (int tuileAssechable : aventurier.AssechementPossible(laGrille)) {
+            // MAJ TUILE ASSECHEMENT
+            if (mode == 1) {
+                for (int tuileAssechable : aventurier.AssechementPossible(laGrille)) {
 
-                tuiles[Utils.getChiffre(tuileAssechable, 2)][Utils.getChiffre(tuileAssechable, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.CYAN));
+                    tuiles[Utils.getChiffre(tuileAssechable, 2)][Utils.getChiffre(tuileAssechable, 1)].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.CYAN));
+                }
             }
-        }
-
+      //  }
         for (Aventurier unAventurier : lesAventuriers) {
             tuiles[unAventurier.getX()][unAventurier.getY()].add(unAventurier.getLabelIcone());
         }

@@ -290,6 +290,21 @@ public class Controleur implements Observateur {
         /*for (CarteInondation test : getPiocheInondation()){
          System.out.println(test.getNom());
          }*/
+        for (Aventurier aventurier : lesAventuriers) {
+            int i = 0;
+            while (i != 2) {
+                Carte cartePioche = piocheTresor.get(piocheTresor.size() - 1);
+                if (cartePioche.getType() != Utils.TypeCarte.Montée) {
+                    aventurier.ajouterMain(cartePioche);
+                    defausseTresor.add(cartePioche);
+                    piocheTresor.remove(cartePioche);
+                    i++;
+                }
+                
+            }
+ 
+        }
+
     }
 
     /**
@@ -365,9 +380,10 @@ public class Controleur implements Observateur {
     public void finDuTourPartie1() {
         if (isGagne()) {
             System.out.println("c gagné");
+            ihmIleInterdite.fin(1);
         }
         if (isPerdu()) {
-            ihmIleInterdite.fin();
+            ihmIleInterdite.fin(0);
         }
 
         ihmIleInterdite.setEnabled(false);

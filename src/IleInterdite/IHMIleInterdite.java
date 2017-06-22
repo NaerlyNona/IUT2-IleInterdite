@@ -191,7 +191,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             mode = 3;
             btnDeplacer.setEnabled(true);
             btnAssecher.setEnabled(true);
-            ((JButton)(e.getSource())).setEnabled(false);
+            ((JButton) (e.getSource())).setEnabled(false);
             /*m.type = TypesMessage.HELICOPTERE;
              observateur.traiterMessage(m);*/
 
@@ -201,11 +201,11 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             mode = 4;
             btnDeplacer.setEnabled(true);
             btnAssecher.setEnabled(true);
-            ((JButton)(e.getSource())).setEnabled(false);
+            ((JButton) (e.getSource())).setEnabled(false);
 
         }
     }
-    
+
     public void setObservateur(Observateur o) {
         observateur = o;
     }
@@ -236,7 +236,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         panelJoueur.add(nomJoueur);
         panelJoueur.add(roleJoueur);
         panelJoueur.setBackground(Color.LIGHT_GRAY);
-        
+
         //panelTresor          
         panelTresor.setLayout(new GridLayout(1, 4));
         btnTresor[0] = new JButton("<html><b>Calice");
@@ -404,7 +404,6 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         setVisible(true);
         this.setResizable(false);
 
-
     }
 
     public void fin(int valeur) {
@@ -412,13 +411,19 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         //this.setVisible(false);
         setEnabled(false);
         System.out.println("test");
-        new IhmFin(valeur,this);
+        new IhmFin(valeur, this);
     }
 
     public void MAJJoueur(Aventurier aventurier) {
         nomJoueur.setText(aventurier.getNomJoueur());
         paJoueur.setText("<html><p align=\"center\"> PA: " + aventurier.getPA());
         roleJoueur.setText(aventurier.getNomRole());
+        panelJoueur.setBackground(aventurier.getPion().getCouleur());
+        if (aventurier.getPion().getCouleur() == Color.DARK_GRAY) {
+            panelJoueur.setForeground(Color.WHITE);
+        } else {
+            panelJoueur.setForeground(Color.BLACK);
+        }
         if (aventurier.isPouvoirPossible()) {
             paJoueur.setText(paJoueur.getText() + "<br> Pouvoir Disponible");
         }
@@ -432,8 +437,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         btnDeplacer.setEnabled(true);
         btnAssecher.setEnabled(true);
 
-       nomJoueur.setBackground(leControleur.getAventurierActuel().getPion().getCouleur());
-       
+        nomJoueur.setBackground(leControleur.getAventurierActuel().getPion().getCouleur());
+
     }
 
     public void MAJTresor(Controleur leControleur) {
@@ -516,12 +521,10 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     i++;
                 }
             }
-            if (i >= 4 && !controleur.getTresors().contains(controleur.getLaGrille().getTuile(controleur.getAventurierActuel().getX(), controleur.getAventurierActuel().getY()).getTresor())) {
+            if (i >= 4 && !controleur.getTresors().contains(controleur.getLaGrille().getTuile(controleur.getAventurierActuel().getX(), controleur.getAventurierActuel().getY()).getTresor()) && (aventurier.getPA() > 0)) {
                 btnRecuperer.setEnabled(true);
             }
 
-       
-            
         }
 
     }
@@ -593,10 +596,10 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         Border compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
         Border greenline = BorderFactory.createMatteBorder(3, 3, 3, 3, Color.GREEN);
         Border compoundGreen = BorderFactory.createCompoundBorder(compound, greenline);
-        
+
         Border cyanline = BorderFactory.createMatteBorder(3, 3, 3, 3, Color.CYAN);
         Border compoundCyan = BorderFactory.createCompoundBorder(compound, cyanline);
-        
+
         for (int l = 0; l <= 5; l++) {
             for (int c = 0; c <= 5; c++) {
                 uneTuile = laGrille.getTuile(l, c);
@@ -628,14 +631,11 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             }
         }
         // MAJ TUILE DEPLACEMENT
-        
-            
+        if (aventurier.getPA() > 0) {
             if (mode == 0) {
-                //if (aventurier.getPA() > 0) {
                 for (int tuile : aventurier.DeplacementPossible(laGrille)) {
 
                     tuiles[Utils.getChiffre(tuile, 2)][Utils.getChiffre(tuile, 1)].setBorder(compoundGreen);
-               // }
                 }
             }
             // MAJ TUILE ASSECHEMENT
@@ -645,8 +645,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                     tuiles[Utils.getChiffre(tuileAssechable, 2)][Utils.getChiffre(tuileAssechable, 1)].setBorder(compoundCyan);
                 }
             }
-           
-        
+        }
 
         //MAJ PIONS
         for (Aventurier unAventurier : lesAventuriers) {
@@ -655,8 +654,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
     }
 
-
-    protected ImageIcon createImageIcon(String path,String description) {
+    protected ImageIcon createImageIcon(String path, String description) {
         java.net.URL imgURL = getClass().getResource(path);
         if (imgURL != null) {
             return new ImageIcon(imgURL, description);
@@ -665,8 +663,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             return null;
         }
     }
-    
-    public void fermer(){
+
+    public void fermer() {
         System.exit(0);
     }
 

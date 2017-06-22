@@ -582,9 +582,6 @@ public class FenetreDebut implements ActionListener {
                     role = aventuriersProposes[listeRole4.getSelectedIndex()];
                 }
 
-                System.out.println(nom);
-                System.out.println(role);
-
                 //"Explorateur", "Pilote", "Navigateur", "Plongeur", "Ingénieur", "Messager"
                 if (role == "Ingénieur") {
                     lesAventuriers.add(new Ingenieur(nom));
@@ -610,10 +607,6 @@ public class FenetreDebut implements ActionListener {
                 difficulté = 2.0;
             } else {
                 difficulté = 3.0;
-            }
-
-            for (Aventurier unAventurier : lesAventuriers) {
-                System.out.println(unAventurier.getNomJoueur() + " : " + unAventurier.getNomRole());
             }
 
             Controleur controleur = new Controleur(lesAventuriers, difficulté);

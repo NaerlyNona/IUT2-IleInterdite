@@ -59,12 +59,12 @@ public class Utils {
 
     public static enum Pion {
 
-        ROUGE("Rouge", new Color(255, 0, 0)),
-        VERT("Vert", new Color(0, 195, 0)),
-        BLEU("Bleu", new Color(55, 194, 198)),
-        ORANGE("Orange", new Color(255, 148, 0)),
-        VIOLET("Violet", new Color(204, 94, 255)),
-        JAUNE("Jaune", new Color(255, 255, 0));
+        ROUGE("Rouge", new Color(255, 0, 0)), // Ingénieur 
+        VERT("Vert", new Color(0, 195, 0)), // Explorateur
+        BLEU("Bleu", new Color(55, 194, 198)), // Pilote
+        GRISCLAIR("Orange", Color.LIGHT_GRAY), // Messager
+        GRISFONCE("Violet", Color.DARK_GRAY), // Plongeur
+        JAUNE("Jaune", new Color(255, 255, 0)); // Navigateur
 
         private final String libelle;
         private final Color couleur;
@@ -93,11 +93,11 @@ public class Utils {
             if (BLEU.name().equals(name)) {
                 return BLEU;
             }
-            if (ORANGE.name().equals(name)) {
-                return ORANGE;
+            if (GRISCLAIR.name().equals(name)) {
+                return GRISCLAIR;
             }
-            if (VIOLET.name().equals(name)) {
-                return VIOLET;
+            if (GRISFONCE.name().equals(name)) {
+                return GRISFONCE;
             }
             if (JAUNE.name().equals(name)) {
                 return JAUNE;

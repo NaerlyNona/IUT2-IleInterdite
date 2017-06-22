@@ -20,7 +20,7 @@ public class Plongeur extends Aventurier {
     private String nomRole;
 
     public Plongeur(String leNomJoueur) {
-        super(leNomJoueur, Utils.Pion.VIOLET);
+        super(leNomJoueur, Utils.Pion.GRISFONCE);
         setNomRole("Plongeur");
         setIconPath("/img/resources/logo/RoleTable_Icon_Diver@2x.png");
         super.setLabelIcone(createImageIcon(getIconPath(), getNomRole()));

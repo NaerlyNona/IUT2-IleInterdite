@@ -54,6 +54,7 @@ public class Controleur implements Observateur {
         ihmIleInterdite.MAJJoueur(getAventurierActuel());
         ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
         ihmIleInterdite.MAJMain(getAventurierActuel());
+        ihmIleInterdite.initialisationTuile(laGrille);
         ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
     }
 

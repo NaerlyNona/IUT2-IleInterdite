@@ -75,10 +75,14 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     private JButtonSpecial[] main = new JButtonSpecial[5];
 
     private JButton btnTerminerTour = new JButton("Terminer Tour");
-    
-    private ArrayList<JLabel> labelIconeAventurier = new ArrayList(); 
+
+    private ArrayList<JLabel> labelIconeAventurier = new ArrayList();
 
     private int mode = 0;
+
+    private ImageIcon[][] iconTuiles = new ImageIcon[6][6];
+    private ImageIcon[][] iconTuilesInondées = new ImageIcon[6][6];
+
 
     /*  Mode en cours
      0 = Se Déplacer
@@ -153,17 +157,13 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             } else if (mode == 3) {
                 if (e.getSource() == main[0]) {
                     m.numCarte = 0;
-                }
-                else if (e.getSource() == main[1]) {
+                } else if (e.getSource() == main[1]) {
                     m.numCarte = 1;
-                }
-                else if (e.getSource() == main[2]) {
+                } else if (e.getSource() == main[2]) {
                     m.numCarte = 2;
-                }
-                else if (e.getSource() == main[3]) {
+                } else if (e.getSource() == main[3]) {
                     m.numCarte = 3;
-                }
-                else if (e.getSource() == main[4]) {
+                } else if (e.getSource() == main[4]) {
                     m.numCarte = 4;
                 }
                 m.type = TypesMessage.HELICOPTERE;
@@ -242,6 +242,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
                 this.tuiles[l][c].addActionListener(this);
             }
         }
+        panelPlateau.setBackground(Color.LIGHT_GRAY);
         panelMain.add(panelPlateau, BorderLayout.CENTER);
 
         //panelInterface
@@ -253,15 +254,9 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         panelJoueur.setBorder(BorderFactory.createRaisedBevelBorder());
         panelJoueur.add(nomJoueur);
         panelJoueur.add(roleJoueur);
+        
         //panelTresor          
         panelTresor.setLayout(new GridLayout(1, 4));
-
-        /*panelTresor.add(btnCalice);
-         btnCalice.setHorizontalTextPosition(SwingConstants.CENTER);
-         btnCalice.setVerticalTextPosition(SwingConstants.BOTTOM);
-         btnCalice.setBackground(Color.BLACK);
-         btnCalice.setForeground(Color.BLACK);
-         btnCalice.setEnabled(false);*/
         btnTresor[0] = new JButton("<html><b>Calice");
         btnTresor[1] = new JButton("<html><b>Pierre");
         btnTresor[2] = new JButton("<html><b>Statue");
@@ -275,20 +270,6 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             unBouton.setMargin(new Insets(5, 5, 5, 5));
             panelTresor.add(unBouton);
         }
-        /*panelTresor.add(btnPierre);
-         btnPierre.setHorizontalTextPosition(SwingConstants.CENTER);
-         //btnPierre.setBackground(Color.DARK_GRAY);
-         //btnCalice.setForeground(Color.LIGHT_GRAY);
-        
-         panelTresor.add(btnStatue);
-         btnStatue.setHorizontalTextPosition(SwingConstants.CENTER);
-         //btnCalice.setBackground(Color.DARK_GRAY);
-         //btnCalice.setForeground(Color.LIGHT_GRAY);
-        
-         panelTresor.add(btnCristal);
-         btnCristal.setHorizontalTextPosition(SwingConstants.CENTER);
-         //btnCalice.setBackground(Color.DARK_GRAY);
-         //btnCalice.setForeground(Color.LIGHT_GRAY);*/
 
         //panelNiveauEau
         panelNiveauEau.setLayout(new BorderLayout());
@@ -308,7 +289,6 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
         //panelBoutons
         panelBoutons.setLayout(new GridBagLayout());
-        //panelBoutons.setBackground(Color.GREEN);
         GridBagConstraints gbc = new GridBagConstraints();
 
         gbc.gridx = 0;
@@ -448,32 +428,32 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
         btnTresor[0].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Calice");
         img = icon.getImage();
-        newimg = img.getScaledInstance( 50, 50,  java.awt.Image.SCALE_SMOOTH ) ;  
-        icon = new ImageIcon( newimg );
+        newimg = img.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newimg);
         btnTresor[0].setIcon(icon);
 
         iconPath = ("/img/resources/treasures/Pierre.png");
         btnTresor[1].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Pierre");
         img = icon.getImage();
-        newimg = img.getScaledInstance( 50, 50,  java.awt.Image.SCALE_SMOOTH ) ;  
-        icon = new ImageIcon( newimg );
+        newimg = img.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newimg);
         btnTresor[1].setIcon(icon);
 
         iconPath = ("/img/resources/treasures/Statue.png");
         btnTresor[2].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Statue");
         img = icon.getImage();
-        newimg = img.getScaledInstance( 50, 50,  java.awt.Image.SCALE_SMOOTH ) ;  
-        icon = new ImageIcon( newimg );
+        newimg = img.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newimg);
         btnTresor[2].setIcon(icon);
-        
+
         iconPath = ("/img/resources/treasures/Cristal.png");
         btnTresor[3].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         icon = createImageIcon(iconPath, "Cristal");
         img = icon.getImage();
-        newimg = img.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH ) ;  
-        icon = new ImageIcon( newimg );
+        newimg = img.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newimg);
         btnTresor[3].setIcon(icon);
 
         for (Tresor unTresor : leControleur.getTresors()) {
@@ -555,47 +535,64 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
 
     }
 
+    public void initialisationTuile(Grille laGrille) {
+        Tuile uneTuile;
+        ImageIcon icon;
+        String iconPath;
+        Image img;
+        Image newimg;
+        for (int l = 0; l <= 5; l++) {
+            for (int c = 0; c <= 5; c++) {
+                if (laGrille.getTuile(l, c) != null) {
+                    uneTuile = laGrille.getTuile(l, c);
+                    iconPath = ("/img/resources/tuiles/" + uneTuile.getNom() + ".png");
+                    icon = createImageIcon(iconPath, uneTuile.getNom());
+                    img = icon.getImage();
+                    newimg = img.getScaledInstance(tuiles[l][c].getWidth(), tuiles[l][c].getHeight(), java.awt.Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(newimg);
+                    iconTuiles[l][c] = icon;
+
+                    iconPath = ("/img/resources/tuiles/" + uneTuile.getNom() + "_Inonde.png");
+                    icon = createImageIcon(iconPath, uneTuile.getNom());
+                    img = icon.getImage();
+                    newimg = img.getScaledInstance(tuiles[l][c].getWidth(), tuiles[l][c].getHeight(), java.awt.Image.SCALE_SMOOTH);
+                    icon = new ImageIcon(newimg);
+                    iconTuilesInondées[l][c] = icon;
+                }
+            }
+        }
+    }
+
     public void MAJTuile(Grille laGrille, ArrayList<Aventurier> lesAventuriers, Aventurier aventurier) {
         Tuile uneTuile;
         ImageIcon icon;
         String iconPath;
-        ArrayList<JLabel> labelIcon = new ArrayList();
         for (int l = 0; l <= 5; l++) {
             for (int c = 0; c <= 5; c++) {
                 uneTuile = laGrille.getTuile(l, c);
                 if (uneTuile == null) {
                     tuiles[l][c].setBorder(null);
-                    tuiles[l][c].setBackground(Color.LIGHT_GRAY);
+                    tuiles[l][c].setBackground(null);
                     tuiles[l][c].setEnabled(false);
                 } else {
-                    //tuiles[l][c].setText(laGrille.getTuile(l, c).getNom()+"<html><br>");
-                    tuiles[l][c].setText("<html><p align=\"center\">");
-
-                    iconPath = ("/images/tuiles/" + uneTuile.getNom() + ".png");
-                    tuiles[l][c].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
+                    //tuiles[l][c].setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
+                    tuiles[l][c].setBorder(null);
+                    tuiles[l][c].setBackground(Color.WHITE);
+                    tuiles[l][c].setIcon(iconTuiles[l][c]);
                     if (laGrille.getTuile(l, c).getEtat() == Utils.EtatTuile.ASSECHEE) {
-                        //tuiles[l][c].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.ORANGE));
-                        tuiles[l][c].setBackground(Color.WHITE);
                         tuiles[l][c].setEnabled(true);
+
                     } else if (laGrille.getTuile(l, c).getEtat() == Utils.EtatTuile.INONDEE) {
                         //tuiles[l][c].setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.CYAN));
-                        tuiles[l][c].setBackground(Color.WHITE);
                         tuiles[l][c].setEnabled(true);
-                        iconPath = ("/images/tuiles/" + uneTuile.getNom() + "_Inonde.png");
+                        tuiles[l][c].setIcon(iconTuilesInondées[l][c]);
                     } else if (laGrille.getTuile(l, c).getEtat() == Utils.EtatTuile.COULEE) {
                         tuiles[l][c].setBorder(null);
-                        tuiles[l][c].setBackground(Color.GRAY);
+                        tuiles[l][c].setBackground(null);
                         tuiles[l][c].setEnabled(false);
-                    }
-                    icon = createImageIcon(iconPath, uneTuile.getNom());
-                    Image img = icon.getImage();
-                    Image newimg = img.getScaledInstance(tuiles[l][c].getWidth(), tuiles[l][c].getHeight(), java.awt.Image.SCALE_SMOOTH);
-                    icon = new ImageIcon(newimg);
-                    tuiles[l][c].setIcon(icon);
-                }
+                        tuiles[l][c].setIcon(null);
 
-                if ((aventurier.getX() == l) && (aventurier.getY() == c)) {
-                    tuiles[l][c].setBackground(aventurier.getPion().getCouleur());
+                    }
                 }
 
             }
@@ -615,8 +612,8 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
             }
         }
 
-        for (Aventurier unAventurier: lesAventuriers) {
-            tuiles[unAventurier.getX()][unAventurier.getY()].add(unAventurier.getLabelIcone());  
+        for (Aventurier unAventurier : lesAventuriers) {
+            tuiles[unAventurier.getX()][unAventurier.getY()].add(unAventurier.getLabelIcone());
         }
 
     }

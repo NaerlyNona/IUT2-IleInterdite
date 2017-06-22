@@ -634,7 +634,7 @@ public class Controleur implements Observateur {
                 setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel()) + 1));
             }
 
-            InonderFinTour(palierNiveau(), piocheInondation);
+            InonderFinTour(getPalierNiveau(), piocheInondation);
             ihmIleInterdite.MAJInfo(this);
 
             ihmIleInterdite.MAJMain(getAventurierActuel());
@@ -1031,7 +1031,7 @@ public class Controleur implements Observateur {
         this.tresors = tresors;
     }
     
-    public int palierNiveau(){
+    public int getPalierNiveau(){
         if (niveauEau < 1){
             return 2;
         } else if (niveauEau < 2.5){    

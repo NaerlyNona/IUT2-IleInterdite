@@ -428,7 +428,7 @@ public class IHMIleInterdite extends JFrame implements ActionListener {
     }
 
     public void MAJInfo(Controleur leControleur) {
-        niveauEau = leControleur.getNiveauEau();
+        niveauEau = leControleur.getPalierNiveau();
         labelNiveauEau.setText("<html><p align=\"center\">Niveau de l'eau: " + niveauEau);
         sliderNiveauEau.setValue((int) (niveauEau * 2));
         mode = 5;

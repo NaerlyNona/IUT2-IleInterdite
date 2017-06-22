@@ -55,7 +55,7 @@ public class IHMRegles extends JFrame implements ActionListener {
         Image newimg;
         
         
-        for ( int i = 1; i < 8; i++){
+        for (int i = 1; i < 8; i++){
         pages[i] = new JPanel();
         iconPath = ("/img/resources/regles/ReglesPage"+i+".png");
         icon = createImageIcon(iconPath, "Regles"+i);

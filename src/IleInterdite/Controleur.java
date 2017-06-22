@@ -49,6 +49,7 @@ public class Controleur implements Observateur {
 
         ihmIleInterdite = new IHMIleInterdite(this);
         ihmIleInterdite.afficher();
+        ihmIleInterdite.setJoueurCourant(getAventurierActuel());
         ihmIleInterdite.MAJInfo(this);
         ihmIleInterdite.MAJTresor(this);
         ihmIleInterdite.MAJJoueur(getAventurierActuel());
@@ -65,6 +66,7 @@ public class Controleur implements Observateur {
         InitialiserPartie();
         
         ihmIleInterdite = new IHMIleInterdite(this);
+        ihmIleInterdite.setJoueurCourant(getAventurierActuel());
         ihmIleInterdite.afficher();
         ihmIleInterdite.MAJInfo(this);
         ihmIleInterdite.MAJTresor(this);
@@ -124,7 +126,7 @@ public class Controleur implements Observateur {
         Collections.shuffle(piocheTresor);
 
         for (Aventurier unAventurier : getLesAventuriers()) {
-            System.out.println(unAventurier.getNomJoueur());
+            System.out.println(unAventurier.getNomJoueur() + " : " + unAventurier.getNomRole());
             if (unAventurier.getNomRole() == "Plongeur") {
                 unAventurier.setPosition(1, 1);
             } else if (unAventurier.getNomRole() == "Pilote") {
@@ -635,6 +637,7 @@ public class Controleur implements Observateur {
             }
 
             InonderFinTour(getPalierNiveau(), piocheInondation);
+            ihmIleInterdite.setJoueurCourant(getAventurierActuel());
             ihmIleInterdite.MAJInfo(this);
 
             ihmIleInterdite.MAJMain(getAventurierActuel());
@@ -767,17 +770,21 @@ public class Controleur implements Observateur {
                     i++;
                 }
             }
-            if (i >= 2) {
+            if (i >= 4) {
                 getTresors().add(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
                 tresorsRestant.remove(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
                 tresors.add(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
                 System.out.println("Trésor récupéré");
+                int y = 0;
                 for (Carte main : (ArrayList<Carte>) (getAventurierActuel().getMain().clone())) {
+                    if (y == 4){
+                        break;
+                    }
                     if (main.getNomCarte() == laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor().getNom()) {
 
                         defausseTresor.add(main);
                         getAventurierActuel().removeMain(main);
-
+                        y++;
                     }
                 }
                 ihmIleInterdite.MAJBoutons(aventurierActuel, this);
@@ -824,6 +831,7 @@ public class Controleur implements Observateur {
         Message m = new Message();
         switch (msg.type) {
             case DEMARRER:
+                ihmIleInterdite.setJoueurCourant(getAventurierActuel());
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
                 ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);

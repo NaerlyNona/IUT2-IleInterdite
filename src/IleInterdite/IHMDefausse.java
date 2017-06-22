@@ -32,13 +32,15 @@ public class IHMDefausse extends JFrame implements ActionListener {
      
      
      
-     private String[] lesCartes = new String[7];
+     private String[] lesCartes;
      
      public IHMDefausse (Aventurier aventurier, Observateur observateur, int nbDefausse, int partieFinDuTour){
          this.observateur = observateur;
          this.aventurier = aventurier;
          this.nbDefausse = nbDefausse;
          this.partieFinDuTour = partieFinDuTour;
+         
+         lesCartes = new String[aventurier.getMain().size()];
          
          this.setSize(new Dimension(300,100));
          this.setLocationRelativeTo(null);

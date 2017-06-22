@@ -37,14 +37,14 @@ public class IhmFin extends JFrame implements ActionListener {
         
         
         this.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        this.setSize(new Dimension(200, 400));
+        this.setSize(new Dimension(400, 200));
         this.setLocationRelativeTo(null);
         this.setAlwaysOnTop(true);
  
         if (valeur == 0) {
-            texteF = new JLabel("Félicitations ! Vous avez perdu.");
+            texteF = new JLabel("<html><b><p align=\"center\">Félicitations ! Vous avez perdu.");
         } else {
-            texteF = new JLabel("Dommage ! Vous avez gagné.");
+            texteF = new JLabel("<html><b><p align=\"center\">Dommage ! Vous avez gagné.");
         }
         
         
@@ -78,8 +78,8 @@ public class IhmFin extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         
         if (e.getSource() == btnQuitter){
-            //this.setVisible(false);
-            new IhmAbandon();
+            this.setVisible(false);
+            new IhmAbandon(this);
         } else if (e.getSource() == btnMenu){
             this.setVisible(false);
             new FenetreDebut();

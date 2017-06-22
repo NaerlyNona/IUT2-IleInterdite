@@ -25,30 +25,31 @@ public class IhmAbandon extends JFrame implements ActionListener {
     private JButton btnNon;
     
     private JPanel panelBouton;
+    private IhmFin finIhm;
     
     // 0 = perdu
     // 1 = Gagné
-    public IhmAbandon(){
+    public IhmAbandon(IhmFin fin){
         this.setLayout(new BorderLayout());
         btnOui = new JButton("Oui");
         btnNon = new JButton("Non");
        
         
-        
+        this.finIhm = fin;
         
         this.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        this.setSize(new Dimension(200, 400));
+        this.setSize(400, 200);
         this.setLocationRelativeTo(null);
         this.setAlwaysOnTop(true);
  
        
-            texteF = new JLabel("Es tu faible a ce point ?");
+        texteF = new JLabel("<html><b><p align=\"center\">Êtes vous faible a ce point ?");
         
           
         
         
         
-        this.setSize(200, 200);
+        
         this.add(texteF, BorderLayout.NORTH);
         
         panelBouton = new JPanel(new GridLayout(1,2));
@@ -80,6 +81,7 @@ public class IhmAbandon extends JFrame implements ActionListener {
             this.setVisible(false);
             System.exit(0);
         } else if (e.getSource() == btnNon){
+            finIhm.setVisible(true);
             this.setVisible(false);
             
         

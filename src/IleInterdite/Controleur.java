@@ -124,7 +124,7 @@ public class Controleur implements Observateur {
         Collections.shuffle(piocheTresor);
 
         for (Aventurier unAventurier : getLesAventuriers()) {
-            System.out.println(unAventurier.getNomJoueur());
+            System.out.println(unAventurier.getNomJoueur() + " : " + unAventurier.getNomRole());
             if (unAventurier.getNomRole() == "Plongeur") {
                 unAventurier.setPosition(1, 1);
             } else if (unAventurier.getNomRole() == "Pilote") {

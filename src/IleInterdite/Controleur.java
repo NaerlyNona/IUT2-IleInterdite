@@ -115,8 +115,8 @@ public class Controleur implements Observateur {
             if (unAventurier.getNomRole() == "Messager") {
                 unAventurier.setPosition(3, 5);
                 for (int i = 0; i < 5; i++) {
-                carte = new CarteTrésor("Le Calice de l’onde", calice, Utils.TypeCarte.Trésor);
-                unAventurier.ajouterMain(carte);
+                    carte = new CarteTrésor("Le Calice de l’onde", calice, Utils.TypeCarte.Trésor);
+                    unAventurier.ajouterMain(carte);
                 }
             }
 
@@ -378,7 +378,7 @@ public class Controleur implements Observateur {
         } else {
             setAventurierActuel(getLesAventuriers().get(this.getLesAventuriers().lastIndexOf(getAventurierActuel()) + 1));
         }
-        
+
         InonderFinTour(getNiveauEau(), piocheInondation);
         ihmIleInterdite.MAJInfo(this);
 
@@ -392,7 +392,7 @@ public class Controleur implements Observateur {
     public void finDuTourPartie2() {
 
         setFinDuTour(false);
-;
+        ;
         ihmIleInterdite.MAJMain(getAventurierActuel());
         ihmIleInterdite.setEnabled(true);
 
@@ -514,7 +514,7 @@ public class Controleur implements Observateur {
                 getTresors().add(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
                 tresorsRestant.remove(laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor());
                 System.out.println("recuperation du trésor en cours... ah c fini laul");
-                for (Carte main : (ArrayList<Carte>)(getAventurierActuel().getMain().clone())) {
+                for (Carte main : (ArrayList<Carte>) (getAventurierActuel().getMain().clone())) {
                     if (main.getNomCarte() == laGrille.getTuile(getAventurierActuel().getX(), getAventurierActuel().getY()).getTresor().getNom()) {
 
                         defausseTresor.add(main);
@@ -592,6 +592,9 @@ public class Controleur implements Observateur {
                 ihmIleInterdite.MAJJoueur(getAventurierActuel());
                 ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
                 ihmIleInterdite.MAJBoutons(getAventurierActuel(), this);
+                break;
+            case BTNDEPLACER:
+                ihmIleInterdite.MAJTuile(laGrille, lesAventuriers, aventurierActuel);
                 break;
 
             case DEPLACER:
@@ -687,8 +690,7 @@ public class Controleur implements Observateur {
                 i++;
             }
 
-            
-    }
+        }
         return i;
     }
 
